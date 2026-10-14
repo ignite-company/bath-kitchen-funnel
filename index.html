@@ -112,8 +112,43 @@ const steps=[
 ];
 const state={};let step=0,submitting=false;
 const $=id=>document.getElementById(id),question=$('question'),desc=$('question-desc'),options=$('options'),err=$('quiz-error');
-function draw(){const contact=step===steps.length;$('question-view').classList.toggle('hidden',contact);$('contact-form').classList.toggle('hidden',!contact);$('quiz-step-title').textContent=contact?'Almost finished':'Tell us about your company';$('quiz-step-count').textContent='Step '+(step+1)+' of 6';$('quiz-progress').style.width=((step+1)/6*100)+'%';if(contact)return;const q=steps[step];question.textContent=q.title;desc.textContent=q.desc;options.textContent='';q.options.forEach(pair=>{const b=document.createElement('button');b.type='button';b.className='opt';b.setAttribute('aria-pressed',String(state[q.key]===pair[0]));const label=document.createElement('span');label.textContent=pair[1];const dot=document.createElement('span');dot.className='circle';dot.textContent='✓';b.append(label,dot);b.addEventListener('click',()=>{state[q.key]=pair[0];err.textContent='';draw();});options.append(b)});$('prev').disabled=step===0;$('next').textContent=step===steps.length-1?'Contact details →':'Continue →';err.textContent='';}
-$('prev').addEventListener('click',()=>{if(step>0){step--;draw()}});$('contact-prev').addEventListener('click',()=>{step=steps.length-1;draw()});$('next').addEventListener('click',()=>{if(!state[steps[step].key]){err.textContent='Please choose an option to continue.';return;}step++;draw()});
+function draw(){
+ const contact=step===steps.length;
+ $('question-view').classList.toggle('hidden',contact);
+ $('contact-form').classList.toggle('hidden',!contact);
+ $('quiz-step-title').textContent=contact?'Almost finished':'Tell us about your company';
+ $('quiz-step-count').textContent='Step '+(step+1)+' of 6';
+ $('quiz-progress').style.width=((step+1)/6*100)+'%';
+ if(contact)return;
+ const q=steps[step];
+ question.textContent=q.title;
+ desc.textContent=q.desc;
+ options.textContent='';
+ q.options.forEach(pair=>{
+  const b=document.createElement('button'); b.type='button'; b.className='opt';
+  const current=q.multi?(Array.isArray(state[q.key])?state[q.key]:[]):state[q.key];
+  const selected=q.multi?current.includes(pair[0]):current===pair[0];
+  b.setAttribute('aria-pressed',String(selected));
+  const label=document.createElement('span');label.textContent=pair[1];
+  const dot=document.createElement('span');dot.className='circle';dot.textContent='✓';
+  b.append(label,dot);
+  b.addEventListener('click',()=>{
+   if(q.multi){
+    let values=Array.isArray(state[q.key])?[...state[q.key]]:[];
+    if(values.includes(pair[0]))values=values.filter(v=>v!==pair[0]);
+    else if(pair[0]==='other') values=['other'];
+    else values=[...values.filter(v=>v!=='other'),pair[0]];
+    state[q.key]=values;
+   }else state[q.key]=pair[0];
+   err.textContent='';draw();
+  });
+  options.append(b);
+ });
+ $('prev').disabled=step===0;
+ $('next').textContent=step===steps.length-1?'Contact details →':'Continue →';
+ err.textContent='';
+}
+$('prev').addEventListener('click',()=>{if(step>0){step--;draw()}});$('contact-prev').addEventListener('click',()=>{step=steps.length-1;draw()});$('next').addEventListener('click',()=>{const response=state[steps[step].key];if(!response||(Array.isArray(response)&&!response.length)){err.textContent='Please select at least one option to continue.';return;}step++;draw()});
 $('contact-form').addEventListener('submit',async e=>{e.preventDefault();if(submitting)return;const form=e.currentTarget;const fe=$('form-error');fe.textContent='';if(!form.reportValidity()){fe.textContent='Please complete the required contact details.';return;}if(!$('consent').checked){fe.textContent='Please confirm the contact consent.';return;}
 const data=new FormData(form),query=new URLSearchParams(window.location.search);
 const previousReceipt=readSubmission();
@@ -126,10 +161,10 @@ const receipt=await response.json();
 if(!receipt.ok||!receipt.submission_id||!receipt.edit_token)throw new Error('Unable to confirm saved application.');
 $('contact-form').classList.add('hidden');$('booking-reveal').classList.remove('hidden');$('quiz-step-title').textContent='Application received';$('quiz-step-count').textContent='Calendar';$('quiz-progress').style.width='100%';if(!$('calendar').src) $('calendar').src=$('calendar').dataset.src;
 window.sessionStorage.setItem('igniteRemodelSubmission',JSON.stringify({submission_id:receipt.submission_id,edit_token:receipt.edit_token,answers:{...state},contact:contactRecord}));
-$('quiz-overlay').querySelector('.quiz-dialog').scrollTo({top:0,behavior:'smooth'});}
+$('quiz-overlay').querySelector('.quiz-scroll').scrollTo({top:0,behavior:'smooth'});}
 catch(ex){fe.textContent=ex.name==='AbortError'?'The request timed out. Please try again.':ex.message||'Unable to save. Please try again.'}finally{submitting=false;$('submit').disabled=false;$('submit').textContent='Save & See Calendar →'}});
 function readSubmission(){try{const r=JSON.parse(window.sessionStorage.getItem('igniteRemodelSubmission')||'null');if(r&&r.submission_id&&r.edit_token)return r;}catch{}return null;}
-function returnToAnswers(){$('booking-reveal').classList.add('hidden');step=0;draw();$('quiz-overlay').querySelector('.quiz-dialog').scrollTo({top:0,behavior:'smooth'});question.setAttribute('tabindex','-1');question.focus({preventScroll:true});}
+function returnToAnswers(){$('booking-reveal').classList.add('hidden');step=0;draw();$('quiz-overlay').querySelector('.quiz-scroll').scrollTo({top:0,behavior:'smooth'});question.setAttribute('tabindex','-1');question.focus({preventScroll:true});}
 $('booking-back').addEventListener('click',returnToAnswers);
 const previous=readSubmission();
 if(previous&&previous.answers&&previous.contact){
@@ -142,10 +177,30 @@ if(previous&&previous.answers&&previous.contact){
 const video=$('ignite-vsl');
 video.muted=true;
 video.defaultMuted=true;
-video.play().catch(()=>{ /* Browser power saving or autoplay policy may require tapping play. */ });
+const videoUnmute=$('video-unmute'),unmuteStatus=$('video-unmute-status'),unmuteAction=$('video-unmute-action');
+function updateVideoUnmute(){
+ const needsSound=video.muted||video.volume===0;
+ videoUnmute.classList.toggle('hidden',!needsSound);
+ if(needsSound){
+  unmuteStatus.textContent=video.paused?'YOUR WALKTHROUGH IS READY':'YOUR WALKTHROUGH IS PLAYING';
+  unmuteAction.textContent=video.paused?'PRESS TO PLAY WITH SOUND 🔊':'PRESS TO UNMUTE 🔊';
+ }
+}
+videoUnmute.addEventListener('click',()=>{
+ video.muted=false;
+ video.defaultMuted=false;
+ video.volume=1;
+ if(video.paused) video.play().catch(()=>{updateVideoUnmute();});
+ updateVideoUnmute();
+});
+video.addEventListener('volumechange',updateVideoUnmute);
+video.addEventListener('play',updateVideoUnmute);
+video.addEventListener('pause',updateVideoUnmute);
+video.play().catch(()=>{updateVideoUnmute();});
+updateVideoUnmute();
 const sticky=$('sticky');function updateSticky(){const show=window.innerWidth<=640&&!document.body.classList.contains('quiz-open');sticky.style.display=show?'block':'none';}
 let focusBeforeQuiz=null;
-function openQuiz(){focusBeforeQuiz=document.activeElement;const overlay=$('quiz-overlay');overlay.classList.remove('hidden');document.body.classList.add('quiz-open');overlay.querySelector('.quiz-dialog').scrollTop=0;overlay.querySelector('.quiz-dialog').focus();updateSticky();}
+function openQuiz(){focusBeforeQuiz=document.activeElement;const overlay=$('quiz-overlay');overlay.classList.remove('hidden');document.body.classList.add('quiz-open');overlay.querySelector('.quiz-scroll').scrollTop=0;overlay.querySelector('.quiz-dialog').focus();updateSticky();}
 function closeQuiz(){const overlay=$('quiz-overlay');overlay.classList.add('hidden');document.body.classList.remove('quiz-open');updateSticky();if(focusBeforeQuiz&&typeof focusBeforeQuiz.focus==='function')focusBeforeQuiz.focus();}
 document.querySelectorAll('[data-open-quiz]').forEach(button=>button.addEventListener('click',openQuiz));
 $('close-quiz').addEventListener('click',closeQuiz);
