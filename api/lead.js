@@ -1,4 +1,5 @@
 'use strict';
+const { randomUUID } = require('node:crypto');
 
 // Server-side qualification intake. No Meta Pixel, GHL webhook, or analytics SDK.
 // This route stores consented applications in an insert-only Supabase table.
@@ -50,6 +51,11 @@ module.exports = async function handler(req,res) {
     console.error('Remodel application storage environment is not configured');
     return send(res,503,{error:'Application service unavailable'});
   }
+  const isEdit = Boolean(data.submission_id || data.edit_token);
+  const uuidRx = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  if(isEdit && (!uuidRx.test(data.submission_id||'') || !uuidRx.test(data.edit_token||''))) return send(res,400,{error:'Invalid edit session'});
+  const submissionId = isEdit ? data.submission_id : randomUUID();
+  const editToken = isEdit ? data.edit_token : randomUUID();
   const payload = {
     first_name:limited(data.first_name,80),
     last_name:limited(data.last_name,80),
@@ -67,14 +73,21 @@ module.exports = async function handler(req,res) {
   try {
     const headers = {'Content-Type':'application/json','apikey':key,'Prefer':'return=minimal'};
     if(!key.startsWith('sb_publishable_'))headers.Authorization='Bearer '+key;
-    const upstream = await fetch(url.replace(/\/$/,'')+'/rest/v1/remodel_funnel_leads',{
-      method:'POST',headers,body:JSON.stringify(payload),signal:AbortSignal.timeout(9000)
+    const endpoint = url.replace(/\/$/,'') + (isEdit ? '/rest/v1/rpc/update_remodel_funnel_application' : '/rest/v1/remodel_funnel_leads');
+    const body = isEdit
+      ? {p_id:submissionId,p_token:editToken,p_data:payload}
+      : {...payload,id:submissionId,edit_token:editToken};
+    const upstream = await fetch(endpoint,{
+      method:'POST',headers,body:JSON.stringify(body),signal:AbortSignal.timeout(9000)
     });
     if(!upstream.ok) {
-      console.error('Database insert failed, status:',upstream.status);
+      console.error('Database write failed, status:',upstream.status);
       return send(res,502,{error:'Unable to save application right now'});
     }
-    return send(res,201,{ok:true});
+    if(isEdit && (await upstream.text()).trim() !== 'true') {
+      return send(res,409,{error:'This editing session expired. Please refresh and submit again.'});
+    }
+    return send(res,isEdit?200:201,{ok:true,submission_id:submissionId,edit_token:editToken});
   } catch(err) {
     console.error('Application submission failed:',err?.name || 'UnknownError');
     return send(res,503,{error:'Unable to save application right now'});
