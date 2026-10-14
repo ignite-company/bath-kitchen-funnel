@@ -1,8 +1,8 @@
 'use strict';
 const { randomUUID } = require('node:crypto');
 
-// Server-side qualification intake. No Meta Pixel, GHL webhook, or analytics SDK.
-// This route stores consented applications in an insert-only Supabase table.
+// Server-side qualification intake. No Meta Pixel or analytics SDK.
+// Save consented applications to Supabase, then notify GoHighLevel.
 
 const allowed = {
   project_type: ['kitchens','bathrooms','both'],
@@ -91,6 +91,51 @@ module.exports = async function handler(req,res) {
     if(isEdit && (await upstream.text()).trim() !== 'true') {
       return send(res,409,{error:'This editing session expired. Please refresh and submit again.'});
     }
+
+    // A GoHighLevel incoming webhook is a server-to-server integration.
+    // Keep its URL out of the public webpage and never send the edit token.
+    const webhookUrl = process.env.GHL_LEAD_WEBHOOK_URL;
+    if(webhookUrl) {
+      const webhookPayload = {
+        event_type: isEdit ? 'application_updated' : 'application_submitted',
+        submission_id: submissionId,
+        first_name: payload.first_name,
+        last_name: payload.last_name,
+        name: [payload.first_name,payload.last_name].filter(Boolean).join(' '),
+        email: payload.email,
+        phone: payload.phone,
+        company_name: payload.business_name,
+        business_name: payload.business_name,
+        service_area: payload.service_area,
+        website: payload.website,
+        project_type: payload.project_type,
+        monthly_revenue: payload.monthly_revenue,
+        monthly_inquiries: payload.monthly_inquiries,
+        biggest_gap: payload.biggest_gap,
+        biggest_gaps: payload.biggest_gaps,
+        biggest_gaps_text: payload.biggest_gaps.join(', '),
+        capacity: payload.capacity,
+        consent: true,
+        source: 'Ignite Kitchen & Bath Funnel',
+        utm_source: payload.utm_source,
+        utm_medium: payload.utm_medium,
+        utm_campaign: payload.utm_campaign
+      };
+      try {
+        const hookResponse = await fetch(webhookUrl,{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify(webhookPayload),
+          signal:AbortSignal.timeout(6000)
+        });
+        if(!hookResponse.ok) console.error('GoHighLevel webhook delivery returned:',hookResponse.status);
+      } catch (hookError) {
+        console.error('GoHighLevel webhook delivery failed:',hookError?.name || 'UnknownError');
+      }
+    } else {
+      console.error('GoHighLevel webhook environment variable not configured');
+    }
+
     return send(res,isEdit?200:201,{ok:true,submission_id:submissionId,edit_token:editToken});
   } catch(err) {
     console.error('Application submission failed:',err?.name || 'UnknownError');
