@@ -11,6 +11,9 @@
 .vsl{padding:0;background:#000;display:block;aspect-ratio:16/9}
 .vsl-video{display:block;width:100%;height:100%;aspect-ratio:16/9;object-fit:contain;object-position:center;background:#000;outline:none}
 .vsl-video:focus-visible{outline:3px solid #ff5879;outline-offset:3px}
+.booking-back{display:flex;align-items:center;gap:7px;margin:0 0 22px;padding:10px 14px;border:1px solid #ffffff30;border-radius:999px;background:#ffffff0d;color:#f7f7f9;font-size:14px;font-weight:700}
+.booking-back:hover{background:#ffffff20}
+.booking-back:focus-visible{outline:3px solid #ff7897;outline-offset:3px}
 body.quiz-open{overflow:hidden}
 .quiz-overlay{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:12px;background:rgba(3,4,7,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .quiz-dialog{position:relative;outline:none;width:min(810px,100%);max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior:contain;background:#101117;border:1px solid #ffffff2b;border-radius:26px;box-shadow:0 30px 110px #000b;scrollbar-width:thin;scrollbar-color:#585967 transparent}
@@ -33,8 +36,8 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
 <div class="eyebrow">For established kitchen &amp; bathroom remodeling companies</div>
 <h1>More booked projects.<br><span class="accent">Without wasting more leads.</span></h1>
 <p class="intro">I spent two years as a lead project manager at a seven-figure remodeling company. We were consistently busy without constantly increasing our marketing budget. The systems behind the leads mattered.</p>
-<div class="vsl" aria-label="Ignite Co. kitchen and bathroom remodeling growth video"><video class="vsl-video" id="ignite-vsl" controls playsinline preload="metadata" aria-label="Watch the Ignite remodeling growth video"><source src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6acfdeb45b9d6f310453a551.mp4" type="video/mp4">Your browser does not support HTML5 video. <a href="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6acfdeb45b9d6f310453a551.mp4" target="_blank" rel="noopener noreferrer">Open the video directly</a>.</video></div>
-<p class="caption">A short breakdown of what may be costing your business booked work.</p>
+<div class="vsl" aria-label="Ignite Co. kitchen and bathroom remodeling growth video"><video class="vsl-video" id="ignite-vsl" controls autoplay muted playsinline preload="auto" aria-label="Watch the Ignite remodeling growth video"><source src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6acfdeb45b9d6f310453a551.mp4" type="video/mp4">Your browser does not support HTML5 video. <a href="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6acfdeb45b9d6f310453a551.mp4" target="_blank" rel="noopener noreferrer">Open the video directly</a>.</video></div>
+<p class="caption">Video starts muted to allow automatic playback. Use the player controls to turn the sound on.</p>
 <div class="hero-buttons"><button type="button" class="cta" data-open-quiz>See If Ignite Is a Fit ↗</button><a class="ghost" href="#systems">Explore the systems</a></div>
 <p class="micro hero-note">No purchase required. A few short questions before the calendar.</p>
 </div></section>
@@ -67,7 +70,7 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
 <div class="honeypot" aria-hidden="true"><label for="other-field">Leave blank</label><input id="other-field" name="other_field" tabindex="-1" autocomplete="off"></div>
 <label class="consent"><input type="checkbox" id="consent" required><span>I agree to be contacted by Ignite Co. about my inquiry by phone or email. This is not consent to automated marketing texts. My information is used to review this application and arrange a call.</span></label>
 <p id="form-error" class="error" role="alert"></p><div class="quiz-actions"><button class="linkbtn" type="button" id="contact-prev">← Back</button><button type="submit" class="cta" id="submit">Save &amp; See Calendar →</button></div></form>
-<div id="booking-reveal" class="success hidden"><div class="check">✓</div><h3 class="q-title">Your application is in.</h3><p>Thanks for sharing the details. The final step is choosing a call time. You'll confirm your appointment and contact information in the calendar below.</p>
+<div id="booking-reveal" class="success hidden"><button class="booking-back" id="booking-back" type="button">← Back to your answers</button><div class="check">✓</div><h3 class="q-title">Your application is in.</h3><p>Thanks for sharing the details. The final step is choosing a call time. You'll confirm your appointment and contact information in the calendar below.</p>
 <div class="calendar-shell"><iframe id="calendar" title="Book an Ignite Co. growth systems call" loading="lazy" data-src="https://api.leadconnectorhq.com/widget/booking/SmqZP8xY90P4YKenFu50"></iframe></div><a class="calendar-link" target="_blank" rel="noopener noreferrer" href="https://api.leadconnectorhq.com/widget/booking/SmqZP8xY90P4YKenFu50">Calendar not showing? Open it in a new tab ↗</a></div>
 </div></div>
 </div></section>
@@ -92,13 +95,33 @@ function draw(){const contact=step===steps.length;$('question-view').classList.t
 $('prev').addEventListener('click',()=>{if(step>0){step--;draw()}});$('contact-prev').addEventListener('click',()=>{step=steps.length-1;draw()});$('next').addEventListener('click',()=>{if(!state[steps[step].key]){err.textContent='Please choose an option to continue.';return;}step++;draw()});
 $('contact-form').addEventListener('submit',async e=>{e.preventDefault();if(submitting)return;const form=e.currentTarget;const fe=$('form-error');fe.textContent='';if(!form.reportValidity()){fe.textContent='Please complete the required contact details.';return;}if(!$('consent').checked){fe.textContent='Please confirm the contact consent.';return;}
 const data=new FormData(form),query=new URLSearchParams(window.location.search);
-const payload={...state,first_name:String(data.get('first_name')||'').trim(),last_name:String(data.get('last_name')||'').trim(),business_name:String(data.get('business_name')||'').trim(),email:String(data.get('email')||'').trim(),phone:String(data.get('phone')||'').trim(),service_area:String(data.get('service_area')||'').trim(),website:String(data.get('website')||'').trim()||null,consent:true,other_field:String(data.get('other_field')||''),utm_source:(query.get('utm_source')||'').slice(0,100),utm_medium:(query.get('utm_medium')||'').slice(0,100),utm_campaign:(query.get('utm_campaign')||'').slice(0,100)};
+const previousReceipt=readSubmission();
+const contactRecord={first_name:String(data.get('first_name')||'').trim(),last_name:String(data.get('last_name')||'').trim(),business_name:String(data.get('business_name')||'').trim(),email:String(data.get('email')||'').trim(),phone:String(data.get('phone')||'').trim(),service_area:String(data.get('service_area')||'').trim(),website:String(data.get('website')||'').trim()};
+const payload={...state,...(previousReceipt?{submission_id:previousReceipt.submission_id,edit_token:previousReceipt.edit_token}:{}),first_name:String(data.get('first_name')||'').trim(),last_name:String(data.get('last_name')||'').trim(),business_name:String(data.get('business_name')||'').trim(),email:String(data.get('email')||'').trim(),phone:String(data.get('phone')||'').trim(),service_area:String(data.get('service_area')||'').trim(),website:String(data.get('website')||'').trim()||null,consent:true,other_field:String(data.get('other_field')||''),utm_source:(query.get('utm_source')||'').slice(0,100),utm_medium:(query.get('utm_medium')||'').slice(0,100),utm_campaign:(query.get('utm_campaign')||'').slice(0,100)};
 submitting=true;$('submit').disabled=true;$('submit').textContent='Saving your application…';
 try{const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),16000);let response;try{response=await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:controller.signal});}finally{clearTimeout(timeout);}
-if(!response.ok){throw new Error(response.status===429?'Please wait a moment and try again.':'Could not save your application. Please try again.')}
-$('contact-form').classList.add('hidden');$('booking-reveal').classList.remove('hidden');$('quiz-step-title').textContent='Application received';$('quiz-step-count').textContent='Calendar';$('quiz-progress').style.width='100%';$('calendar').src=$('calendar').dataset.src;window.sessionStorage.setItem('igniteRemodelApplied','1');$('quiz-overlay').querySelector('.quiz-dialog').scrollTo({top:0,behavior:'smooth'});}
+if(!response.ok){let detail;try{detail=await response.json();}catch{}throw new Error(detail?.error || 'Could not save your application. Please try again.')}
+const receipt=await response.json();
+if(!receipt.ok||!receipt.submission_id||!receipt.edit_token)throw new Error('Unable to confirm saved application.');
+$('contact-form').classList.add('hidden');$('booking-reveal').classList.remove('hidden');$('quiz-step-title').textContent='Application received';$('quiz-step-count').textContent='Calendar';$('quiz-progress').style.width='100%';if(!$('calendar').src) $('calendar').src=$('calendar').dataset.src;
+window.sessionStorage.setItem('igniteRemodelSubmission',JSON.stringify({submission_id:receipt.submission_id,edit_token:receipt.edit_token,answers:{...state},contact:contactRecord}));
+$('quiz-overlay').querySelector('.quiz-dialog').scrollTo({top:0,behavior:'smooth'});}
 catch(ex){fe.textContent=ex.name==='AbortError'?'The request timed out. Please try again.':ex.message||'Unable to save. Please try again.'}finally{submitting=false;$('submit').disabled=false;$('submit').textContent='Save & See Calendar →'}});
-if(window.sessionStorage.getItem('igniteRemodelApplied')==='1'){$('question-view').classList.add('hidden');$('contact-form').classList.add('hidden');$('booking-reveal').classList.remove('hidden');$('quiz-step-title').textContent='Application received';$('quiz-step-count').textContent='Calendar';$('quiz-progress').style.width='100%';$('calendar').src=$('calendar').dataset.src;}else draw();
+function readSubmission(){try{const r=JSON.parse(window.sessionStorage.getItem('igniteRemodelSubmission')||'null');if(r&&r.submission_id&&r.edit_token)return r;}catch{}return null;}
+function returnToAnswers(){$('booking-reveal').classList.add('hidden');step=0;draw();$('quiz-overlay').querySelector('.quiz-dialog').scrollTo({top:0,behavior:'smooth'});question.setAttribute('tabindex','-1');question.focus({preventScroll:true});}
+$('booking-back').addEventListener('click',returnToAnswers);
+const previous=readSubmission();
+if(previous&&previous.answers&&previous.contact){
+ Object.assign(state,previous.answers);
+ Object.entries(previous.contact).forEach(([name,value])=>{const field=$('contact-form').elements.namedItem(name);if(field&&typeof value==='string')field.value=value;});
+ $('consent').checked=true;
+ $('question-view').classList.add('hidden');$('contact-form').classList.add('hidden');$('booking-reveal').classList.remove('hidden');
+ $('quiz-step-title').textContent='Application received';$('quiz-step-count').textContent='Calendar';$('quiz-progress').style.width='100%';$('calendar').src=$('calendar').dataset.src;
+}else draw();
+const video=$('ignite-vsl');
+video.muted=true;
+video.defaultMuted=true;
+video.play().catch(()=>{ /* Browser power saving or autoplay policy may require tapping play. */ });
 const sticky=$('sticky');function updateSticky(){const show=window.innerWidth<=640&&!document.body.classList.contains('quiz-open');sticky.style.display=show?'block':'none';}
 let focusBeforeQuiz=null;
 function openQuiz(){focusBeforeQuiz=document.activeElement;const overlay=$('quiz-overlay');overlay.classList.remove('hidden');document.body.classList.add('quiz-open');overlay.querySelector('.quiz-dialog').scrollTop=0;overlay.querySelector('.quiz-dialog').focus();updateSticky();}
