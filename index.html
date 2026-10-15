@@ -396,7 +396,12 @@ function setProofSlide(nextIndex){
     button.classList.toggle('is-active',active);
     button.setAttribute('aria-pressed',String(active));
   });
-  proofThumbButtons[proofIndex].scrollIntoView({block:'nearest',inline:'nearest',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+  const thumbsRail=document.querySelector('.ignite-proof-thumbs');
+  const thumb=proofThumbButtons[proofIndex];
+  const railRect=thumbsRail.getBoundingClientRect();
+  const thumbRect=thumb.getBoundingClientRect();
+  const targetLeft=thumbsRail.scrollLeft+(thumbRect.left-railRect.left)-(thumbsRail.clientWidth-thumbRect.width)/2;
+  thumbsRail.scrollTo({left:targetLeft,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
   if(proofModal.open){
     proofModalImg.src=source;
     proofModalImg.alt='Enlarged proof image '+(proofIndex+1)+' of '+proofSources.length;
