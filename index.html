@@ -232,12 +232,7 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
         <h2 id="ignite-proof-title">Proof you can <span class="accent">actually see.</span></h2>
         <p>Browse examples of our work and results. Tap any image to take a closer look.</p>
       </div>
-      <div class="ignite-proof-controls">
-        <button class="ignite-proof-arrow" id="ignite-proof-prev" aria-label="Previous proof image" type="button"><svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <span class="ignite-proof-counter">10 images</span>
-        <button class="ignite-proof-arrow" id="ignite-proof-next" aria-label="Next proof image" type="button"><svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg></button>
-        <button class="ignite-proof-arrow ignite-proof-autoplay-toggle" id="ignite-proof-autoplay-toggle" aria-label="Pause automatic results slideshow" aria-pressed="false" title="Pause slideshow" type="button"><span aria-hidden="true">Ⅱ</span></button>
-      </div>
+
     </div>
     <div class="ignite-proof-marquee" id="ignite-proof-marquee" role="region" aria-roledescription="carousel" aria-label="Continuously moving examples of Ignite work and results">
       <div class="ignite-proof-marquee-track">
@@ -263,7 +258,7 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
 <div class="ignite-proof-slide" data-proof-index="9" aria-hidden="true"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ac520887d735ea2a1627246.png" alt="" loading="lazy" decoding="async"></div></div>
       </div>
     </div>
-    <div class="ignite-proof-help">Results scroll continuously in the opposite direction to the logos. Hover or use Pause to stop; tap any image to enlarge.</div>
+    <div class="ignite-proof-help">Results scroll continuously in the opposite direction to the logos. Hover to pause or tap any image to enlarge.</div>
   </div>
 </section>
 <dialog id="ignite-proof-lightbox" class="ignite-proof-lightbox" aria-label="Enlarged proof image">
@@ -451,20 +446,11 @@ const proofModal=$('ignite-proof-lightbox');
 const proofModalImg=$('ignite-proof-lightbox-img');
 const proofModalStage=$('ignite-proof-lightbox-stage');
 const proofZoomBtn=$('ignite-proof-lightbox-zoom');
-const proofAutoToggle=$('ignite-proof-autoplay-toggle');
 const reducedProofMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let proofIndex=0;
-let resultsPaused=reducedProofMotion,proofVisible=true,proofHover=false,proofFocused=false,proofTouch=false;
+const resultsPaused=reducedProofMotion;
+let proofVisible=true,proofHover=false,proofFocused=false,proofTouch=false;
 let proofLastInteraction=0,proofLastFrame=0,proofRailReady=false;
-
-function paintProofAutoToggle(){
-  proofAutoToggle.querySelector('span').textContent=resultsPaused?'▶':'Ⅱ';
-  proofAutoToggle.setAttribute('aria-pressed',String(resultsPaused));
-  proofAutoToggle.setAttribute('aria-label',resultsPaused?'Resume automatic results slider':'Pause automatic results slider');
-  proofAutoToggle.title=resultsPaused?'Play slider':'Pause slider';
-}
-paintProofAutoToggle();
-proofAutoToggle.addEventListener('click',()=>{resultsPaused=!resultsPaused;paintProofAutoToggle();});
 
 function fillProofModal(){
   const source=proofSources[proofIndex];
@@ -486,16 +472,6 @@ function proofModalStep(delta){
   proofIndex=(proofIndex+delta+proofSources.length)%proofSources.length;
   fillProofModal();
 }
-function proofMarqueeStep(delta){
-  const setWidth=proofOriginalSet.getBoundingClientRect().width;
-  const step=proofSlides[0].getBoundingClientRect().width+18;
-  if(setWidth<=0)return;
-  const next=proofRail.scrollLeft - delta*step;
-  proofRail.scrollLeft=((next%setWidth)+setWidth)%setWidth;
-  proofLastInteraction=Date.now();
-}
-$('ignite-proof-prev').addEventListener('click',()=>proofMarqueeStep(-1));
-$('ignite-proof-next').addEventListener('click',()=>proofMarqueeStep(1));
 proofRail.addEventListener('click',event=>{
   const slide=event.target.closest('.ignite-proof-slide');
   if(slide)openProofModal(Number(slide.dataset.proofIndex));
