@@ -49,6 +49,70 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
  .quiz-close{width:42px;height:42px;flex-basis:42px}
  .quiz-overlay .qualification{padding:20px 9px 17px}
 }
+
+/* Social proof: source photos and logos are never cropped */
+.ignite-companies{padding:30px 0 35px;background:#0e0f15;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.ignite-companies-header{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:18px}
+.ignite-companies-header h2{font-size:clamp(15px,2.4vw,20px);letter-spacing:-.025em;font-weight:730;color:#edebf1}
+.ignite-companies-buttons{display:flex;gap:8px}
+.ignite-companies-buttons button,.ignite-proof-arrow{display:grid;place-items:center;width:39px;height:39px;border:1px solid #ffffff35;border-radius:50%;background:#ffffff0d;color:#fff;flex:none}
+.ignite-companies-buttons button:hover,.ignite-proof-arrow:hover{background:#ffffff23}
+.ignite-companies-buttons button:focus-visible,.ignite-proof-arrow:focus-visible{outline:3px solid #ff7097;outline-offset:2px}
+.ignite-logos-scroll{overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:#ffffff3a transparent;padding:0 0 7px}
+.ignite-logos-track{display:flex;align-items:center;gap:12px;width:max-content}
+.ignite-proof-logo-card{width:155px;height:88px;flex:none;border:1px solid #ffffff18;border-radius:14px;background:linear-gradient(130deg,#242630,#15161f);display:flex;align-items:center;justify-content:center;padding:13px;scroll-snap-align:start}
+.ignite-proof-logo-card img{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 2px 3px #0005)}
+.ignite-proof-section{padding:68px 0 79px;background:linear-gradient(180deg,#101016 0%,#08090d 95%);border-bottom:1px solid var(--line)}
+.ignite-proof-header{display:flex;align-items:flex-end;justify-content:space-between;gap:22px;margin-bottom:25px}
+.ignite-proof-header h2{font-size:clamp(31px,4.6vw,53px);margin:12px 0 12px;line-height:1.08;letter-spacing:-.055em}
+.ignite-proof-header p{color:#b7b7c3;max-width:600px;font-size:15px}
+.ignite-proof-controls{display:flex;align-items:center;justify-content:center;gap:14px;flex:none;padding-bottom:5px}
+.ignite-proof-counter{min-width:62px;font-size:13px;color:#d9d8e0;font-weight:780;letter-spacing:.07em;font-variant-numeric:tabular-nums;text-align:center}
+.ignite-proof-viewer{position:relative;width:100%;height:clamp(340px,55vw,675px);max-height:75dvh;background:radial-gradient(ellipse at 50% 30%,#1c1b23,#101116 68%);border:1px solid #ffffff26;border-radius:24px;box-shadow:0 22px 72px #0007;overflow:hidden}
+.ignite-proof-enlarge{position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:100%;padding:20px;border:0;color:#fff;cursor:zoom-in;background:transparent}
+.ignite-proof-enlarge img{display:block;max-width:100%;max-height:100%;height:auto;width:auto;object-fit:contain;object-position:center;filter:drop-shadow(0 7px 20px #0007)}
+.ignite-proof-zoom-hint{position:absolute;bottom:15px;right:15px;display:flex;align-items:center;gap:8px;background:#08090de8;border:1px solid #ffffff35;border-radius:50px;padding:10px 14px;font-size:12px;font-weight:740;pointer-events:none}
+.ignite-proof-thumbs{display:flex;gap:10px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:#ffffff44 transparent;padding:15px 1px 11px}
+.ignite-proof-thumb{height:80px;min-width:104px;width:104px;flex:none;border:2px solid #ffffff23;border-radius:12px;padding:5px;display:flex;align-items:center;justify-content:center;background:#181921;scroll-snap-align:center;overflow:hidden}
+.ignite-proof-thumb img{width:100%;height:100%;object-fit:contain}
+.ignite-proof-thumb.is-active{border-color:#fa577c;background:#351924}
+.ignite-proof-thumb:hover{border-color:#ff9cb5}
+.ignite-proof-enlarge:focus-visible,.ignite-proof-thumb:focus-visible{outline:3px solid #ff7999;outline-offset:3px}
+.ignite-proof-help{font-size:12px;color:#9494a3;margin-top:6px;text-align:center}
+.ignite-proof-lightbox{padding:0;margin:auto;width:min(1260px,calc(100% - 22px));height:min(960px,calc(100dvh - 22px));max-width:none;max-height:none;overflow:hidden;color:#fff;border:1px solid #ffffff38;border-radius:18px;background:#0b0c10;box-shadow:0 30px 150px #000d}
+.ignite-proof-lightbox::backdrop{background:#000e;backdrop-filter:blur(8px)}
+.ignite-proof-lightbox[open]{display:flex;flex-direction:column}
+.ignite-proof-lightbox-top,.ignite-proof-lightbox-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 17px;background:#171820;flex:none}
+.ignite-proof-lightbox-top{border-bottom:1px solid #ffffff26}
+.ignite-proof-lightbox-footer{border-top:1px solid #ffffff26}
+.ignite-proof-lightbox-top>span{font-size:14px;letter-spacing:.07em;font-variant-numeric:tabular-nums}
+.ignite-proof-lightbox-actions{display:flex;align-items:center;gap:9px}
+.ignite-proof-lightbox-actions button,.ignite-proof-lightbox-actions a{font-size:12px;font-weight:750;color:#fff;background:#ffffff11;border:1px solid #ffffff32;border-radius:8px;padding:10px 13px;white-space:nowrap}
+.ignite-proof-lightbox-actions button:hover,.ignite-proof-lightbox-actions a:hover{background:#ffffff25}
+.ignite-proof-lightbox-stage{flex:1;min-height:0;min-width:0;overflow:auto;display:flex;align-items:center;justify-content:center;overscroll-behavior:contain}
+.ignite-proof-lightbox-stage img{display:block;max-width:100%;max-height:100%;height:auto;width:auto;object-fit:contain}
+.ignite-proof-lightbox-stage.is-zoomed{display:block;text-align:center}
+.ignite-proof-lightbox-stage.is-zoomed img{max-width:none;max-height:none;width:auto;height:auto;margin:0 auto}
+.ignite-proof-lightbox-footer>span{color:#b3b3c0;font-size:12px}
+@media(max-width:640px){
+ .ignite-companies{padding:23px 0 25px}
+ .ignite-proof-logo-card{width:124px;height:76px;padding:10px}
+ .ignite-logos-track{gap:9px}
+ .ignite-proof-section{padding:46px 0 57px}
+ .ignite-proof-header{flex-direction:column;align-items:flex-start;gap:15px}
+ .ignite-proof-header h2{font-size:clamp(30px,9vw,41px)}
+ .ignite-proof-header p{font-size:14px}
+ .ignite-proof-controls{align-self:flex-end;padding:0}
+ .ignite-proof-viewer{height:min(470px,65dvh);min-height:280px;border-radius:15px}
+ .ignite-proof-enlarge{padding:9px}
+ .ignite-proof-zoom-hint{bottom:10px;right:10px;font-size:10px;padding:8px}
+ .ignite-proof-thumb{height:67px;width:82px;min-width:82px;border-radius:8px;padding:3px}
+ .ignite-proof-lightbox{width:calc(100% - 10px);height:calc(100dvh - 10px);border-radius:11px}
+ .ignite-proof-lightbox-top,.ignite-proof-lightbox-footer{padding:10px}
+ .ignite-proof-lightbox-actions{gap:5px}
+ .ignite-proof-lightbox-actions button,.ignite-proof-lightbox-actions a{font-size:11px;padding:10px 8px}
+}
+@media(prefers-reduced-motion:reduce){.ignite-logos-scroll,.ignite-proof-thumbs{scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
@@ -62,6 +126,94 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
 <div class="hero-buttons"><button type="button" class="cta" data-open-quiz>See If Ignite Is a Fit ↗</button><a class="ghost" href="#systems">Explore the systems</a></div>
 <p class="micro hero-note">No purchase required. A few short questions before the calendar.</p>
 </div></section>
+<section class="ignite-companies" aria-labelledby="ignite-companies-title">
+  <div class="container">
+    <div class="ignite-companies-header">
+      <h2 id="ignite-companies-title">Companies we've worked with</h2>
+      <div class="ignite-companies-buttons">
+        <button type="button" id="ignite-logos-prev" aria-label="Scroll company logos left"><svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button type="button" id="ignite-logos-next" aria-label="Scroll company logos right"><svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg></button>
+      </div>
+    </div>
+    <div class="ignite-logos-scroll" id="ignite-logos-scroll" tabindex="0" role="group" aria-label="Company logos, scroll horizontally for more">
+      <div class="ignite-logos-track"><div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a9c56db4013f612d9f.png" alt="Company we've worked with, logo 1" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a9c56db4013f612d9e.png" alt="Company we've worked with, logo 2" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a982125b9874903bea.png" alt="Company we've worked with, logo 3" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a97f9c717c7cc87936.png" alt="Company we've worked with, logo 4" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a967457445b9f1b14e.png" alt="Company we've worked with, logo 5" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a982125b9874903bec.png" alt="Company we've worked with, logo 6" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a982125b9874903be9.png" alt="Company we've worked with, logo 7" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a97f9c717c7cc87935.png" alt="Company we've worked with, logo 8" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a9f07c4898898030cf.png" alt="Company we've worked with, logo 9" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a929adc07d21ecd4bf.png" alt="Company we've worked with, logo 10" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a9f90b5bc73b09d571.png" alt="Company we've worked with, logo 11" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a9f90b5bc73b09d570.png" alt="Company we've worked with, logo 12" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a9330f3d5313e66ec9.png" alt="Company we've worked with, logo 13" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a9fa8afa3be0b450da.png" alt="Company we've worked with, logo 14" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a951bf95bcbb74d36c.png" alt="Company we've worked with, logo 15" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03ba02f07c489889803e42.png" alt="Company we've worked with, logo 16" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a34d5154ffe73711d034b62.png" alt="Company we've worked with, logo 17" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a44118718d22f08d731d0c5.png" alt="Company we've worked with, logo 18" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a46dc3d62d435fa95740840.png" alt="Company we've worked with, logo 19" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a712b07497cd89d243fe013.png" alt="Company we've worked with, logo 20" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a84fc2dce9e46f41d01cac0.png" alt="Company we've worked with, logo 21" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a9363b20914f1121510a901.png" alt="Company we've worked with, logo 22" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6aac8155bdaa5e26a90f2bf2.png" alt="Company we've worked with, logo 23" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ab1c9e4bdaa5e26a97f4bc3.png" alt="Company we've worked with, logo 24" loading="lazy" decoding="async"></div></div>
+    </div>
+  </div>
+</section>
+<section class="ignite-proof-section" id="proof" aria-labelledby="ignite-proof-title">
+  <div class="container">
+    <div class="ignite-proof-header">
+      <div>
+        <div class="eyebrow">A look at the work</div>
+        <h2 id="ignite-proof-title">Proof you can <span class="accent">actually see.</span></h2>
+        <p>Browse examples of our work and results. Tap any image to take a closer look.</p>
+      </div>
+      <div class="ignite-proof-controls">
+        <button class="ignite-proof-arrow" id="ignite-proof-prev" aria-label="Previous proof image" type="button"><svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <span class="ignite-proof-counter" id="ignite-proof-count" aria-live="polite">01 / 10</span>
+        <button class="ignite-proof-arrow" id="ignite-proof-next" aria-label="Next proof image" type="button"><svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg></button>
+      </div>
+    </div>
+    <div class="ignite-proof-viewer" id="ignite-proof-viewer" role="region" aria-roledescription="carousel" aria-label="Examples of Ignite work and results">
+      <button class="ignite-proof-enlarge" type="button" id="ignite-proof-enlarge" aria-label="Enlarge proof image 1">
+        <img id="ignite-proof-main" src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a3da1bb355a0e846b4dcd98.jpg" alt="Example of Ignite work, image 1 of 10" loading="eager" decoding="async">
+        <span class="ignite-proof-zoom-hint"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M10.5 7.5v6M7.5 10.5h6"/></svg> Tap to enlarge</span>
+      </button>
+    </div>
+    <div class="ignite-proof-thumbs" role="group" aria-label="Choose a proof image"><button class="ignite-proof-thumb is-active" type="button" data-proof-index="0" aria-label="View proof image 1" aria-pressed="true"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a3da1bb355a0e846b4dcd98.jpg" alt="" loading="lazy" decoding="async"></button>
+<button class="ignite-proof-thumb" type="button" data-proof-index="1" aria-label="View proof image 2" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a3da1bbe4daecfbb48dc348.jpg" alt="" loading="lazy" decoding="async"></button>
+<button class="ignite-proof-thumb" type="button" data-proof-index="2" aria-label="View proof image 3" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a2f517ab9af5312bc2f2c3d.jpg" alt="" loading="lazy" decoding="async"></button>
+<button class="ignite-proof-thumb" type="button" data-proof-index="3" aria-label="View proof image 4" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a2f517ab9af5312bc2f2c37.jpg" alt="" loading="lazy" decoding="async"></button>
+<button class="ignite-proof-thumb" type="button" data-proof-index="4" aria-label="View proof image 5" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a9c7797e29b3baf97d6ef7c.png" alt="" loading="lazy" decoding="async"></button>
+<button class="ignite-proof-thumb" type="button" data-proof-index="5" aria-label="View proof image 6" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a9c777be29b3baf97d6ed01.png" alt="" loading="lazy" decoding="async"></button>
+<button class="ignite-proof-thumb" type="button" data-proof-index="6" aria-label="View proof image 7" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ab1d3002e45fddc3853b9a0.jpeg" alt="" loading="lazy" decoding="async"></button>
+<button class="ignite-proof-thumb" type="button" data-proof-index="7" aria-label="View proof image 8" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ac5206617216aa3b2a9f59f.png" alt="" loading="lazy" decoding="async"></button>
+<button class="ignite-proof-thumb" type="button" data-proof-index="8" aria-label="View proof image 9" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ac520adbbad531ac8f0182d.png" alt="" loading="lazy" decoding="async"></button>
+<button class="ignite-proof-thumb" type="button" data-proof-index="9" aria-label="View proof image 10" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ac520887d735ea2a1627246.png" alt="" loading="lazy" decoding="async"></button></div>
+    <div class="ignite-proof-help">Use the arrows or swipe between images. Open any image to view its full resolution.</div>
+  </div>
+</section>
+<dialog id="ignite-proof-lightbox" class="ignite-proof-lightbox" aria-label="Enlarged proof image">
+  <div class="ignite-proof-lightbox-top">
+    <span id="ignite-proof-lightbox-count" aria-live="polite">01 / 10</span>
+    <div class="ignite-proof-lightbox-actions">
+      <button type="button" id="ignite-proof-lightbox-zoom" aria-pressed="false">Zoom in</button>
+      <a id="ignite-proof-original" href="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a3da1bb355a0e846b4dcd98.jpg" target="_blank" rel="noopener noreferrer">Original size ↗</a>
+      <button type="button" id="ignite-proof-lightbox-close" aria-label="Close enlarged image">✕</button>
+    </div>
+  </div>
+  <div class="ignite-proof-lightbox-stage" id="ignite-proof-lightbox-stage">
+    <img id="ignite-proof-lightbox-img" src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a3da1bb355a0e846b4dcd98.jpg" alt="Enlarged proof image 1 of 10" decoding="async">
+  </div>
+  <div class="ignite-proof-lightbox-footer">
+    <button class="ignite-proof-arrow" type="button" id="ignite-proof-lightbox-prev" aria-label="Previous enlarged image"><svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <span>Swipe or use arrow keys</span>
+    <button class="ignite-proof-arrow" type="button" id="ignite-proof-lightbox-next" aria-label="Next enlarged image"><svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg></button>
+  </div>
+</dialog>
 <div class="trust"><div class="container trust-grid"><div class="trust-item"><strong>Industry experience</strong><span>Two years inside remodeling operations</span></div><div class="trust-item"><strong>Conversion first</strong><span>Make more of existing demand</span></div><div class="trust-item"><strong>Built for ownership</strong><span>Keep agreed assets we create</span></div></div></div>
 <section class="section"><div class="container"><div class="section-title"><div class="eyebrow">The real problem</div><h2>More advertising won't fix the holes after someone reaches out.</h2><p>For kitchen and bath companies, a single interested homeowner can represent a meaningful project. These gaps quietly cost opportunities.</p></div>
 <div class="cards"><article class="card"><div class="num">01 / RESPONSE</div><h3>A missed call turns into a competitor's job.</h3><p>When a homeowner can't reach your team or waits for a reply, they often keep contacting other contractors.</p></article><article class="card"><div class="num">02 / FOLLOW-UP</div><h3>Interested people go cold.</h3><p>Website inquiries and past conversations get lost when there isn't an organized way to follow up.</p></article><article class="card"><div class="num">03 / CUSTOMER VALUE</div><h3>Completed remodels stop producing opportunities.</h3><p>Reviews, referrals and future projects are easier to miss when nobody consistently asks or checks in.</p></article></div></div></section>
@@ -219,6 +371,96 @@ $('close-quiz').addEventListener('click',closeQuiz);
 $('quiz-overlay').addEventListener('mousedown',e=>{if(e.target===$('quiz-overlay'))closeQuiz();});
 document.addEventListener('keydown',e=>{if($('quiz-overlay').classList.contains('hidden'))return;if(e.key==='Escape'){e.preventDefault();closeQuiz();return;}if(e.key!=='Tab')return;const dialog=$('quiz-overlay').querySelector('.quiz-dialog');const els=Array.from(dialog.querySelectorAll('button:not([disabled]),input:not([disabled]),a[href],iframe')).filter(el=>el.getClientRects().length>0&&getComputedStyle(el).visibility!=='hidden'&&el.closest('.hidden')===null);if(!els.length){e.preventDefault();return;}let first=els[0],last=els[els.length-1];if(e.shiftKey&&(document.activeElement===first||document.activeElement===dialog)){e.preventDefault();last.focus();}else if(!e.shiftKey&&(document.activeElement===last||document.activeElement===dialog)){e.preventDefault();first.focus();}});
 window.addEventListener('scroll',updateSticky,{passive:true});window.addEventListener('resize',updateSticky);updateSticky();
+
+/* Image-first social proof gallery. Photos are contained, not cropped. */
+const proofThumbButtons=Array.from(document.querySelectorAll('.ignite-proof-thumb'));
+const proofSources=proofThumbButtons.map(button=>button.querySelector('img').src);
+const proofMain=$('ignite-proof-main');
+const proofCount=$('ignite-proof-count');
+const proofModal=$('ignite-proof-lightbox');
+const proofModalImg=$('ignite-proof-lightbox-img');
+const proofModalStage=$('ignite-proof-lightbox-stage');
+const proofZoomBtn=$('ignite-proof-lightbox-zoom');
+let proofIndex=0;
+function setProofSlide(nextIndex){
+  proofIndex=(nextIndex+proofSources.length)%proofSources.length;
+  const source=proofSources[proofIndex];
+  proofMain.src=source;
+  proofMain.alt='Example of Ignite work, image '+(proofIndex+1)+' of '+proofSources.length;
+  $('ignite-proof-enlarge').setAttribute('aria-label','Enlarge proof image '+(proofIndex+1));
+  const countText=String(proofIndex+1).padStart(2,'0')+' / '+String(proofSources.length).padStart(2,'0');
+  proofCount.textContent=countText;
+  $('ignite-proof-lightbox-count').textContent=countText;
+  proofThumbButtons.forEach((button,i)=>{
+    const active=i===proofIndex;
+    button.classList.toggle('is-active',active);
+    button.setAttribute('aria-pressed',String(active));
+  });
+  proofThumbButtons[proofIndex].scrollIntoView({block:'nearest',inline:'nearest',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+  if(proofModal.open){
+    proofModalImg.src=source;
+    proofModalImg.alt='Enlarged proof image '+(proofIndex+1)+' of '+proofSources.length;
+    $('ignite-proof-original').href=source;
+    proofModalStage.classList.remove('is-zoomed');
+    proofZoomBtn.textContent='Zoom in';
+    proofZoomBtn.setAttribute('aria-pressed','false');
+    proofModalStage.scrollTo({top:0,left:0});
+  }
+}
+function proofStep(delta){setProofSlide(proofIndex+delta);}
+$('ignite-proof-prev').addEventListener('click',()=>proofStep(-1));
+$('ignite-proof-next').addEventListener('click',()=>proofStep(1));
+proofThumbButtons.forEach((button,i)=>button.addEventListener('click',()=>setProofSlide(i)));
+function openProofModal(){
+  proofModalImg.src=proofSources[proofIndex];
+  proofModalImg.alt='Enlarged proof image '+(proofIndex+1)+' of '+proofSources.length;
+  $('ignite-proof-original').href=proofSources[proofIndex];
+  $('ignite-proof-lightbox-count').textContent=proofCount.textContent;
+  proofModal.showModal();
+}
+$('ignite-proof-enlarge').addEventListener('click',openProofModal);
+$('ignite-proof-lightbox-close').addEventListener('click',()=>proofModal.close());
+$('ignite-proof-lightbox-prev').addEventListener('click',()=>proofStep(-1));
+$('ignite-proof-lightbox-next').addEventListener('click',()=>proofStep(1));
+proofZoomBtn.addEventListener('click',()=>{
+  const zoomed=proofModalStage.classList.toggle('is-zoomed');
+  proofZoomBtn.textContent=zoomed?'Fit to screen':'Zoom in';
+  proofZoomBtn.setAttribute('aria-pressed',String(zoomed));
+  proofModalStage.scrollTo({top:0,left:0});
+});
+proofModal.addEventListener('click',event=>{
+  if(event.target===proofModal)proofModal.close();
+});
+proofModal.addEventListener('close',()=>{
+  proofModalStage.classList.remove('is-zoomed');
+  proofZoomBtn.textContent='Zoom in';
+  proofZoomBtn.setAttribute('aria-pressed','false');
+});
+document.addEventListener('keydown',event=>{
+  if(event.key!=='ArrowLeft'&&event.key!=='ArrowRight')return;
+  if(proofModal.open){event.preventDefault();proofStep(event.key==='ArrowLeft'?-1:1);}
+  else if(document.activeElement&&document.activeElement.closest('#ignite-proof-viewer, .ignite-proof-thumbs')){event.preventDefault();proofStep(event.key==='ArrowLeft'?-1:1);}
+});
+function proofSwipe(element,action){
+  let startX=null,startY=null;
+  element.addEventListener('touchstart',event=>{
+    if(event.touches.length!==1)return;
+    startX=event.touches[0].clientX;startY=event.touches[0].clientY;
+  },{passive:true});
+  element.addEventListener('touchend',event=>{
+    if(startX===null || !event.changedTouches.length)return;
+    const dx=event.changedTouches[0].clientX-startX;
+    const dy=event.changedTouches[0].clientY-startY;
+    startX=null;startY=null;
+    if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.3)action(dx<0?1:-1);
+  },{passive:true});
+}
+proofSwipe($('ignite-proof-viewer'),proofStep);
+proofSwipe(proofModalStage,delta=>{if(!proofModalStage.classList.contains('is-zoomed'))proofStep(delta);});
+const logoScroll=$('ignite-logos-scroll');
+$('ignite-logos-prev').addEventListener('click',()=>logoScroll.scrollBy({left:-logoScroll.clientWidth*0.75,behavior:'smooth'}));
+$('ignite-logos-next').addEventListener('click',()=>logoScroll.scrollBy({left:logoScroll.clientWidth*0.75,behavior:'smooth'}));
+
 })();
 </script>
 </body></html>
