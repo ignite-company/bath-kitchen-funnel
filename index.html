@@ -135,6 +135,22 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
  .ignite-proof-autoplay-toggle{margin-left:0}
  .ignite-proof-controls{gap:10px}
 }
+
+/* Logos have no visible cards: just an unbounded soft white halo behind the artwork. */
+.ignite-logos-scroll{background:none}
+.ignite-proof-logo-card{position:relative;isolation:isolate;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;overflow:visible}
+.ignite-proof-logo-card:before{content:"";position:absolute;inset:-5px -17px;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at center,rgba(255,255,255,.88) 0%,rgba(255,255,255,.63) 27%,rgba(255,255,255,.22) 52%,rgba(255,255,255,0) 78%);filter:blur(5px)}
+.ignite-proof-logo-card img{position:relative;z-index:1}
+/* Results: two identical sets with a seamless reverse-direction ticker, never cropping photos. */
+.ignite-proof-marquee{position:relative;width:100%;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;scroll-snap-type:none;mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);padding:10px 0 14px;outline-offset:3px}
+.ignite-proof-marquee::-webkit-scrollbar{display:none}
+.ignite-proof-marquee-track{display:flex;align-items:center;width:max-content}
+.ignite-proof-set{display:flex;align-items:center;flex:none;width:max-content;gap:18px;padding-right:18px}
+.ignite-proof-slide{flex:none;width:430px;height:345px;padding:12px;display:flex;align-items:center;justify-content:center;border-radius:17px;border:0;background:radial-gradient(ellipse at center,#292935,#181922 80%);box-shadow:0 12px 32px #0006;cursor:zoom-in}
+.ignite-proof-slide img{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;object-position:center;filter:drop-shadow(0 2px 8px #0004)}
+.ignite-proof-slide:focus-visible{outline:3px solid #ff7898;outline-offset:3px}
+.ignite-proof-marquee:focus-visible{outline:3px solid #ff7898}
+@media(max-width:640px){.ignite-proof-slide{width:285px;height:275px;padding:8px;border-radius:12px}.ignite-proof-set{gap:11px;padding-right:11px}.ignite-proof-marquee{padding:7px 0 13px}}
 </style>
 </head>
 <body>
@@ -218,28 +234,36 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
       </div>
       <div class="ignite-proof-controls">
         <button class="ignite-proof-arrow" id="ignite-proof-prev" aria-label="Previous proof image" type="button"><svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <span class="ignite-proof-counter" id="ignite-proof-count" aria-live="polite">01 / 10</span>
+        <span class="ignite-proof-counter">10 images</span>
         <button class="ignite-proof-arrow" id="ignite-proof-next" aria-label="Next proof image" type="button"><svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg></button>
         <button class="ignite-proof-arrow ignite-proof-autoplay-toggle" id="ignite-proof-autoplay-toggle" aria-label="Pause automatic results slideshow" aria-pressed="false" title="Pause slideshow" type="button"><span aria-hidden="true">Ⅱ</span></button>
       </div>
     </div>
-    <div class="ignite-proof-viewer" id="ignite-proof-viewer" role="region" aria-roledescription="carousel" aria-label="Examples of Ignite work and results">
-      <button class="ignite-proof-enlarge" type="button" id="ignite-proof-enlarge" aria-label="Enlarge proof image 1">
-        <img id="ignite-proof-main" src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a3da1bb355a0e846b4dcd98.jpg" alt="Example of Ignite work, image 1 of 10" loading="eager" decoding="async">
-        <span class="ignite-proof-zoom-hint"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M10.5 7.5v6M7.5 10.5h6"/></svg> Tap to enlarge</span>
-      </button>
+    <div class="ignite-proof-marquee" id="ignite-proof-marquee" role="region" aria-roledescription="carousel" aria-label="Continuously moving examples of Ignite work and results">
+      <div class="ignite-proof-marquee-track">
+        <div class="ignite-proof-set" id="ignite-proof-original-set"><div class="ignite-proof-slide" data-proof-index="0" role="button" tabindex="0" aria-label="Enlarge proof image 1 of 10"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a3da1bb355a0e846b4dcd98.jpg" alt="Example of Ignite work or results, image 1 of 10" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-slide" data-proof-index="1" role="button" tabindex="0" aria-label="Enlarge proof image 2 of 10"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a3da1bbe4daecfbb48dc348.jpg" alt="Example of Ignite work or results, image 2 of 10" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-slide" data-proof-index="2" role="button" tabindex="0" aria-label="Enlarge proof image 3 of 10"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a2f517ab9af5312bc2f2c3d.jpg" alt="Example of Ignite work or results, image 3 of 10" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-slide" data-proof-index="3" role="button" tabindex="0" aria-label="Enlarge proof image 4 of 10"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a2f517ab9af5312bc2f2c37.jpg" alt="Example of Ignite work or results, image 4 of 10" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-slide" data-proof-index="4" role="button" tabindex="0" aria-label="Enlarge proof image 5 of 10"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a9c7797e29b3baf97d6ef7c.png" alt="Example of Ignite work or results, image 5 of 10" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-slide" data-proof-index="5" role="button" tabindex="0" aria-label="Enlarge proof image 6 of 10"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a9c777be29b3baf97d6ed01.png" alt="Example of Ignite work or results, image 6 of 10" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-slide" data-proof-index="6" role="button" tabindex="0" aria-label="Enlarge proof image 7 of 10"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ab1d3002e45fddc3853b9a0.jpeg" alt="Example of Ignite work or results, image 7 of 10" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-slide" data-proof-index="7" role="button" tabindex="0" aria-label="Enlarge proof image 8 of 10"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ac5206617216aa3b2a9f59f.png" alt="Example of Ignite work or results, image 8 of 10" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-slide" data-proof-index="8" role="button" tabindex="0" aria-label="Enlarge proof image 9 of 10"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ac520adbbad531ac8f0182d.png" alt="Example of Ignite work or results, image 9 of 10" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-slide" data-proof-index="9" role="button" tabindex="0" aria-label="Enlarge proof image 10 of 10"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ac520887d735ea2a1627246.png" alt="Example of Ignite work or results, image 10 of 10" loading="lazy" decoding="async"></div></div>
+        <div class="ignite-proof-set" aria-hidden="true"><div class="ignite-proof-slide" data-proof-index="0" aria-hidden="true"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a3da1bb355a0e846b4dcd98.jpg" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-slide" data-proof-index="1" aria-hidden="true"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a3da1bbe4daecfbb48dc348.jpg" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-slide" data-proof-index="2" aria-hidden="true"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a2f517ab9af5312bc2f2c3d.jpg" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-slide" data-proof-index="3" aria-hidden="true"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a2f517ab9af5312bc2f2c37.jpg" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-slide" data-proof-index="4" aria-hidden="true"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a9c7797e29b3baf97d6ef7c.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-slide" data-proof-index="5" aria-hidden="true"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a9c777be29b3baf97d6ed01.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-slide" data-proof-index="6" aria-hidden="true"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ab1d3002e45fddc3853b9a0.jpeg" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-slide" data-proof-index="7" aria-hidden="true"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ac5206617216aa3b2a9f59f.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-slide" data-proof-index="8" aria-hidden="true"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ac520adbbad531ac8f0182d.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-slide" data-proof-index="9" aria-hidden="true"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ac520887d735ea2a1627246.png" alt="" loading="lazy" decoding="async"></div></div>
+      </div>
     </div>
-    <div class="ignite-proof-thumbs" role="group" aria-label="Choose a proof image"><button class="ignite-proof-thumb is-active" type="button" data-proof-index="0" aria-label="View proof image 1" aria-pressed="true"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a3da1bb355a0e846b4dcd98.jpg" alt="" loading="lazy" decoding="async"></button>
-<button class="ignite-proof-thumb" type="button" data-proof-index="1" aria-label="View proof image 2" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a3da1bbe4daecfbb48dc348.jpg" alt="" loading="lazy" decoding="async"></button>
-<button class="ignite-proof-thumb" type="button" data-proof-index="2" aria-label="View proof image 3" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a2f517ab9af5312bc2f2c3d.jpg" alt="" loading="lazy" decoding="async"></button>
-<button class="ignite-proof-thumb" type="button" data-proof-index="3" aria-label="View proof image 4" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a2f517ab9af5312bc2f2c37.jpg" alt="" loading="lazy" decoding="async"></button>
-<button class="ignite-proof-thumb" type="button" data-proof-index="4" aria-label="View proof image 5" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a9c7797e29b3baf97d6ef7c.png" alt="" loading="lazy" decoding="async"></button>
-<button class="ignite-proof-thumb" type="button" data-proof-index="5" aria-label="View proof image 6" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a9c777be29b3baf97d6ed01.png" alt="" loading="lazy" decoding="async"></button>
-<button class="ignite-proof-thumb" type="button" data-proof-index="6" aria-label="View proof image 7" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ab1d3002e45fddc3853b9a0.jpeg" alt="" loading="lazy" decoding="async"></button>
-<button class="ignite-proof-thumb" type="button" data-proof-index="7" aria-label="View proof image 8" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ac5206617216aa3b2a9f59f.png" alt="" loading="lazy" decoding="async"></button>
-<button class="ignite-proof-thumb" type="button" data-proof-index="8" aria-label="View proof image 9" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ac520adbbad531ac8f0182d.png" alt="" loading="lazy" decoding="async"></button>
-<button class="ignite-proof-thumb" type="button" data-proof-index="9" aria-label="View proof image 10" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ac520887d735ea2a1627246.png" alt="" loading="lazy" decoding="async"></button></div>
-    <div class="ignite-proof-help">Slides advance automatically. You can swipe, use the arrows, pause, or open any image at full resolution.</div>
+    <div class="ignite-proof-help">Results scroll continuously in the opposite direction to the logos. Hover or use Pause to stop; tap any image to enlarge.</div>
   </div>
 </section>
 <dialog id="ignite-proof-lightbox" class="ignite-proof-lightbox" aria-label="Enlarged proof image">
@@ -418,132 +442,118 @@ $('quiz-overlay').addEventListener('mousedown',e=>{if(e.target===$('quiz-overlay
 document.addEventListener('keydown',e=>{if($('quiz-overlay').classList.contains('hidden'))return;if(e.key==='Escape'){e.preventDefault();closeQuiz();return;}if(e.key!=='Tab')return;const dialog=$('quiz-overlay').querySelector('.quiz-dialog');const els=Array.from(dialog.querySelectorAll('button:not([disabled]),input:not([disabled]),a[href],iframe')).filter(el=>el.getClientRects().length>0&&getComputedStyle(el).visibility!=='hidden'&&el.closest('.hidden')===null);if(!els.length){e.preventDefault();return;}let first=els[0],last=els[els.length-1];if(e.shiftKey&&(document.activeElement===first||document.activeElement===dialog)){e.preventDefault();last.focus();}else if(!e.shiftKey&&(document.activeElement===last||document.activeElement===dialog)){e.preventDefault();first.focus();}});
 window.addEventListener('scroll',updateSticky,{passive:true});window.addEventListener('resize',updateSticky);updateSticky();
 
-/* Image-first social proof gallery. Photos are contained, not cropped. */
-const proofThumbButtons=Array.from(document.querySelectorAll('.ignite-proof-thumb'));
-const proofSources=proofThumbButtons.map(button=>button.querySelector('img').src);
-const proofMain=$('ignite-proof-main');
-const proofCount=$('ignite-proof-count');
+/* Seamless proof-image marquee moves RIGHT; logo marquee moves LEFT. */
+const proofRail=$('ignite-proof-marquee');
+const proofOriginalSet=$('ignite-proof-original-set');
+const proofSlides=Array.from(proofOriginalSet.querySelectorAll('.ignite-proof-slide'));
+const proofSources=proofSlides.map(slide=>slide.querySelector('img').src);
 const proofModal=$('ignite-proof-lightbox');
 const proofModalImg=$('ignite-proof-lightbox-img');
 const proofModalStage=$('ignite-proof-lightbox-stage');
 const proofZoomBtn=$('ignite-proof-lightbox-zoom');
+const proofAutoToggle=$('ignite-proof-autoplay-toggle');
+const reducedProofMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let proofIndex=0;
-function setProofSlide(nextIndex){
-  proofIndex=(nextIndex+proofSources.length)%proofSources.length;
-  const source=proofSources[proofIndex];
-  proofMain.src=source;
-  proofMain.alt='Example of Ignite work, image '+(proofIndex+1)+' of '+proofSources.length;
-  $('ignite-proof-enlarge').setAttribute('aria-label','Enlarge proof image '+(proofIndex+1));
-  const countText=String(proofIndex+1).padStart(2,'0')+' / '+String(proofSources.length).padStart(2,'0');
-  proofCount.textContent=countText;
-  $('ignite-proof-lightbox-count').textContent=countText;
-  proofThumbButtons.forEach((button,i)=>{
-    const active=i===proofIndex;
-    button.classList.toggle('is-active',active);
-    button.setAttribute('aria-pressed',String(active));
-  });
-  const thumbsRail=document.querySelector('.ignite-proof-thumbs');
-  const thumb=proofThumbButtons[proofIndex];
-  const railRect=thumbsRail.getBoundingClientRect();
-  const thumbRect=thumb.getBoundingClientRect();
-  const targetLeft=thumbsRail.scrollLeft+(thumbRect.left-railRect.left)-(thumbsRail.clientWidth-thumbRect.width)/2;
-  thumbsRail.scrollTo({left:targetLeft,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
-  if(proofModal.open){
-    proofModalImg.src=source;
-    proofModalImg.alt='Enlarged proof image '+(proofIndex+1)+' of '+proofSources.length;
-    $('ignite-proof-original').href=source;
-    proofModalStage.classList.remove('is-zoomed');
-    proofZoomBtn.textContent='Zoom in';
-    proofZoomBtn.setAttribute('aria-pressed','false');
-    proofModalStage.scrollTo({top:0,left:0});
-  }
+let resultsPaused=reducedProofMotion,proofVisible=true,proofHover=false,proofFocused=false,proofTouch=false;
+let proofLastInteraction=0,proofLastFrame=0,proofRailReady=false;
+
+function paintProofAutoToggle(){
+  proofAutoToggle.querySelector('span').textContent=resultsPaused?'▶':'Ⅱ';
+  proofAutoToggle.setAttribute('aria-pressed',String(resultsPaused));
+  proofAutoToggle.setAttribute('aria-label',resultsPaused?'Resume automatic results slider':'Pause automatic results slider');
+  proofAutoToggle.title=resultsPaused?'Play slider':'Pause slider';
 }
-function proofStep(delta){setProofSlide(proofIndex+delta);}
-$('ignite-proof-prev').addEventListener('click',()=>proofStep(-1));
-$('ignite-proof-next').addEventListener('click',()=>proofStep(1));
-proofThumbButtons.forEach((button,i)=>button.addEventListener('click',()=>setProofSlide(i)));
-function openProofModal(){
-  proofModalImg.src=proofSources[proofIndex];
+paintProofAutoToggle();
+proofAutoToggle.addEventListener('click',()=>{resultsPaused=!resultsPaused;paintProofAutoToggle();});
+
+function fillProofModal(){
+  const source=proofSources[proofIndex];
+  proofModalImg.src=source;
   proofModalImg.alt='Enlarged proof image '+(proofIndex+1)+' of '+proofSources.length;
-  $('ignite-proof-original').href=proofSources[proofIndex];
-  $('ignite-proof-lightbox-count').textContent=proofCount.textContent;
+  $('ignite-proof-original').href=source;
+  $('ignite-proof-lightbox-count').textContent=String(proofIndex+1).padStart(2,'0')+' / '+String(proofSources.length).padStart(2,'0');
+  proofModalStage.classList.remove('is-zoomed');
+  proofZoomBtn.textContent='Zoom in';
+  proofZoomBtn.setAttribute('aria-pressed','false');
+  proofModalStage.scrollTo({top:0,left:0});
+}
+function openProofModal(index){
+  proofIndex=index;
+  fillProofModal();
   proofModal.showModal();
 }
-$('ignite-proof-enlarge').addEventListener('click',openProofModal);
+function proofModalStep(delta){
+  proofIndex=(proofIndex+delta+proofSources.length)%proofSources.length;
+  fillProofModal();
+}
+function proofMarqueeStep(delta){
+  const setWidth=proofOriginalSet.getBoundingClientRect().width;
+  const step=proofSlides[0].getBoundingClientRect().width+18;
+  if(setWidth<=0)return;
+  const next=proofRail.scrollLeft - delta*step;
+  proofRail.scrollLeft=((next%setWidth)+setWidth)%setWidth;
+  proofLastInteraction=Date.now();
+}
+$('ignite-proof-prev').addEventListener('click',()=>proofMarqueeStep(-1));
+$('ignite-proof-next').addEventListener('click',()=>proofMarqueeStep(1));
+proofRail.addEventListener('click',event=>{
+  const slide=event.target.closest('.ignite-proof-slide');
+  if(slide)openProofModal(Number(slide.dataset.proofIndex));
+});
+proofRail.addEventListener('keydown',event=>{
+  const slide=event.target.closest('.ignite-proof-slide');
+  if(slide&&(event.key==='Enter'||event.key===' ')){
+    event.preventDefault();openProofModal(Number(slide.dataset.proofIndex));
+  }
+});
 $('ignite-proof-lightbox-close').addEventListener('click',()=>proofModal.close());
-$('ignite-proof-lightbox-prev').addEventListener('click',()=>proofStep(-1));
-$('ignite-proof-lightbox-next').addEventListener('click',()=>proofStep(1));
+$('ignite-proof-lightbox-prev').addEventListener('click',()=>proofModalStep(-1));
+$('ignite-proof-lightbox-next').addEventListener('click',()=>proofModalStep(1));
 proofZoomBtn.addEventListener('click',()=>{
   const zoomed=proofModalStage.classList.toggle('is-zoomed');
   proofZoomBtn.textContent=zoomed?'Fit to screen':'Zoom in';
   proofZoomBtn.setAttribute('aria-pressed',String(zoomed));
   proofModalStage.scrollTo({top:0,left:0});
 });
-proofModal.addEventListener('click',event=>{
-  if(event.target===proofModal)proofModal.close();
-});
+proofModal.addEventListener('click',event=>{if(event.target===proofModal)proofModal.close();});
 proofModal.addEventListener('close',()=>{
   proofModalStage.classList.remove('is-zoomed');
   proofZoomBtn.textContent='Zoom in';
   proofZoomBtn.setAttribute('aria-pressed','false');
 });
 document.addEventListener('keydown',event=>{
-  if(event.key!=='ArrowLeft'&&event.key!=='ArrowRight')return;
-  if(proofModal.open){event.preventDefault();proofStep(event.key==='ArrowLeft'?-1:1);}
-  else if(document.activeElement&&document.activeElement.closest('#ignite-proof-viewer, .ignite-proof-thumbs')){event.preventDefault();proofStep(event.key==='ArrowLeft'?-1:1);}
+  if(!proofModal.open)return;
+  if(event.key==='ArrowLeft'||event.key==='ArrowRight'){
+    event.preventDefault();proofModalStep(event.key==='ArrowLeft'?-1:1);
+  }
 });
-function proofSwipe(element,action){
-  let startX=null,startY=null;
-  element.addEventListener('touchstart',event=>{
-    if(event.touches.length!==1)return;
-    startX=event.touches[0].clientX;startY=event.touches[0].clientY;
-  },{passive:true});
-  element.addEventListener('touchend',event=>{
-    if(startX===null || !event.changedTouches.length)return;
-    const dx=event.changedTouches[0].clientX-startX;
-    const dy=event.changedTouches[0].clientY-startY;
-    startX=null;startY=null;
-    if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.3)action(dx<0?1:-1);
-  },{passive:true});
-}
-proofSwipe($('ignite-proof-viewer'),proofStep);
-proofSwipe(proofModalStage,delta=>{if(!proofModalStage.classList.contains('is-zoomed'))proofStep(delta);});
-const proofAutoToggle=$('ignite-proof-autoplay-toggle');
-let resultsPaused=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-let proofVisible=true,proofHover=false,proofFocused=false,lastProofInteraction=0;
-function paintProofAutoToggle(){
-  proofAutoToggle.querySelector('span').textContent=resultsPaused?'▶':'Ⅱ';
-  proofAutoToggle.setAttribute('aria-pressed',String(resultsPaused));
-  proofAutoToggle.setAttribute('aria-label',resultsPaused?'Resume automatic results slideshow':'Pause automatic results slideshow');
-  proofAutoToggle.title=resultsPaused?'Play slideshow':'Pause slideshow';
-}
-paintProofAutoToggle();
-proofAutoToggle.addEventListener('click',()=>{
-  resultsPaused=!resultsPaused;
-  lastProofInteraction=Date.now();
-  paintProofAutoToggle();
-});
-const proofViewer=$('ignite-proof-viewer');
-const proofThumbsRail=document.querySelector('.ignite-proof-thumbs');
-for(const part of [proofViewer,proofThumbsRail]){
-  part.addEventListener('mouseenter',()=>proofHover=true);
-  part.addEventListener('mouseleave',()=>proofHover=false);
-  part.addEventListener('focusin',()=>proofFocused=true);
-  part.addEventListener('focusout',event=>{
-    if(!proofViewer.contains(event.relatedTarget)&&!proofThumbsRail.contains(event.relatedTarget))proofFocused=false;
-  });
-}
+proofRail.addEventListener('mouseenter',()=>proofHover=true);
+proofRail.addEventListener('mouseleave',()=>proofHover=false);
+proofRail.addEventListener('focusin',()=>proofFocused=true);
+proofRail.addEventListener('focusout',event=>{if(!proofRail.contains(event.relatedTarget))proofFocused=false;});
+proofRail.addEventListener('touchstart',()=>proofTouch=true,{passive:true});
+proofRail.addEventListener('touchend',()=>{proofTouch=false;proofLastInteraction=Date.now();},{passive:true});
+proofRail.addEventListener('touchcancel',()=>proofTouch=false,{passive:true});
 if('IntersectionObserver' in window){
-  new IntersectionObserver(entries=>{proofVisible=entries[0].isIntersecting;},{threshold:0.10}).observe($('proof'));
+  new IntersectionObserver(entries=>{proofVisible=entries[0].isIntersecting;},{threshold:.05}).observe(proofRail);
 }
-for(const button of [$('ignite-proof-prev'),$('ignite-proof-next'),...proofThumbButtons]){
-  button.addEventListener('click',()=>lastProofInteraction=Date.now());
+function animateProofMarquee(timestamp){
+  if(!proofLastFrame)proofLastFrame=timestamp;
+  const dt=Math.min(timestamp-proofLastFrame,64);
+  proofLastFrame=timestamp;
+  const length=proofOriginalSet.getBoundingClientRect().width;
+  if(!proofRailReady&&length>0){
+    proofRail.scrollLeft=length;
+    proofRailReady=true;
+  }
+  if(proofRailReady&&length>0&&!resultsPaused&&!proofHover&&!proofFocused&&!proofTouch&&proofVisible&&!document.hidden&&!proofModal.open&&Date.now()-proofLastInteraction>2500){
+    let next=proofRail.scrollLeft-dt*.059;
+    if(next<=0)next+=length;
+    proofRail.scrollLeft=next;
+  }
+  window.requestAnimationFrame(animateProofMarquee);
 }
-window.setInterval(()=>{
-  if(resultsPaused||!proofVisible||proofModal.open||document.hidden||proofHover||proofFocused)return;
-  if(Date.now()-lastProofInteraction<6500)return;
-  proofStep(1);
-},5800);
+window.requestAnimationFrame(animateProofMarquee);
 const logoScroll=$('ignite-logos-scroll');
 const logoFirstSet=logoScroll.querySelector('.ignite-logos-set');
 const logosToggle=$('ignite-logos-toggle');
