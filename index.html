@@ -113,6 +113,28 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
  .ignite-proof-lightbox-actions button,.ignite-proof-lightbox-actions a{font-size:11px;padding:10px 8px}
 }
 @media(prefers-reduced-motion:reduce){.ignite-logos-scroll,.ignite-proof-thumbs{scroll-behavior:auto!important}}
+
+/* Clean, borderless, softly illuminated client-logo ticker */
+.ignite-companies{background:radial-gradient(ellipse 75% 80% at 50% 75%,rgba(255,255,255,.10),transparent 83%),#0e0f15;padding:25px 0 27px}
+.ignite-companies-header{margin-bottom:10px}
+.ignite-logos-scroll{position:relative;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;scroll-snap-type:none;padding:10px 0 13px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.075) 48%,rgba(255,255,255,.11) 55%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.ignite-logos-scroll::-webkit-scrollbar{display:none}
+.ignite-logos-track{display:flex;align-items:center;width:max-content;gap:0}
+.ignite-logos-set{display:flex;align-items:center;gap:22px;padding-right:22px;flex:none;width:max-content}
+.ignite-proof-logo-card{flex:none;width:163px;height:101px;padding:11px;border:0;border-radius:0;background:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.90),rgba(255,255,255,.54) 44%,rgba(255,255,255,.10) 75%,transparent 100%);box-shadow:none;scroll-snap-align:none}
+.ignite-proof-logo-card img{object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.32))}
+.ignite-logos-toggle{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:none;color:#bcbcc8;border:0;padding:9px 11px;border-radius:20px;font-size:12px;font-weight:680}
+.ignite-logos-toggle:hover{background:#ffffff10;color:#fff}
+.ignite-logos-toggle:focus-visible,.ignite-proof-autoplay-toggle:focus-visible{outline:3px solid #ff7293;outline-offset:2px}
+.ignite-logos-toggle>span:first-child{font-size:18px;line-height:.7}
+.ignite-proof-autoplay-toggle{margin-left:2px;font-size:19px;font-weight:800}
+@media(max-width:640px){
+ .ignite-proof-logo-card{width:134px;height:85px;padding:7px}
+ .ignite-logos-set{gap:13px;padding-right:13px}
+ .ignite-companies{padding:22px 0 20px}
+ .ignite-proof-autoplay-toggle{margin-left:0}
+ .ignite-proof-controls{gap:10px}
+}
 </style>
 </head>
 <body>
@@ -130,13 +152,11 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
   <div class="container">
     <div class="ignite-companies-header">
       <h2 id="ignite-companies-title">Companies we've worked with</h2>
-      <div class="ignite-companies-buttons">
-        <button type="button" id="ignite-logos-prev" aria-label="Scroll company logos left"><svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <button type="button" id="ignite-logos-next" aria-label="Scroll company logos right"><svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg></button>
-      </div>
+      <button type="button" class="ignite-logos-toggle" id="ignite-logos-toggle" aria-label="Pause automatic logo slider" aria-pressed="false"><span id="ignite-logos-toggle-icon" aria-hidden="true">Ⅱ</span><span id="ignite-logos-toggle-text">Pause</span></button>
     </div>
     <div class="ignite-logos-scroll" id="ignite-logos-scroll" tabindex="0" role="group" aria-label="Company logos, scroll horizontally for more">
-      <div class="ignite-logos-track"><div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a9c56db4013f612d9f.png" alt="Company we've worked with, logo 1" loading="lazy" decoding="async"></div>
+      <div class="ignite-logos-track">
+        <div class="ignite-logos-set"><div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a9c56db4013f612d9f.png" alt="Company we've worked with, logo 1" loading="lazy" decoding="async"></div>
 <div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a9c56db4013f612d9e.png" alt="Company we've worked with, logo 2" loading="lazy" decoding="async"></div>
 <div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a982125b9874903bea.png" alt="Company we've worked with, logo 3" loading="lazy" decoding="async"></div>
 <div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a97f9c717c7cc87936.png" alt="Company we've worked with, logo 4" loading="lazy" decoding="async"></div>
@@ -159,7 +179,32 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
 <div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a84fc2dce9e46f41d01cac0.png" alt="Company we've worked with, logo 21" loading="lazy" decoding="async"></div>
 <div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a9363b20914f1121510a901.png" alt="Company we've worked with, logo 22" loading="lazy" decoding="async"></div>
 <div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6aac8155bdaa5e26a90f2bf2.png" alt="Company we've worked with, logo 23" loading="lazy" decoding="async"></div>
-<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ab1c9e4bdaa5e26a97f4bc3.png" alt="Company we've worked with, logo 24" loading="lazy" decoding="async"></div></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ab1c9e4bdaa5e26a97f4bc3.png" alt="Company we've worked with, logo 24" loading="lazy" decoding="async"></div>
+        <div class="ignite-logos-set" aria-hidden="true"><div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a9c56db4013f612d9f.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a9c56db4013f612d9e.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a982125b9874903bea.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a97f9c717c7cc87936.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a967457445b9f1b14e.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a982125b9874903bec.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a982125b9874903be9.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a97f9c717c7cc87935.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a9f07c4898898030cf.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a929adc07d21ecd4bf.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a9f90b5bc73b09d571.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a9f90b5bc73b09d570.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a9330f3d5313e66ec9.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a9fa8afa3be0b450da.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a951bf95bcbb74d36c.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03ba02f07c489889803e42.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a34d5154ffe73711d034b62.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a44118718d22f08d731d0c5.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a46dc3d62d435fa95740840.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a712b07497cd89d243fe013.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a84fc2dce9e46f41d01cac0.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a9363b20914f1121510a901.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6aac8155bdaa5e26a90f2bf2.png" alt="" loading="lazy" decoding="async"></div>
+<div class="ignite-proof-logo-card"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ab1c9e4bdaa5e26a97f4bc3.png" alt="" loading="lazy" decoding="async"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -175,6 +220,7 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
         <button class="ignite-proof-arrow" id="ignite-proof-prev" aria-label="Previous proof image" type="button"><svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
         <span class="ignite-proof-counter" id="ignite-proof-count" aria-live="polite">01 / 10</span>
         <button class="ignite-proof-arrow" id="ignite-proof-next" aria-label="Next proof image" type="button"><svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg></button>
+        <button class="ignite-proof-arrow ignite-proof-autoplay-toggle" id="ignite-proof-autoplay-toggle" aria-label="Pause automatic results slideshow" aria-pressed="false" title="Pause slideshow" type="button"><span aria-hidden="true">Ⅱ</span></button>
       </div>
     </div>
     <div class="ignite-proof-viewer" id="ignite-proof-viewer" role="region" aria-roledescription="carousel" aria-label="Examples of Ignite work and results">
@@ -193,7 +239,7 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
 <button class="ignite-proof-thumb" type="button" data-proof-index="7" aria-label="View proof image 8" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ac5206617216aa3b2a9f59f.png" alt="" loading="lazy" decoding="async"></button>
 <button class="ignite-proof-thumb" type="button" data-proof-index="8" aria-label="View proof image 9" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ac520adbbad531ac8f0182d.png" alt="" loading="lazy" decoding="async"></button>
 <button class="ignite-proof-thumb" type="button" data-proof-index="9" aria-label="View proof image 10" aria-pressed="false"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6ac520887d735ea2a1627246.png" alt="" loading="lazy" decoding="async"></button></div>
-    <div class="ignite-proof-help">Use the arrows or swipe between images. Open any image to view its full resolution.</div>
+    <div class="ignite-proof-help">Slides advance automatically. You can swipe, use the arrows, pause, or open any image at full resolution.</div>
   </div>
 </section>
 <dialog id="ignite-proof-lightbox" class="ignite-proof-lightbox" aria-label="Enlarged proof image">
@@ -462,9 +508,83 @@ function proofSwipe(element,action){
 }
 proofSwipe($('ignite-proof-viewer'),proofStep);
 proofSwipe(proofModalStage,delta=>{if(!proofModalStage.classList.contains('is-zoomed'))proofStep(delta);});
+const proofAutoToggle=$('ignite-proof-autoplay-toggle');
+let resultsPaused=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let proofVisible=true,proofHover=false,proofFocused=false,lastProofInteraction=0;
+function paintProofAutoToggle(){
+  proofAutoToggle.querySelector('span').textContent=resultsPaused?'▶':'Ⅱ';
+  proofAutoToggle.setAttribute('aria-pressed',String(resultsPaused));
+  proofAutoToggle.setAttribute('aria-label',resultsPaused?'Resume automatic results slideshow':'Pause automatic results slideshow');
+  proofAutoToggle.title=resultsPaused?'Play slideshow':'Pause slideshow';
+}
+paintProofAutoToggle();
+proofAutoToggle.addEventListener('click',()=>{
+  resultsPaused=!resultsPaused;
+  lastProofInteraction=Date.now();
+  paintProofAutoToggle();
+});
+const proofViewer=$('ignite-proof-viewer');
+const proofThumbsRail=document.querySelector('.ignite-proof-thumbs');
+for(const part of [proofViewer,proofThumbsRail]){
+  part.addEventListener('mouseenter',()=>proofHover=true);
+  part.addEventListener('mouseleave',()=>proofHover=false);
+  part.addEventListener('focusin',()=>proofFocused=true);
+  part.addEventListener('focusout',event=>{
+    if(!proofViewer.contains(event.relatedTarget)&&!proofThumbsRail.contains(event.relatedTarget))proofFocused=false;
+  });
+}
+if('IntersectionObserver' in window){
+  new IntersectionObserver(entries=>{proofVisible=entries[0].isIntersecting;},{threshold:0.10}).observe($('proof'));
+}
+for(const button of [$('ignite-proof-prev'),$('ignite-proof-next'),...proofThumbButtons]){
+  button.addEventListener('click',()=>lastProofInteraction=Date.now());
+}
+window.setInterval(()=>{
+  if(resultsPaused||!proofVisible||proofModal.open||document.hidden||proofHover||proofFocused)return;
+  if(Date.now()-lastProofInteraction<6500)return;
+  proofStep(1);
+},5800);
 const logoScroll=$('ignite-logos-scroll');
-$('ignite-logos-prev').addEventListener('click',()=>logoScroll.scrollBy({left:-logoScroll.clientWidth*0.75,behavior:'smooth'}));
-$('ignite-logos-next').addEventListener('click',()=>logoScroll.scrollBy({left:logoScroll.clientWidth*0.75,behavior:'smooth'}));
+const logoFirstSet=logoScroll.querySelector('.ignite-logos-set');
+const logosToggle=$('ignite-logos-toggle');
+const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let logosPaused=reducedMotion;
+let logosHover=false,logosFocus=false,logosVisible=true,logosTouch=false;
+function paintLogoToggle(){
+  $('ignite-logos-toggle-icon').textContent=logosPaused?'▶':'Ⅱ';
+  $('ignite-logos-toggle-text').textContent=logosPaused?'Play':'Pause';
+  logosToggle.setAttribute('aria-pressed',String(logosPaused));
+  logosToggle.setAttribute('aria-label',logosPaused?'Play automatic logo slider':'Pause automatic logo slider');
+}
+paintLogoToggle();
+logosToggle.addEventListener('click',()=>{logosPaused=!logosPaused;paintLogoToggle();});
+logoScroll.addEventListener('mouseenter',()=>logosHover=true);
+logoScroll.addEventListener('mouseleave',()=>logosHover=false);
+logoScroll.addEventListener('focusin',()=>logosFocus=true);
+logoScroll.addEventListener('focusout',event=>{if(!logoScroll.contains(event.relatedTarget))logosFocus=false;});
+logoScroll.addEventListener('touchstart',()=>logosTouch=true,{passive:true});
+logoScroll.addEventListener('touchend',()=>logosTouch=false,{passive:true});
+logoScroll.addEventListener('touchcancel',()=>logosTouch=false,{passive:true});
+if('IntersectionObserver' in window){
+  const logosObserver=new IntersectionObserver(entries=>{logosVisible=entries[0].isIntersecting;},{threshold:0.05});
+  logosObserver.observe(logoScroll);
+}
+let logosLastFrame=0;
+function animateLogos(timestamp){
+  if(!logosLastFrame)logosLastFrame=timestamp;
+  const dt=Math.min(timestamp-logosLastFrame,64);
+  logosLastFrame=timestamp;
+  if(!logosPaused&&!logosHover&&!logosFocus&&!logosTouch&&logosVisible&&!document.hidden){
+    const length=logoFirstSet.getBoundingClientRect().width;
+    if(length>0){
+      let next=logoScroll.scrollLeft+dt*.067;
+      if(next>=length)next%=length;
+      logoScroll.scrollLeft=next;
+    }
+  }
+  window.requestAnimationFrame(animateLogos);
+}
+window.requestAnimationFrame(animateLogos);
 
 })();
 </script>
