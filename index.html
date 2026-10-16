@@ -297,13 +297,10 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
 <div class="quiz-body">
 <div id="question-view"><h3 id="question" class="q-title"></h3><p id="question-desc" class="q-desc"></p><div id="options" class="options"></div><p class="error" id="quiz-error" role="alert"></p><div class="quiz-actions"><button class="linkbtn" type="button" id="prev" disabled>← Back</button><button class="cta" type="button" id="next">Continue →</button></div></div>
 <form id="contact-form" class="hidden" novalidate><h3 class="q-title">Where can we reach you?</h3><p class="q-desc">One last step before seeing the calendar.</p><div class="formgrid">
-<div class="field"><label for="first">First name</label><input id="first" name="first_name" autocomplete="given-name" required maxlength="80" placeholder="First name"></div>
-<div class="field"><label for="last">Last name</label><input id="last" name="last_name" autocomplete="family-name" required maxlength="80" placeholder="Last name"></div>
-<div class="field wide"><label for="business">Company name</label><input id="business" name="business_name" autocomplete="organization" required maxlength="150" placeholder="Your home service company"></div>
-<div class="field"><label for="email">Business email</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="200" placeholder="you@company.com"></div>
+<div class="field"><label for="name">Name</label><input id="name" name="name" autocomplete="name" required maxlength="160" placeholder="Full name"></div>
 <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" placeholder="(555) 555-5555"></div>
-<div class="field"><label for="area">Main service area</label><input id="area" name="service_area" required maxlength="150" placeholder="City / region"></div>
-<div class="field"><label for="website">Website (optional)</label><input id="website" name="website" type="text" maxlength="250" placeholder="yourcompany.com"></div>
+<div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="200" placeholder="you@company.com"></div>
+<div class="field"><label for="business">Company name</label><input id="business" name="business_name" autocomplete="organization" required maxlength="150" placeholder="Your company name"></div>
 </div>
 <div class="honeypot" aria-hidden="true"><label for="other-field">Leave blank</label><input id="other-field" name="other_field" tabindex="-1" autocomplete="off"></div>
 <label class="consent"><input type="checkbox" id="consent" required><span>I agree to be contacted by Ignite Co. about my inquiry by phone or email. This is not consent to automated marketing texts. My information is used to review this application and arrange a call.</span></label>
@@ -367,8 +364,8 @@ $('prev').addEventListener('click',()=>{if(step>0){step--;draw()}});$('contact-p
 $('contact-form').addEventListener('submit',async e=>{e.preventDefault();if(submitting)return;const form=e.currentTarget;const fe=$('form-error');fe.textContent='';if(!form.reportValidity()){fe.textContent='Please complete the required contact details.';return;}if(!$('consent').checked){fe.textContent='Please confirm the contact consent.';return;}
 const data=new FormData(form),query=new URLSearchParams(window.location.search);
 const previousReceipt=readSubmission();
-const contactRecord={first_name:String(data.get('first_name')||'').trim(),last_name:String(data.get('last_name')||'').trim(),business_name:String(data.get('business_name')||'').trim(),email:String(data.get('email')||'').trim(),phone:String(data.get('phone')||'').trim(),service_area:String(data.get('service_area')||'').trim(),website:String(data.get('website')||'').trim()};
-const payload={...state,...(previousReceipt?{submission_id:previousReceipt.submission_id,edit_token:previousReceipt.edit_token}:{}),first_name:String(data.get('first_name')||'').trim(),last_name:String(data.get('last_name')||'').trim(),business_name:String(data.get('business_name')||'').trim(),email:String(data.get('email')||'').trim(),phone:String(data.get('phone')||'').trim(),service_area:String(data.get('service_area')||'').trim(),website:String(data.get('website')||'').trim()||null,consent:true,other_field:String(data.get('other_field')||''),utm_source:(query.get('utm_source')||'').slice(0,100),utm_medium:(query.get('utm_medium')||'').slice(0,100),utm_campaign:(query.get('utm_campaign')||'').slice(0,100)};
+const contactRecord={name:String(data.get('name')||'').trim(),phone:String(data.get('phone')||'').trim(),email:String(data.get('email')||'').trim(),business_name:String(data.get('business_name')||'').trim()};
+const payload={...state,...(previousReceipt?{submission_id:previousReceipt.submission_id,edit_token:previousReceipt.edit_token}:{}),name:contactRecord.name,phone:contactRecord.phone,email:contactRecord.email,business_name:contactRecord.business_name,consent:true,other_field:String(data.get('other_field')||''),utm_source:(query.get('utm_source')||'').slice(0,100),utm_medium:(query.get('utm_medium')||'').slice(0,100),utm_campaign:(query.get('utm_campaign')||'').slice(0,100)};
 submitting=true;$('submit').disabled=true;$('submit').textContent='Saving your application…';
 try{const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),16000);let response;try{response=await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:controller.signal});}finally{clearTimeout(timeout);}
 if(!response.ok){let detail;try{detail=await response.json();}catch{}throw new Error(detail?.error || 'Could not save your application. Please try again.')}
@@ -384,7 +381,9 @@ $('booking-back').addEventListener('click',returnToAnswers);
 const previous=readSubmission();
 if(previous&&previous.answers&&previous.contact){
  Object.assign(state,previous.answers);
- Object.entries(previous.contact).forEach(([name,value])=>{const field=$('contact-form').elements.namedItem(name);if(field&&typeof value==='string')field.value=value;});
+ const restoredName=previous.contact.name||[previous.contact.first_name,previous.contact.last_name].filter(Boolean).join(' ');
+ if(restoredName) $('name').value=restoredName;
+ for(const key of ['phone','email','business_name']){const value=previous.contact[key];if(typeof value==='string') $('contact-form').elements.namedItem(key).value=value;}
  $('consent').checked=true;
  $('question-view').classList.add('hidden');$('contact-form').classList.add('hidden');$('booking-reveal').classList.remove('hidden');
  $('quiz-step-title').textContent='Application received';$('quiz-step-count').textContent='Calendar';$('quiz-progress').style.width='100%';$('calendar').src=$('calendar').dataset.src;
