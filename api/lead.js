@@ -5,7 +5,7 @@ const { randomUUID } = require('node:crypto');
 // Save consented applications to Supabase, then notify GoHighLevel.
 
 const allowed = {
-  project_type: ['kitchens','bathrooms','both'],
+  project_type: ['kitchens','bathrooms','both','remodeling','hvac','plumbing','electrical','roofing','landscaping','junk_removal','restoration','cleaning','pest_control','garage_doors','other_home_service'],
   monthly_revenue: ['under_20k','20k_50k','50k_100k','100k_plus'],
   monthly_inquiries: ['under_10','10_25','26_50','50_plus','unsure'],
   biggest_gap: ['missed_calls','slow_followup','reactivation','reviews','lead_quality','other'],
@@ -52,7 +52,7 @@ module.exports = async function handler(req,res) {
   const url = process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_PUBLISHABLE_KEY;
   if(!url || !key) {
-    console.error('Remodel application storage environment is not configured');
+    console.error('Home services application storage environment is not configured');
     return send(res,503,{error:'Application service unavailable'});
   }
   const isEdit = Boolean(data.submission_id || data.edit_token);
@@ -69,7 +69,7 @@ module.exports = async function handler(req,res) {
     service_area:limited(data.service_area,150),
     website:data.website?limited(data.website,250):null,
     project_type:data.project_type,monthly_revenue:data.monthly_revenue,monthly_inquiries:data.monthly_inquiries,
-    biggest_gap:gaps[0],biggest_gaps:gaps,capacity:data.capacity,consent:true,source:'kitchen_bath_funnel',
+    biggest_gap:gaps[0],biggest_gaps:gaps,capacity:data.capacity,consent:true,source:'home_services_funnel',
     utm_source:limited(data.utm_source,100)||null,
     utm_medium:limited(data.utm_medium,100)||null,
     utm_campaign:limited(data.utm_campaign,100)||null
@@ -116,7 +116,7 @@ module.exports = async function handler(req,res) {
         biggest_gaps_text: payload.biggest_gaps.join(', '),
         capacity: payload.capacity,
         consent: true,
-        source: 'Ignite Kitchen & Bath Funnel',
+        source: 'Ignite Home Services Funnel',
         utm_source: payload.utm_source,
         utm_medium: payload.utm_medium,
         utm_campaign: payload.utm_campaign
