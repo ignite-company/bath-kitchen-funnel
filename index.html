@@ -151,6 +151,37 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
 .ignite-proof-slide:focus-visible{outline:3px solid #ff7898;outline-offset:3px}
 .ignite-proof-marquee:focus-visible{outline:3px solid #ff7898}
 @media(max-width:640px){.ignite-proof-slide{width:285px;height:275px;padding:8px;border-radius:12px}.ignite-proof-set{gap:11px;padding-right:11px}.ignite-proof-marquee{padding:7px 0 13px}}
+
+/* Short quiz screens: tap an answer to advance, with a compact two-column trade grid. */
+.quiz-overlay .qual-head{display:none}
+.quiz-overlay .qualification{padding:18px 18px 20px}
+.quiz-overlay .quiz-top{padding:16px 20px 13px}
+.quiz-overlay .quiz-body{padding:20px 20px 22px;min-height:0}
+.quiz-overlay .q-title{font-size:clamp(23px,3vw,32px);margin-bottom:6px}
+.quiz-overlay .q-desc{font-size:13px;margin-bottom:16px}
+.quiz-overlay #options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.quiz-overlay #options .opt{min-height:49px;padding:10px 12px;font-size:13px;line-height:1.25;border-radius:11px}
+.quiz-overlay #options .circle{width:21px;height:21px;font-size:11px}
+.quiz-overlay #question-view .quiz-actions{margin-top:13px;min-height:28px}
+.quiz-auto-note{color:#9294a4;font-size:11px}
+@media(max-width:640px){
+ .quiz-overlay .qualification{padding:12px 9px 15px}
+ .quiz-overlay .quiz-top{padding:13px 13px 11px}
+ .quiz-overlay .quiz-body{padding:13px 12px 15px;min-height:0}
+ .quiz-overlay #options{gap:7px}
+ .quiz-overlay #options .opt{min-height:45px;padding:8px 9px;font-size:12px;gap:6px}
+ .quiz-overlay #options .circle{width:18px;height:18px;flex-shrink:0;font-size:10px}
+ .quiz-overlay .q-title{font-size:clamp(21px,5.9vw,26px)}
+ .quiz-overlay .q-desc{font-size:12px;margin-bottom:12px}
+ .quiz-overlay #question-view .quiz-actions{margin-top:9px}
+ .quiz-auto-note{font-size:10px}
+}
+@media(max-height:660px){
+ .quiz-overlay .quiz-body{padding-top:11px;padding-bottom:12px}
+ .quiz-overlay #options .opt{min-height:42px}
+ .quiz-overlay #options{gap:6px}
+ .quiz-overlay .quiz-top{padding-top:10px;padding-bottom:10px}
+}
 </style>
 </head>
 <body>
@@ -295,10 +326,10 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
 <div class="quiz-overlay hidden" id="quiz-overlay"><div class="quiz-dialog" role="dialog" aria-modal="true" aria-labelledby="apply-heading" tabindex="-1"><div class="quiz-toolbar"><span>Quick home services application</span><button class="quiz-close" id="close-quiz" type="button" aria-label="Close questionnaire">&times;</button></div><div class="quiz-scroll"><section class="section qualification" id="apply"><div class="container"><div class="qual-head"><div class="eyebrow">Free home service systems review</div><h2 id="apply-heading">Let's find the gaps in your business.</h2><p>Answer three quick questions, then choose a time for your free systems review.</p></div>
 <div class="quiz" id="quiz"><div class="quiz-top"><strong id="quiz-step-title">Tell us about your company</strong><span id="quiz-step-count">Step 1 of 4</span></div><div class="progress"><div class="progress-bar" id="quiz-progress"></div></div>
 <div class="quiz-body">
-<div id="question-view"><h3 id="question" class="q-title"></h3><p id="question-desc" class="q-desc"></p><div id="options" class="options"></div><p class="error" id="quiz-error" role="alert"></p><div class="quiz-actions"><button class="linkbtn" type="button" id="prev" disabled>← Back</button><button class="cta" type="button" id="next">Continue →</button></div></div>
+<div id="question-view"><h3 id="question" class="q-title"></h3><p id="question-desc" class="q-desc"></p><div id="options" class="options"></div><p class="error" id="quiz-error" role="alert"></p><div class="quiz-actions"><button class="linkbtn" type="button" id="prev" disabled>← Back</button><span class="quiz-auto-note">Select an answer to continue</span></div></div>
 <form id="contact-form" class="hidden" novalidate><h3 class="q-title">Where can we reach you?</h3><p class="q-desc">One last step before seeing the calendar.</p><div class="formgrid">
 <div class="field"><label for="name">Name</label><input id="name" name="name" autocomplete="name" required maxlength="160" placeholder="Full name"></div>
-<div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" placeholder="(555) 555-5555"></div>
+<div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="30" placeholder="(555) 555-5555"></div>
 <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="200" placeholder="you@company.com"></div>
 <div class="field"><label for="business">Company name</label><input id="business" name="business_name" autocomplete="organization" required maxlength="150" placeholder="Your company name"></div>
 </div>
@@ -320,10 +351,35 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
 const steps=[
  {key:'project_type',title:'What type of home service business do you run?',desc:'Pick the trade that best describes your company.',options:[['remodeling','Remodeling / general construction'],['hvac','HVAC / heating & cooling'],['plumbing','Plumbing'],['electrical','Electrical'],['roofing','Roofing'],['landscaping','Landscaping / lawn care'],['junk_removal','Junk removal'],['restoration','Water / damage restoration'],['cleaning','Residential / commercial cleaning'],['pest_control','Pest control'],['garage_doors','Garage doors'],['other_home_service','Other home service trade']]},
  {key:'monthly_inquiries',title:'How many new inquiries do you get in a typical month?',desc:'Include calls, website requests and other incoming leads.',options:[['under_10','Fewer than 10'],['10_25','10 to 25'],['26_50','26 to 50'],['50_plus','More than 50'],['unsure',"I'm not sure"]]},
- {key:'biggest_gaps',multi:true,title:'Where do you think opportunities are slipping away?',desc:'Select all that apply. You can choose more than one.',options:[['missed_calls','Missed calls or slow response'],['slow_followup','Inconsistent lead follow-up'],['reactivation','Past leads or customers not being contacted'],['reviews','Not enough reviews or referrals'],['lead_quality','Not enough qualified leads'],['other','Not sure, want an outside perspective']]},
+ {key:'biggest_gap',title:'What is your biggest challenge right now?',desc:'Choose the one you would fix first.',options:[['missed_calls','Missed calls or slow response'],['slow_followup','Inconsistent lead follow-up'],['reactivation','Past leads or customers not being contacted'],['reviews','Not enough reviews or referrals'],['lead_quality','Not enough qualified leads'],['other','Not sure, want an outside perspective']]},
 ];
 const state={};let step=0,submitting=false;
 const $=id=>document.getElementById(id),question=$('question'),desc=$('question-desc'),options=$('options'),err=$('quiz-error');
+
+function phoneDigits(value){
+ const digits=String(value||'').replace(/\D/g,'');
+ return digits.length===11&&digits.startsWith('1')?digits.slice(1):digits;
+}
+function normalizeUSPhone(value){
+ const digits=phoneDigits(value);
+ return /^\d{10}$/.test(digits)?'+1'+digits:null;
+}
+function formatUSPhone(value){
+ const digits=phoneDigits(value);
+ return /^\d{10}$/.test(digits)?'('+digits.slice(0,3)+') '+digits.slice(3,6)+'-'+digits.slice(6):String(value||'').trim();
+}
+const phoneInput=$('phone');
+function tidyPhone(){
+ phoneInput.value=formatUSPhone(phoneInput.value);
+ phoneInput.setCustomValidity('');
+}
+phoneInput.addEventListener('input',()=>{
+ phoneInput.setCustomValidity('');
+ if(normalizeUSPhone(phoneInput.value)) phoneInput.value=formatUSPhone(phoneInput.value);
+});
+phoneInput.addEventListener('change',tidyPhone);
+phoneInput.addEventListener('blur',tidyPhone);
+
 function draw(){
  const contact=step===steps.length;
  $('question-view').classList.toggle('hidden',contact);
@@ -338,33 +394,31 @@ function draw(){
  options.textContent='';
  q.options.forEach(pair=>{
   const b=document.createElement('button'); b.type='button'; b.className='opt';
-  const current=q.multi?(Array.isArray(state[q.key])?state[q.key]:[]):state[q.key];
-  const selected=q.multi?current.includes(pair[0]):current===pair[0];
+  const selected=state[q.key]===pair[0];
   b.setAttribute('aria-pressed',String(selected));
   const label=document.createElement('span');label.textContent=pair[1];
   const dot=document.createElement('span');dot.className='circle';dot.textContent='✓';
   b.append(label,dot);
   b.addEventListener('click',()=>{
-   if(q.multi){
-    let values=Array.isArray(state[q.key])?[...state[q.key]]:[];
-    if(values.includes(pair[0]))values=values.filter(v=>v!==pair[0]);
-    else if(pair[0]==='other') values=['other'];
-    else values=[...values.filter(v=>v!=='other'),pair[0]];
-    state[q.key]=values;
-   }else state[q.key]=pair[0];
-   err.textContent='';draw();
+   state[q.key]=pair[0];
+   err.textContent='';
+   step++;
+   draw();
+   $('quiz-overlay').querySelector('.quiz-scroll').scrollTop=0;
+   if(step<steps.length){question.setAttribute('tabindex','-1');question.focus({preventScroll:true});}
+   else $('name').focus({preventScroll:true});
   });
   options.append(b);
  });
  $('prev').disabled=step===0;
- $('next').textContent=step===steps.length-1?'Contact details →':'Continue →';
  err.textContent='';
 }
-$('prev').addEventListener('click',()=>{if(step>0){step--;draw()}});$('contact-prev').addEventListener('click',()=>{step=steps.length-1;draw()});$('next').addEventListener('click',()=>{const response=state[steps[step].key];if(!response||(Array.isArray(response)&&!response.length)){err.textContent='Please select at least one option to continue.';return;}step++;draw()});
-$('contact-form').addEventListener('submit',async e=>{e.preventDefault();if(submitting)return;const form=e.currentTarget;const fe=$('form-error');fe.textContent='';if(!form.reportValidity()){fe.textContent='Please complete the required contact details.';return;}if(!$('consent').checked){fe.textContent='Please confirm the contact consent.';return;}
+$('prev').addEventListener('click',()=>{if(step>0){step--;draw();$('quiz-overlay').querySelector('.quiz-scroll').scrollTop=0;}});
+$('contact-prev').addEventListener('click',()=>{step=steps.length-1;draw();$('quiz-overlay').querySelector('.quiz-scroll').scrollTop=0;});
+$('contact-form').addEventListener('submit',async e=>{e.preventDefault();if(submitting)return;const form=e.currentTarget;const fe=$('form-error');fe.textContent='';phoneInput.setCustomValidity(normalizeUSPhone(phoneInput.value)?'':'Enter a valid 10-digit US phone number.');if(!form.reportValidity()){fe.textContent='Please complete the required contact details.';return;}if(!$('consent').checked){fe.textContent='Please confirm the contact consent.';return;}
 const data=new FormData(form),query=new URLSearchParams(window.location.search);
 const previousReceipt=readSubmission();
-const contactRecord={name:String(data.get('name')||'').trim(),phone:String(data.get('phone')||'').trim(),email:String(data.get('email')||'').trim(),business_name:String(data.get('business_name')||'').trim()};
+const contactRecord={name:String(data.get('name')||'').trim(),phone:normalizeUSPhone(data.get('phone'))||String(data.get('phone')||'').trim(),email:String(data.get('email')||'').trim(),business_name:String(data.get('business_name')||'').trim()};
 const payload={...state,...(previousReceipt?{submission_id:previousReceipt.submission_id,edit_token:previousReceipt.edit_token}:{}),name:contactRecord.name,phone:contactRecord.phone,email:contactRecord.email,business_name:contactRecord.business_name,consent:true,other_field:String(data.get('other_field')||''),utm_source:(query.get('utm_source')||'').slice(0,100),utm_medium:(query.get('utm_medium')||'').slice(0,100),utm_campaign:(query.get('utm_campaign')||'').slice(0,100)};
 submitting=true;$('submit').disabled=true;$('submit').textContent='Saving your application…';
 try{const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),16000);let response;try{response=await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:controller.signal});}finally{clearTimeout(timeout);}
@@ -384,6 +438,7 @@ if(previous&&previous.answers&&previous.contact){
  const restoredName=previous.contact.name||[previous.contact.first_name,previous.contact.last_name].filter(Boolean).join(' ');
  if(restoredName) $('name').value=restoredName;
  for(const key of ['phone','email','business_name']){const value=previous.contact[key];if(typeof value==='string') $('contact-form').elements.namedItem(key).value=value;}
+ $('phone').value=formatUSPhone($('phone').value);
  $('consent').checked=true;
  $('question-view').classList.add('hidden');$('contact-form').classList.add('hidden');$('booking-reveal').classList.remove('hidden');
  $('quiz-step-title').textContent='Application received';$('quiz-step-count').textContent='Calendar';$('quiz-progress').style.width='100%';$('calendar').src=$('calendar').dataset.src;
