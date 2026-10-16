@@ -39,7 +39,9 @@ module.exports = async function handler(req,res) {
   if(!data || typeof data !== 'object' || Array.isArray(data)) return send(res,400,{error:'Invalid request'});
   // Honeypot. Never create records for bots filling hidden fields.
   if(data.other_field) return send(res,201,{ok:true});
-  for(const key of Object.keys(allowed).filter(key=>key !== 'biggest_gap')) if(!allowed[key].includes(data[key])) return send(res,400,{error:'Please complete the qualification questions'});
+  for(const key of ['project_type','monthly_inquiries']) if(!allowed[key].includes(data[key])) return send(res,400,{error:'Please complete the qualification questions'});
+  // Allow legacy open forms to send these fields, but never require them.
+  for(const key of ['monthly_revenue','capacity']) if(data[key] != null && !allowed[key].includes(data[key])) return send(res,400,{error:'Invalid qualification answer'});
   const gaps = Array.isArray(data.biggest_gaps) ? [...new Set(data.biggest_gaps)] : (typeof data.biggest_gap === 'string' ? [data.biggest_gap] : []);
   if(!gaps.length || gaps.length > allowed.biggest_gap.length || !gaps.every(value=>typeof value==='string' && allowed.biggest_gap.includes(value))){
     return send(res,400,{error:'Select at least one business challenge'});
@@ -68,8 +70,8 @@ module.exports = async function handler(req,res) {
     phone:limited(data.phone,20),
     service_area:limited(data.service_area,150),
     website:data.website?limited(data.website,250):null,
-    project_type:data.project_type,monthly_revenue:data.monthly_revenue,monthly_inquiries:data.monthly_inquiries,
-    biggest_gap:gaps[0],biggest_gaps:gaps,capacity:data.capacity,consent:true,source:'home_services_funnel',
+    project_type:data.project_type,monthly_revenue:data.monthly_revenue??null,monthly_inquiries:data.monthly_inquiries,
+    biggest_gap:gaps[0],biggest_gaps:gaps,capacity:data.capacity??null,consent:true,source:'home_services_funnel',
     utm_source:limited(data.utm_source,100)||null,
     utm_medium:limited(data.utm_medium,100)||null,
     utm_campaign:limited(data.utm_campaign,100)||null
