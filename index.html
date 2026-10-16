@@ -182,6 +182,33 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
  .quiz-overlay #options{gap:6px}
  .quiz-overlay .quiz-top{padding-top:10px;padding-bottom:10px}
 }
+
+/* Confirm the choice visually before moving to the next question. */
+.quiz-overlay #options .opt{transition:transform .13s ease,background .13s ease,border-color .13s ease,box-shadow .13s ease;touch-action:manipulation}
+.quiz-overlay #options .opt.opt-picked{background:linear-gradient(135deg,#fc365f,#e92350);border-color:#ff9ab0;color:#fff;transform:scale(.976);box-shadow:0 0 0 2px rgba(255,99,132,.23),0 8px 22px rgba(238,37,82,.3)}
+.quiz-overlay #options .opt.opt-picked .circle{background:#fff;border-color:#fff;color:#dc2350}
+.quiz-overlay #options .opt.opt-muted{opacity:.45;pointer-events:none}
+
+/* Scheduling is an unfinished, required step, not an application success page. */
+.quiz-overlay .booking-stage{text-align:left}
+.quiz-overlay .booking-intro{margin:0 0 14px}
+.quiz-overlay .booking-eyebrow{display:block;color:#ff6c8c;font-size:11px;letter-spacing:.11em;font-weight:800;margin-bottom:8px}
+.quiz-overlay .booking-intro h3{font-size:clamp(25px,3.4vw,35px);margin-bottom:6px}
+.quiz-overlay .booking-intro p{margin:0;max-width:650px;color:#bfc0ca;font-size:14px;line-height:1.4}
+.quiz-overlay .booking-intro p strong{color:#f8f8fa}
+.quiz-overlay .booking-stage .calendar-shell{margin:14px 0 0;max-width:none;border:1px solid #ffffff27;border-radius:13px;overflow:hidden}
+.quiz-overlay .booking-stage .calendar-shell iframe{display:block;width:100%;height:625px;background:#fff}
+.quiz-overlay .booking-stage .calendar-link{display:inline-block;margin:12px 0 0;color:#ff8299;font-size:13px}
+.quiz-overlay .booking-stage .booking-back{margin:16px 0 0;border:0;background:transparent;color:#aaaab6;padding:9px 0;font-size:12px}
+.quiz-overlay .booking-stage .booking-back:hover{color:#fff;background:transparent}
+@media(max-width:640px){
+ .quiz-overlay .booking-eyebrow{font-size:10px;margin-bottom:6px}
+ .quiz-overlay .booking-intro{margin-bottom:9px}
+ .quiz-overlay .booking-intro h3{font-size:clamp(23px,6vw,29px)}
+ .quiz-overlay .booking-intro p{font-size:12px;line-height:1.45}
+ .quiz-overlay .booking-stage .calendar-shell{margin-top:9px}
+ .quiz-overlay .booking-stage .calendar-shell iframe{height:610px}
+}
 </style>
 </head>
 <body>
@@ -336,8 +363,16 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
 <div class="honeypot" aria-hidden="true"><label for="other-field">Leave blank</label><input id="other-field" name="other_field" tabindex="-1" autocomplete="off"></div>
 <label class="consent"><input type="checkbox" id="consent" required><span>I agree to be contacted by Ignite Co. about my inquiry by phone or email. This is not consent to automated marketing texts. My information is used to review this application and arrange a call.</span></label>
 <p id="form-error" class="error" role="alert"></p><div class="quiz-actions"><button class="linkbtn" type="button" id="contact-prev">← Back</button><button type="submit" class="cta" id="submit">Save &amp; See Calendar →</button></div></form>
-<div id="booking-reveal" class="success hidden"><button class="booking-back" id="booking-back" type="button">← Back to your answers</button><div class="check">✓</div><h3 class="q-title">Your application is in.</h3><p>Thanks for sharing the details. The final step is choosing a call time. You'll confirm your appointment and contact information in the calendar below.</p>
-<div class="calendar-shell"><iframe id="calendar" title="Book an Ignite Co. growth systems call" loading="lazy" data-src="https://api.leadconnectorhq.com/widget/booking/SmqZP8xY90P4YKenFu50"></iframe></div><a class="calendar-link" target="_blank" rel="noopener noreferrer" href="https://api.leadconnectorhq.com/widget/booking/SmqZP8xY90P4YKenFu50">Calendar not showing? Open it in a new tab ↗</a></div>
+<div id="booking-reveal" class="booking-stage hidden" aria-labelledby="booking-heading">
+<div class="booking-intro">
+<span class="booking-eyebrow">FINAL STEP · CHOOSE YOUR APPOINTMENT</span>
+<h3 id="booking-heading" class="q-title">Book your free systems review.</h3>
+<p>Your details are saved, but <strong>your call isn't booked yet.</strong> Choose a time below and confirm your appointment to finish.</p>
+</div>
+<div class="calendar-shell"><iframe id="calendar" title="Choose and confirm your Ignite Co. systems review appointment" loading="eager" data-src="https://api.leadconnectorhq.com/widget/booking/SmqZP8xY90P4YKenFu50"></iframe></div>
+<a class="calendar-link" target="_blank" rel="noopener noreferrer" href="https://api.leadconnectorhq.com/widget/booking/SmqZP8xY90P4YKenFu50">Calendar not loading? Book directly ↗</a>
+<button class="booking-back" id="booking-back" type="button">← Edit your answers</button>
+</div>
 </div></div>
 </div></section>
 </div></div></div>
@@ -353,7 +388,7 @@ const steps=[
  {key:'monthly_inquiries',title:'How many new inquiries do you get in a typical month?',desc:'Include calls, website requests and other incoming leads.',options:[['under_10','Fewer than 10'],['10_25','10 to 25'],['26_50','26 to 50'],['50_plus','More than 50'],['unsure',"I'm not sure"]]},
  {key:'biggest_gap',title:'What is your biggest challenge right now?',desc:'Choose the one you would fix first.',options:[['missed_calls','Missed calls or slow response'],['slow_followup','Inconsistent lead follow-up'],['reactivation','Past leads or customers not being contacted'],['reviews','Not enough reviews or referrals'],['lead_quality','Not enough qualified leads'],['other','Not sure, want an outside perspective']]},
 ];
-const state={};let step=0,submitting=false;
+const state={};let step=0,submitting=false,isAdvancing=false,advanceTimer=null;
 const $=id=>document.getElementById(id),question=$('question'),desc=$('question-desc'),options=$('options'),err=$('quiz-error');
 
 function phoneDigits(value){
@@ -400,20 +435,29 @@ function draw(){
   const dot=document.createElement('span');dot.className='circle';dot.textContent='✓';
   b.append(label,dot);
   b.addEventListener('click',()=>{
+   if(isAdvancing)return;
+   isAdvancing=true;
    state[q.key]=pair[0];
    err.textContent='';
-   step++;
-   draw();
-   $('quiz-overlay').querySelector('.quiz-scroll').scrollTop=0;
-   if(step<steps.length){question.setAttribute('tabindex','-1');question.focus({preventScroll:true});}
-   else $('name').focus({preventScroll:true});
+   b.setAttribute('aria-pressed','true');
+   b.classList.add('opt-picked');
+   options.querySelectorAll('.opt').forEach(opt=>{if(opt!==b){opt.setAttribute('aria-pressed','false');opt.classList.add('opt-muted');}});
+   advanceTimer=setTimeout(()=>{
+    advanceTimer=null;
+    isAdvancing=false;
+    step++;
+    draw();
+    $('quiz-overlay').querySelector('.quiz-scroll').scrollTop=0;
+    if(step<steps.length){question.setAttribute('tabindex','-1');question.focus({preventScroll:true});}
+    else $('name').focus({preventScroll:true});
+   },340);
   });
   options.append(b);
  });
  $('prev').disabled=step===0;
  err.textContent='';
 }
-$('prev').addEventListener('click',()=>{if(step>0){step--;draw();$('quiz-overlay').querySelector('.quiz-scroll').scrollTop=0;}});
+$('prev').addEventListener('click',()=>{if(isAdvancing)return;if(step>0){step--;draw();$('quiz-overlay').querySelector('.quiz-scroll').scrollTop=0;}});
 $('contact-prev').addEventListener('click',()=>{step=steps.length-1;draw();$('quiz-overlay').querySelector('.quiz-scroll').scrollTop=0;});
 $('contact-form').addEventListener('submit',async e=>{e.preventDefault();if(submitting)return;const form=e.currentTarget;const fe=$('form-error');fe.textContent='';phoneInput.setCustomValidity(normalizeUSPhone(phoneInput.value)?'':'Enter a valid 10-digit US phone number.');if(!form.reportValidity()){fe.textContent='Please complete the required contact details.';return;}if(!$('consent').checked){fe.textContent='Please confirm the contact consent.';return;}
 const data=new FormData(form),query=new URLSearchParams(window.location.search);
@@ -425,10 +469,21 @@ try{const controller=new AbortController();const timeout=setTimeout(()=>controll
 if(!response.ok){let detail;try{detail=await response.json();}catch{}throw new Error(detail?.error || 'Could not save your application. Please try again.')}
 const receipt=await response.json();
 if(!receipt.ok||!receipt.submission_id||!receipt.edit_token)throw new Error('Unable to confirm saved application.');
-$('contact-form').classList.add('hidden');$('booking-reveal').classList.remove('hidden');$('quiz-step-title').textContent='Application received';$('quiz-step-count').textContent='Calendar';$('quiz-progress').style.width='100%';if(!$('calendar').src) $('calendar').src=$('calendar').dataset.src;
+showBookingStep();
 window.sessionStorage.setItem('igniteHomeServicesSubmission',JSON.stringify({submission_id:receipt.submission_id,edit_token:receipt.edit_token,answers:{...state},contact:contactRecord}));
 $('quiz-overlay').querySelector('.quiz-scroll').scrollTo({top:0,behavior:'smooth'});}
 catch(ex){fe.textContent=ex.name==='AbortError'?'The request timed out. Please try again.':ex.message||'Unable to save. Please try again.'}finally{submitting=false;$('submit').disabled=false;$('submit').textContent='Save & See Calendar →'}});
+
+function showBookingStep(){
+ $('question-view').classList.add('hidden');
+ $('contact-form').classList.add('hidden');
+ $('booking-reveal').classList.remove('hidden');
+ $('quiz-step-title').textContent='One last step: book your call';
+ $('quiz-step-count').textContent='Booking required';
+ $('quiz-progress').style.width='90%';
+ if(!$('calendar').getAttribute('src'))$('calendar').src=$('calendar').dataset.src;
+ $('quiz-overlay').querySelector('.quiz-scroll').scrollTop=0;
+}
 function readSubmission(){try{const r=JSON.parse(window.sessionStorage.getItem('igniteHomeServicesSubmission')||'null');if(r&&r.submission_id&&r.edit_token)return r;}catch{}return null;}
 function returnToAnswers(){$('booking-reveal').classList.add('hidden');step=0;draw();$('quiz-overlay').querySelector('.quiz-scroll').scrollTo({top:0,behavior:'smooth'});question.setAttribute('tabindex','-1');question.focus({preventScroll:true});}
 $('booking-back').addEventListener('click',returnToAnswers);
@@ -440,8 +495,7 @@ if(previous&&previous.answers&&previous.contact){
  for(const key of ['phone','email','business_name']){const value=previous.contact[key];if(typeof value==='string') $('contact-form').elements.namedItem(key).value=value;}
  $('phone').value=formatUSPhone($('phone').value);
  $('consent').checked=true;
- $('question-view').classList.add('hidden');$('contact-form').classList.add('hidden');$('booking-reveal').classList.remove('hidden');
- $('quiz-step-title').textContent='Application received';$('quiz-step-count').textContent='Calendar';$('quiz-progress').style.width='100%';$('calendar').src=$('calendar').dataset.src;
+ showBookingStep();
 }else draw();
 const video=$('ignite-vsl');
 video.muted=true;
@@ -482,7 +536,7 @@ function updateSticky(){
 }
 let focusBeforeQuiz=null;
 function openQuiz(){focusBeforeQuiz=document.activeElement;const overlay=$('quiz-overlay');overlay.classList.remove('hidden');document.body.classList.add('quiz-open');overlay.querySelector('.quiz-scroll').scrollTop=0;overlay.querySelector('.quiz-dialog').focus();updateSticky();}
-function closeQuiz(){const overlay=$('quiz-overlay');overlay.classList.add('hidden');document.body.classList.remove('quiz-open');updateSticky();if(focusBeforeQuiz&&typeof focusBeforeQuiz.focus==='function')focusBeforeQuiz.focus();}
+function closeQuiz(){if(advanceTimer){clearTimeout(advanceTimer);advanceTimer=null;isAdvancing=false;draw();}const overlay=$('quiz-overlay');overlay.classList.add('hidden');document.body.classList.remove('quiz-open');updateSticky();if(focusBeforeQuiz&&typeof focusBeforeQuiz.focus==='function')focusBeforeQuiz.focus();}
 document.querySelectorAll('[data-open-quiz]').forEach(button=>button.addEventListener('click',openQuiz));
 $('close-quiz').addEventListener('click',closeQuiz);
 $('quiz-overlay').addEventListener('mousedown',e=>{if(e.target===$('quiz-overlay'))closeQuiz();});
