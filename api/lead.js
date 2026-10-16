@@ -46,7 +46,15 @@ module.exports = async function handler(req,res) {
   if(!gaps.length || gaps.length > allowed.biggest_gap.length || !gaps.every(value=>typeof value==='string' && allowed.biggest_gap.includes(value))){
     return send(res,400,{error:'Select at least one business challenge'});
   }
-  if(!validText(data.first_name,80)||!validText(data.last_name,80)||!validText(data.business_name,150,2)||!validText(data.service_area,150,2)) return send(res,400,{error:'Please provide valid contact details'});
+  // Support a single Name field while remaining compatible with older saved forms.
+  const enteredName = typeof data.name === 'string' ? data.name.trim().replace(/\s+/g,' ') : '';
+  if(typeof data.name === 'string' && !validText(enteredName,160)) return send(res,400,{error:'Please enter your name'});
+  const namePieces = enteredName ? enteredName.split(' ') : [];
+  const firstName = enteredName ? namePieces.shift() : limited(data.first_name,80);
+  const lastName = enteredName ? namePieces.join(' ') : limited(data.last_name,80);
+  const serviceArea = limited(data.service_area,150);
+  if(!validText(firstName,80) || (lastName && !validText(lastName,80)) || !validText(data.business_name,150,2)) return send(res,400,{error:'Please provide valid contact details'});
+  if(data.service_area != null && serviceArea && !validText(serviceArea,150,2)) return send(res,400,{error:'Invalid service area'});
   if(!validText(data.email,200,5)|| !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) return send(res,400,{error:'Please use a valid business email'});
   if(!validText(data.phone,20,10)||data.phone.replace(/\D/g,'').length<10) return send(res,400,{error:'Please use a valid phone number'});
   if(data.consent !== true) return send(res,400,{error:'Contact permission is required'});
@@ -63,12 +71,12 @@ module.exports = async function handler(req,res) {
   const submissionId = isEdit ? data.submission_id : randomUUID();
   const editToken = isEdit ? data.edit_token : randomUUID();
   const payload = {
-    first_name:limited(data.first_name,80),
-    last_name:limited(data.last_name,80),
+    first_name:firstName,
+    last_name:lastName||null,
     business_name:limited(data.business_name,150),
     email:limited(data.email,200).toLowerCase(),
     phone:limited(data.phone,20),
-    service_area:limited(data.service_area,150),
+    service_area:serviceArea||null,
     website:data.website?limited(data.website,250):null,
     project_type:data.project_type,monthly_revenue:data.monthly_revenue??null,monthly_inquiries:data.monthly_inquiries,
     biggest_gap:gaps[0],biggest_gaps:gaps,capacity:data.capacity??null,consent:true,source:'home_services_funnel',
