@@ -403,6 +403,41 @@ function formatUSPhone(value){
  const digits=phoneDigits(value);
  return /^\d{10}$/.test(digits)?'('+digits.slice(0,3)+') '+digits.slice(3,6)+'-'+digits.slice(6):String(value||'').trim();
 }
+
+/* Only redirect after HighLevel reports a completed booking. */
+const PRE_CALL_URL='https://pre-call-three.vercel.app/';
+const CALENDAR_MESSAGE_ORIGINS=new Set([
+ 'https://api.leadconnectorhq.com',
+ 'https://widgets.leadconnectorhq.com',
+ 'https://widgets.gohighlevel.com'
+]);
+let preCallRedirecting=false;
+window.addEventListener('message',event=>{
+ if(preCallRedirecting || !CALENDAR_MESSAGE_ORIGINS.has(event.origin))return;
+ const calendar=$('calendar');
+ if(event.source!==calendar.contentWindow || $('booking-reveal').classList.contains('hidden'))return;
+ let data=event.data;
+ if(typeof data==='string'){
+  try{data=JSON.parse(data);}catch{return;}
+ }
+ const completed=(
+  Array.isArray(data)&&data[0]==='msgsndr-booking-complete'
+ )||(
+  data&&typeof data==='object'&&!Array.isArray(data)&&(
+   data.action==='bookingConfirmed' ||
+   data.action==='appointment_booked' ||
+   data.action==='booking_success' ||
+   data.type==='ghl-calendar-booked' ||
+   data.type==='calendar_booked' ||
+   data.event==='booking_success' ||
+   data.eventName==='calendar-booked'
+  )
+ );
+ if(!completed)return;
+ preCallRedirecting=true;
+ window.location.assign(PRE_CALL_URL);
+});
+
 const phoneInput=$('phone');
 function tidyPhone(){
  phoneInput.value=formatUSPhone(phoneInput.value);
