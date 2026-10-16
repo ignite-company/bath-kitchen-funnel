@@ -56,7 +56,11 @@ module.exports = async function handler(req,res) {
   if(!validText(firstName,80) || (lastName && !validText(lastName,80)) || !validText(data.business_name,150,2)) return send(res,400,{error:'Please provide valid contact details'});
   if(data.service_area != null && serviceArea && !validText(serviceArea,150,2)) return send(res,400,{error:'Invalid service area'});
   if(!validText(data.email,200,5)|| !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) return send(res,400,{error:'Please use a valid business email'});
-  if(!validText(data.phone,20,10)||data.phone.replace(/\D/g,'').length<10) return send(res,400,{error:'Please use a valid phone number'});
+  // Accept either a 10-digit US number or a +1-prefixed autofill value.
+  const digits = limited(data.phone,30).replace(/\D/g,'');
+  const nationalPhone = digits.length===11 && digits.startsWith('1') ? digits.slice(1) : digits;
+  if(!/^\d{10}$/.test(nationalPhone)) return send(res,400,{error:'Please use a valid 10-digit US phone number'});
+  const normalizedPhone = '+1' + nationalPhone;
   if(data.consent !== true) return send(res,400,{error:'Contact permission is required'});
   if(data.website != null && !validText(data.website,250,0)) return send(res,400,{error:'Invalid website'});
   const url = process.env.SUPABASE_URL;
@@ -75,7 +79,7 @@ module.exports = async function handler(req,res) {
     last_name:lastName||null,
     business_name:limited(data.business_name,150),
     email:limited(data.email,200).toLowerCase(),
-    phone:limited(data.phone,20),
+    phone:normalizedPhone,
     service_area:serviceArea||null,
     website:data.website?limited(data.website,250):null,
     project_type:data.project_type,monthly_revenue:data.monthly_revenue??null,monthly_inquiries:data.monthly_inquiries,
