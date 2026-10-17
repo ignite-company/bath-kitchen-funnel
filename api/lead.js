@@ -5,11 +5,12 @@ const { randomUUID } = require('node:crypto');
 // Save consented applications to Supabase, then notify GoHighLevel.
 
 const allowed = {
-  project_type: ['kitchens','bathrooms','both','remodeling','hvac','plumbing','electrical','roofing','landscaping','junk_removal','restoration','cleaning','pest_control','garage_doors','other_home_service'],
+  project_type: ['kitchens','bathrooms','both','remodeling','hvac','plumbing','electrical','roofing','landscaping','junk_removal','restoration','cleaning','pest_control','garage_doors','other_home_service','roofing_siding','masonry_hardscaping','interior_remodeling'],
   monthly_revenue: ['under_20k','20k_50k','50k_100k','100k_plus'],
   monthly_inquiries: ['under_10','10_25','26_50','50_plus','unsure'],
-  biggest_gap: ['missed_calls','slow_followup','reactivation','reviews','lead_quality','other','not_enough_leads','low_conversion','poor_follow_up','repeat_business'],
-  capacity: ['yes','limited','booked_out','unsure']
+  biggest_gap: ['missed_calls','slow_followup','reactivation','reviews','lead_quality','other','not_enough_leads','low_conversion','poor_follow_up','repeat_business','inconsistent_growth'],
+  capacity: ['yes','limited','booked_out','unsure'],
+  readiness: ['ready_now','need_details','not_ready']
 };
 
 function limited(value, max) {
@@ -39,8 +40,17 @@ module.exports = async function handler(req,res) {
   if(!data || typeof data !== 'object' || Array.isArray(data)) return send(res,400,{error:'Invalid request'});
   // Honeypot. Never create records for bots filling hidden fields.
   if(data.other_field) return send(res,201,{ok:true});
-  if(!allowed.monthly_inquiries.includes(data.monthly_inquiries)) return send(res,400,{error:'Please complete the qualification questions'});
+  // Construction applications use three qualifying questions, with no lead-volume question.
+  // Legacy applications remain supported for visitors with an older page open.
+  const isConstructionApplication = data.readiness != null;
+  if(isConstructionApplication) {
+    if(!allowed.readiness.includes(data.readiness)) return send(res,400,{error:'Please confirm when you are ready to get started'});
+    if(!allowed.project_type.includes(data.project_type)) return send(res,400,{error:'Please select your construction specialty'});
+  } else if(!allowed.monthly_inquiries.includes(data.monthly_inquiries)) {
+    return send(res,400,{error:'Please complete the qualification questions'});
+  }
   if(data.project_type != null && !allowed.project_type.includes(data.project_type)) return send(res,400,{error:'Invalid business type'});
+  if(data.monthly_inquiries != null && !allowed.monthly_inquiries.includes(data.monthly_inquiries)) return send(res,400,{error:'Invalid lead volume'});
   // Allow legacy open forms to send these fields, but never require them.
   for(const key of ['monthly_revenue','capacity']) if(data[key] != null && !allowed[key].includes(data[key])) return send(res,400,{error:'Invalid qualification answer'});
   const gaps = Array.isArray(data.biggest_gaps) ? [...new Set(data.biggest_gaps)] : (typeof data.biggest_gap === 'string' ? [data.biggest_gap] : []);
@@ -83,7 +93,7 @@ module.exports = async function handler(req,res) {
     phone:normalizedPhone,
     service_area:serviceArea||null,
     website:data.website?limited(data.website,250):null,
-    project_type:data.project_type??'junk_removal',monthly_revenue:data.monthly_revenue??null,monthly_inquiries:data.monthly_inquiries,
+    project_type:data.project_type??'junk_removal',monthly_revenue:data.monthly_revenue??null,monthly_inquiries:data.monthly_inquiries??null,readiness:data.readiness??null,
     biggest_gap:gaps[0],biggest_gaps:gaps,capacity:data.capacity??null,consent:true,source:'home_services_funnel',
     utm_source:limited(data.utm_source,100)||null,
     utm_medium:limited(data.utm_medium,100)||null,
@@ -126,6 +136,9 @@ module.exports = async function handler(req,res) {
         project_type: payload.project_type,
         monthly_revenue: payload.monthly_revenue,
         monthly_inquiries: payload.monthly_inquiries,
+        readiness: payload.readiness,
+        readiness_text: {ready_now:'Yes, ready to implement',need_details:'Open to learning more',not_ready:'Not ready right now'}[payload.readiness] || null,
+        construction_type_text: {roofing_siding:'Roofing / Siding',masonry_hardscaping:'Masonry / Hardscaping',interior_remodeling:'Interior Remodeling',hvac:'HVAC',other_home_service:'Other'}[payload.project_type] || null,
         biggest_gap: payload.biggest_gap,
         biggest_gaps: payload.biggest_gaps,
         biggest_gaps_text: payload.biggest_gaps.join(', '),
