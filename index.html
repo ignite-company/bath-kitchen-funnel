@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#08090d">
-<title>Home Service Growth Systems | Ignite Co.</title>
-<meta name="description" content="Free systems review for home service business owners. See how Ignite Co. helps contractors improve lead response, follow-up, customer reactivation and booked jobs.">
+<title>Construction Company Growth Systems | Ignite Co.</title>
+<meta name="description" content="Free systems review for established construction company owners. See how Ignite Co. helps contractors improve lead response, follow-up, customer reactivation and booked projects.">
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PD5SY1SYHH"></script>
 <script>
@@ -217,18 +217,37 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
  .quiz-overlay .booking-stage .calendar-shell{margin-top:9px}
  .quiz-overlay .booking-stage .calendar-shell iframe{height:610px}
 }
+
+/* Construction hero: compact investment guarantee and immediate social proof. */
+.hero{padding-bottom:12px}
+.hero-guarantee{display:inline-flex;align-items:center;justify-content:center;gap:10px;max-width:min(625px,100%);margin:0 auto 27px;padding:11px 17px;border:1px solid rgba(158,233,188,.43);border-radius:13px;background:linear-gradient(130deg,rgba(49,111,72,.29),rgba(42,94,62,.14));color:#d5ffdf;font-size:clamp(13px,1.6vw,16px);font-weight:750;line-height:1.4;text-align:left;box-shadow:0 8px 28px rgba(19,60,30,.15)}
+.guarantee-check{display:grid;place-items:center;flex:0 0 23px;width:23px;height:23px;border-radius:50%;background:#a4e8b9;color:#153f22;font-size:14px;font-weight:900}
+.ignite-companies{border-top:0;padding-top:11px}
+
+/* Persistently available CTA dock for desktop and mobile, with iOS safe-area spacing. */
+body{padding-bottom:94px}
+.sticky{position:fixed;display:flex;align-items:center;gap:10px;left:50%;right:auto;bottom:max(12px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(590px,calc(100% - 24px));padding:9px;background:rgba(15,16,22,.96);border:1px solid rgba(255,255,255,.19);border-radius:999px;z-index:90;box-shadow:0 14px 42px rgba(0,0,0,.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.sticky .cta{display:flex;flex:1 1 60%;width:auto;min-width:0;min-height:49px;padding:12px 18px}
+.sticky .ghost{display:flex;flex:1 1 40%;min-width:0;min-height:49px;padding:10px 14px;white-space:nowrap;border-radius:999px}
+@media(max-width:640px){
+ .hero{padding-bottom:8px}
+ .hero-guarantee{margin-bottom:21px;padding:10px 12px;gap:8px;font-size:13px}
+ .ignite-companies{padding-top:8px}
+ .sticky{left:0;right:0;bottom:0;transform:none;width:100%;gap:8px;padding:9px 12px calc(9px + env(safe-area-inset-bottom));border:0;border-top:1px solid rgba(255,255,255,.16);border-radius:0;background:rgba(8,9,13,.96)}
+ .sticky .cta{flex:1.25 1 0;width:auto;min-height:48px;padding:10px 8px;font-size:12px;white-space:nowrap}
+ .sticky .ghost{flex:1 1 0;min-height:48px;padding:9px 7px;font-size:12px;white-space:nowrap}
+ footer{padding-bottom:28px}
+}
+@media(max-width:350px){.sticky .cta,.sticky .ghost{font-size:11px;letter-spacing:-.02em}}
 </style>
 </head>
 <body>
 <main id="top">
 <section class="hero"><div class="container">
-<div class="eyebrow">For established home service businesses</div>
+<div class="eyebrow">For established construction companies</div>
 <h1>More booked jobs.<br><span class="accent">Without wasting more money.</span></h1>
-<p class="intro">I spent two years managing projects at a seven-figure remodeling company. We kept jobs coming in without constantly raising our marketing budget. Now I help home service companies strengthen the systems behind their leads.</p>
-<div class="vsl" aria-label="Ignite Co. home service business growth video"><video class="vsl-video" id="ignite-vsl" controls autoplay muted playsinline preload="auto" aria-label="Watch the Ignite growth systems video"><source src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6acfdeb45b9d6f310453a551.mp4" type="video/mp4">Your browser does not support HTML5 video. <a href="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6acfdeb45b9d6f310453a551.mp4" target="_blank" rel="noopener noreferrer">Open the video directly</a>.</video><button id="video-unmute" class="video-unmute" type="button" aria-label="Unmute the walkthrough video"><span id="video-unmute-status">YOUR WALKTHROUGH IS PLAYING</span><strong id="video-unmute-action">PRESS TO UNMUTE 🔊</strong></button></div>
-<p class="caption">Video starts muted to allow automatic playback. Use the player controls to turn the sound on.</p>
-<div class="hero-buttons"><button type="button" class="cta" data-open-quiz>Book Your Call Now ↗</button><a class="ghost" href="#systems">Explore the systems</a></div>
-<p class="micro hero-note">Free systems review. No purchase required. A few quick questions before booking.</p>
+<div class="hero-guarantee" role="note" aria-label="Investment guarantee"><span class="guarantee-check" aria-hidden="true">✓</span><span>Make your investment back, or we’ll refund the difference.</span></div>
+<div class="vsl" aria-label="Ignite Co. construction company growth video"><video class="vsl-video" id="ignite-vsl" controls autoplay muted playsinline preload="auto" aria-label="Watch the Ignite growth systems video"><source src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6acfdeb45b9d6f310453a551.mp4" type="video/mp4">Your browser does not support HTML5 video. <a href="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6acfdeb45b9d6f310453a551.mp4" target="_blank" rel="noopener noreferrer">Open the video directly</a>.</video><button id="video-unmute" class="video-unmute" type="button" aria-label="Unmute the walkthrough video"><span id="video-unmute-status">YOUR WALKTHROUGH IS PLAYING</span><strong id="video-unmute-action">PRESS TO UNMUTE 🔊</strong></button></div>
 </div></section>
 <section class="ignite-companies" aria-labelledby="ignite-companies-title">
   <div class="container">
@@ -358,7 +377,7 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
 </div><p class="micro" style="margin-top:20px">Custom integrations, CRM features and advertising are scoped separately based on your needs. No specific results are guaranteed.</p></div></section>
 <section class="section dark-section"><div class="container"><div class="value"><div><div class="eyebrow">A simple way to think about it</div><h2 style="margin-top:12px">What is one more booked job worth to your business?</h2><p>We aren't promising a number of jobs. The point is to examine how much opportunity you may already have in missed inquiries, neglected follow-up and past customer relationships.</p></div><button type="button" class="cta" data-open-quiz>Find Your Biggest Gaps ↗</button></div>
 <div class="steps"><div class="step"><strong>1. Tell us about the business</strong><p>Answer two quick questions about your leads and biggest challenge.</p></div><div class="step"><strong>2. Share your contact details</strong><p>So we know who we're speaking with and can prepare for the conversation.</p></div><div class="step"><strong>3. Choose a call time</strong><p>After your application is saved, you'll see the calendar.</p></div></div></div></section>
-<div class="quiz-overlay hidden" id="quiz-overlay"><div class="quiz-dialog" role="dialog" aria-modal="true" aria-labelledby="apply-heading" tabindex="-1"><div class="quiz-toolbar"><span>Quick home services application</span><button class="quiz-close" id="close-quiz" type="button" aria-label="Close questionnaire">&times;</button></div><div class="quiz-scroll"><section class="section qualification" id="apply"><div class="container"><div class="qual-head"><div class="eyebrow">Free home service systems review</div><h2 id="apply-heading">Let's find the gaps in your business.</h2><p>Answer two quick questions, then choose a time for your free systems review.</p></div>
+<div class="quiz-overlay hidden" id="quiz-overlay"><div class="quiz-dialog" role="dialog" aria-modal="true" aria-labelledby="apply-heading" tabindex="-1"><div class="quiz-toolbar"><span>Quick construction company application</span><button class="quiz-close" id="close-quiz" type="button" aria-label="Close questionnaire">&times;</button></div><div class="quiz-scroll"><section class="section qualification" id="apply"><div class="container"><div class="qual-head"><div class="eyebrow">Free construction company systems review</div><h2 id="apply-heading">Let's find the gaps in your business.</h2><p>Answer two quick questions, then choose a time for your free systems review.</p></div>
 <div class="quiz" id="quiz"><div class="quiz-top"><strong id="quiz-step-title">Tell us about your company</strong><span id="quiz-step-count">Step 1 of 3</span></div><div class="progress"><div class="progress-bar" id="quiz-progress"></div></div>
 <div class="quiz-body">
 <div id="question-view"><h3 id="question" class="q-title"></h3><p id="question-desc" class="q-desc"></p><div id="options" class="options"></div><p class="error" id="quiz-error" role="alert"></p><div class="quiz-actions"><button class="linkbtn" type="button" id="prev" disabled>← Back</button><span class="quiz-auto-note">Select an answer to continue</span></div></div>
@@ -387,7 +406,7 @@ html:has(#booking-reveal:not(.hidden)) #apply{scroll-margin-top:10px}@media(max-
 <section class="section"><div class="container faq" style="max-width:840px"><div class="section-title"><div class="eyebrow">Questions</div><h2>Before you book</h2></div><details><summary>Do I need to spend more on advertising?</summary><p>Not necessarily. We'll first look at the gaps in your current response, follow-up and referral process. Advertising can be discussed separately if appropriate.</p></details><details><summary>Will Ignite handle estimates or the service work?</summary><p>No. Your team keeps control of pricing, estimates, sales decisions and fulfillment. We work on acquisition and conversion systems around that process.</p></details><details><summary>Will we own what you build?</summary><p>You'll retain ownership of agreed deliverables defined in your project agreement. Optional management is available if you want ongoing support.</p></details></div></section>
 </main>
 <footer><div class="container foot"><strong>© Ignite Company</strong><div class="footer-privacy">Information submitted here is saved securely to help us respond to your inquiry. Individual business results vary. No specific jobs, revenue or return are promised.</div></div></footer>
-<div class="sticky" id="sticky"><button type="button" class="cta" data-open-quiz>Book Your Call Now ↗</button></div>
+<nav class="sticky" id="sticky" aria-label="Quick actions"><button type="button" class="cta" data-open-quiz>Book Your Call Now ↗</button><a class="ghost" href="#systems">Explore the systems</a></nav>
 <script>
 (function(){
 'use strict';
@@ -395,7 +414,7 @@ function trackEvent(name,properties={}){
  if(typeof window.gtag==='function')window.gtag('event',name,properties);
 }
 const steps=[
- {key:'monthly_inquiries',title:'How many leads does your junk removal company receive monthly?',desc:'Choose the option that best matches your current lead volume.',options:[['under_10','Under 10'],['10_25','10–25'],['26_50','26–50'],['50_plus','50+']]},
+ {key:'monthly_inquiries',title:'How many leads does your construction company receive monthly?',desc:'Choose the option that best matches your current lead volume.',options:[['under_10','Under 10'],['10_25','10–25'],['26_50','26–50'],['50_plus','50+']]},
  {key:'biggest_gap',title:"What's your biggest challenge right now?",desc:'Choose the one that feels most true right now.',options:[['not_enough_leads','Not enough leads'],['low_conversion','Leads not converting'],['poor_follow_up','Inconsistent follow-up'],['repeat_business','Not enough repeat customers']]}
 ];
 const state={};let step=0,submitting=false,isAdvancing=false,advanceTimer=null;
@@ -654,17 +673,8 @@ video.addEventListener('pause',updateVideoUnmute);
 video.play().catch(()=>{updateVideoUnmute();});
 updateVideoUnmute();
 const sticky=$('sticky');
-const primaryCTA=document.querySelector('.hero-buttons [data-open-quiz]');
-const inlineCTAs=Array.from(document.querySelectorAll('main [data-open-quiz]'));
 function updateSticky(){
-  const viewportHeight=window.visualViewport?window.visualViewport.height:window.innerHeight;
-  const pastPrimaryCTA=primaryCTA && primaryCTA.getBoundingClientRect().bottom<=0;
-  const inlineCTAVisible=inlineCTAs.some(button=>{
-    const rect=button.getBoundingClientRect();
-    return rect.bottom>0 && rect.top<viewportHeight;
-  });
-  const show=window.innerWidth<=640 && !document.body.classList.contains('quiz-open') && pastPrimaryCTA && !inlineCTAVisible;
-  sticky.style.display=show?'block':'none';
+  sticky.style.display=document.body.classList.contains('quiz-open')?'none':'flex';
 }
 let focusBeforeQuiz=null;
 function openQuiz(){trackEvent('quiz_start',{funnel_name:'home_services'});focusBeforeQuiz=document.activeElement;const overlay=$('quiz-overlay');overlay.classList.remove('hidden');document.body.classList.add('quiz-open');overlay.querySelector('.quiz-scroll').scrollTop=0;overlay.querySelector('.quiz-dialog').focus();updateSticky();}
@@ -673,7 +683,7 @@ document.querySelectorAll('[data-open-quiz]').forEach(button=>button.addEventLis
 $('close-quiz').addEventListener('click',closeQuiz);
 $('quiz-overlay').addEventListener('mousedown',e=>{if(e.target===$('quiz-overlay'))closeQuiz();});
 document.addEventListener('keydown',e=>{if($('quiz-overlay').classList.contains('hidden'))return;if(e.key==='Escape'){e.preventDefault();closeQuiz();return;}if(e.key!=='Tab')return;const dialog=$('quiz-overlay').querySelector('.quiz-dialog');const els=Array.from(dialog.querySelectorAll('button:not([disabled]),input:not([disabled]),a[href],iframe')).filter(el=>el.getClientRects().length>0&&getComputedStyle(el).visibility!=='hidden'&&el.closest('.hidden')===null);if(!els.length){e.preventDefault();return;}let first=els[0],last=els[els.length-1];if(e.shiftKey&&(document.activeElement===first||document.activeElement===dialog)){e.preventDefault();last.focus();}else if(!e.shiftKey&&(document.activeElement===last||document.activeElement===dialog)){e.preventDefault();first.focus();}});
-window.addEventListener('scroll',updateSticky,{passive:true});window.addEventListener('resize',updateSticky);updateSticky();
+window.addEventListener('resize',updateSticky);updateSticky();
 
 /* Seamless proof-image marquee moves RIGHT; logo marquee moves LEFT. */
 const proofRail=$('ignite-proof-marquee');
