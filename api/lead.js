@@ -8,7 +8,7 @@ const allowed = {
   project_type: ['kitchens','bathrooms','both','remodeling','hvac','plumbing','electrical','roofing','landscaping','junk_removal','restoration','cleaning','pest_control','garage_doors','other_home_service'],
   monthly_revenue: ['under_20k','20k_50k','50k_100k','100k_plus'],
   monthly_inquiries: ['under_10','10_25','26_50','50_plus','unsure'],
-  biggest_gap: ['missed_calls','slow_followup','reactivation','reviews','lead_quality','other'],
+  biggest_gap: ['missed_calls','slow_followup','reactivation','reviews','lead_quality','other','not_enough_leads','low_conversion','poor_follow_up','repeat_business'],
   capacity: ['yes','limited','booked_out','unsure']
 };
 
@@ -39,7 +39,8 @@ module.exports = async function handler(req,res) {
   if(!data || typeof data !== 'object' || Array.isArray(data)) return send(res,400,{error:'Invalid request'});
   // Honeypot. Never create records for bots filling hidden fields.
   if(data.other_field) return send(res,201,{ok:true});
-  for(const key of ['project_type','monthly_inquiries']) if(!allowed[key].includes(data[key])) return send(res,400,{error:'Please complete the qualification questions'});
+  if(!allowed.monthly_inquiries.includes(data.monthly_inquiries)) return send(res,400,{error:'Please complete the qualification questions'});
+  if(data.project_type != null && !allowed.project_type.includes(data.project_type)) return send(res,400,{error:'Invalid business type'});
   // Allow legacy open forms to send these fields, but never require them.
   for(const key of ['monthly_revenue','capacity']) if(data[key] != null && !allowed[key].includes(data[key])) return send(res,400,{error:'Invalid qualification answer'});
   const gaps = Array.isArray(data.biggest_gaps) ? [...new Set(data.biggest_gaps)] : (typeof data.biggest_gap === 'string' ? [data.biggest_gap] : []);
@@ -82,7 +83,7 @@ module.exports = async function handler(req,res) {
     phone:normalizedPhone,
     service_area:serviceArea||null,
     website:data.website?limited(data.website,250):null,
-    project_type:data.project_type,monthly_revenue:data.monthly_revenue??null,monthly_inquiries:data.monthly_inquiries,
+    project_type:data.project_type??'junk_removal',monthly_revenue:data.monthly_revenue??null,monthly_inquiries:data.monthly_inquiries,
     biggest_gap:gaps[0],biggest_gaps:gaps,capacity:data.capacity??null,consent:true,source:'home_services_funnel',
     utm_source:limited(data.utm_source,100)||null,
     utm_medium:limited(data.utm_medium,100)||null,
