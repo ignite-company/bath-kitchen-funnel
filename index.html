@@ -249,6 +249,37 @@ body{padding-bottom:94px}
  footer{padding-bottom:28px}
 }
 @media(max-width:350px){.sticky .cta,.sticky .ghost{font-size:11px;letter-spacing:-.02em}}
+
+/* Immediate, low-friction hero qualification card. */
+body{padding-bottom:0}
+.hero{padding-bottom:18px}
+.hero-guarantee{margin-bottom:22px}
+.hero-trade{width:min(760px,100%);margin:0 auto;padding:26px 27px 21px;border:1px solid rgba(255,255,255,.23);border-radius:24px;background:radial-gradient(ellipse at 50% 0,rgba(250,61,97,.14),transparent 73%),linear-gradient(145deg,#191923,#111218);box-shadow:0 22px 68px rgba(0,0,0,.42);scroll-margin-top:22px;text-align:center}
+.hero-trade-kicker{color:#ff7896;font-size:11px;font-weight:850;letter-spacing:.14em;margin-bottom:12px}
+.hero-trade h2{font-size:clamp(25px,3.5vw,37px);line-height:1.14;letter-spacing:-.045em;max-width:650px;margin:0 auto 9px}
+.hero-trade-desc{font-size:14px;color:#b9bbc6;margin:0 0 19px;line-height:1.4}
+.hero-trade-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.hero-trade-opt{width:100%;min-height:60px;border:1px solid rgba(255,255,255,.22);border-radius:13px;padding:12px 16px;background:rgba(255,255,255,.045);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;font-size:15px;font-weight:720;transition:border-color .15s,background .15s,transform .15s,box-shadow .15s;touch-action:manipulation}
+.hero-trade-opt:last-child:nth-child(odd){grid-column:1/-1}
+.hero-trade-opt:hover,.hero-trade-opt:focus-visible{border-color:#ff819a;background:rgba(250,61,97,.14);outline:none}
+.hero-trade-opt:focus-visible{box-shadow:0 0 0 3px rgba(255,120,151,.32)}
+.hero-trade-opt[aria-pressed="true"]{background:linear-gradient(135deg,#ff486e,#e52e56);border-color:#ff91aa;transform:scale(.99);box-shadow:0 8px 22px rgba(238,37,82,.22)}
+.hero-trade-arrow{width:25px;height:25px;flex:0 0 25px;border:1px solid rgba(255,255,255,.35);border-radius:50%;display:grid;place-items:center;font-size:16px;line-height:1}
+.hero-trade-hint{font-size:12px;color:#a1a3b1;margin:13px 0 0;line-height:1.4}
+@media(max-width:640px){
+ .hero{padding-bottom:10px}
+ .hero-guarantee{margin-bottom:16px;padding:10px 12px;gap:8px;font-size:13px}
+ .ignite-companies{padding-top:8px}
+ .hero-trade{padding:20px 14px 15px;border-radius:19px}
+ .hero-trade-kicker{font-size:10px;margin-bottom:9px}
+ .hero-trade h2{font-size:clamp(23px,6.2vw,29px)}
+ .hero-trade-desc{font-size:12px;margin-bottom:13px}
+ .hero-trade-options{gap:8px}
+ .hero-trade-opt{min-height:54px;padding:10px 10px;font-size:13px;line-height:1.2;gap:5px;border-radius:11px}
+ .hero-trade-arrow{width:21px;height:21px;flex-basis:21px;font-size:13px}
+ .hero-trade-hint{font-size:11px;margin-top:11px}
+}
+@media(max-width:350px){.hero-trade-opt{font-size:12px;padding:9px 8px}.hero-trade{padding-inline:11px}}
 </style>
 </head>
 <body>
@@ -258,7 +289,13 @@ body{padding-bottom:94px}
 <h1>More booked jobs.<br><span class="accent">Without wasting more money.</span></h1>
 <p class="hero-subheadline">Better lead response. Stronger follow-up. More booked estimates.</p>
 <div class="hero-guarantee" role="note" aria-label="Investment guarantee"><span class="guarantee-check" aria-hidden="true">✓</span><span>Make your investment back, or we’ll refund the difference.</span></div>
-<div class="vsl" aria-label="Ignite Co. construction company growth video"><video class="vsl-video" id="ignite-vsl" controls autoplay muted playsinline preload="auto" aria-label="Watch the Ignite growth systems video"><source src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6acfdeb45b9d6f310453a551.mp4" type="video/mp4">Your browser does not support HTML5 video. <a href="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6acfdeb45b9d6f310453a551.mp4" target="_blank" rel="noopener noreferrer">Open the video directly</a>.</video><button id="video-unmute" class="video-unmute" type="button" aria-label="Unmute the walkthrough video"><span id="video-unmute-status">YOUR WALKTHROUGH IS PLAYING</span><strong id="video-unmute-action">PRESS TO UNMUTE 🔊</strong></button></div>
+<div class="hero-trade" id="choose-trade" aria-labelledby="hero-trade-heading">
+ <div class="hero-trade-kicker">START HERE · QUICK SYSTEMS REVIEW</div>
+ <h2 id="hero-trade-heading">What type of construction does your company do?</h2>
+ <p class="hero-trade-desc">Select your primary type of work to get started.</p>
+ <div class="hero-trade-options" id="hero-trade-options" role="group" aria-label="Choose your construction trade"></div>
+ <p class="hero-trade-hint">One tap to continue. No commitment.</p>
+</div>
 </div></section>
 <section class="ignite-companies" aria-labelledby="ignite-companies-title">
   <div class="container">
@@ -386,7 +423,7 @@ body{padding-bottom:94px}
 <div class="system"><div class="num">03 / REACTIVATION</div><h3>Past lead &amp; client outreach</h3><p>Bring previous conversations and completed-customer relationships back into view with relevant follow-up.</p></div>
 <div class="system"><div class="num">04 / REPUTATION</div><h3>Reviews &amp; referrals</h3><p>Consistent, honest review requests and referral prompts after successful completed projects.</p></div>
 </div><p class="micro" style="margin-top:20px">Custom integrations, CRM features and advertising are scoped separately based on your needs. No specific results are guaranteed.</p></div></section>
-<section class="section dark-section"><div class="container"><div class="value"><div><div class="eyebrow">A simple way to think about it</div><h2 style="margin-top:12px">What is one more booked job worth to your business?</h2><p>We aren't promising a number of jobs. The point is to examine how much opportunity you may already have in missed inquiries, neglected follow-up and past customer relationships.</p></div><button type="button" class="cta" data-open-quiz>Find Your Biggest Gaps ↗</button></div>
+<section class="section dark-section"><div class="container"><div class="value"><div><div class="eyebrow">A simple way to think about it</div><h2 style="margin-top:12px">What is one more booked job worth to your business?</h2><p>We aren't promising a number of jobs. The point is to examine how much opportunity you may already have in missed inquiries, neglected follow-up and past customer relationships.</p></div><button type="button" class="cta" data-scroll-to-trade>Find Your Biggest Gaps ↗</button></div>
 <div class="steps"><div class="step"><strong>1. Tell us about the business</strong><p>Answer three quick questions about your company and growth goals.</p></div><div class="step"><strong>2. Share your contact details</strong><p>So we know who we're speaking with and can prepare for the conversation.</p></div><div class="step"><strong>3. Choose a call time</strong><p>After your application is saved, you'll see the calendar.</p></div></div></div></section>
 <div class="quiz-overlay hidden" id="quiz-overlay"><div class="quiz-dialog" role="dialog" aria-modal="true" aria-labelledby="apply-heading" tabindex="-1"><div class="quiz-toolbar"><span>Quick construction company application</span><button class="quiz-close" id="close-quiz" type="button" aria-label="Close questionnaire">&times;</button></div><div class="quiz-scroll"><section class="section qualification" id="apply"><div class="container"><div class="qual-head"><div class="eyebrow">Free construction company systems review</div><h2 id="apply-heading">Let's find the gaps in your business.</h2><p>Answer three quick questions, then choose a time for your free systems review.</p></div>
 <div class="quiz" id="quiz"><div class="quiz-top"><strong id="quiz-step-title">Tell us about your company</strong><span id="quiz-step-count">Step 1 of 4</span></div><div class="progress"><div class="progress-bar" id="quiz-progress"></div></div>
@@ -417,7 +454,6 @@ body{padding-bottom:94px}
 <section class="section"><div class="container faq" style="max-width:840px"><div class="section-title"><div class="eyebrow">Questions</div><h2>Before you book</h2></div><details><summary>Do I need to spend more on advertising?</summary><p>Not necessarily. We'll first look at the gaps in your current response, follow-up and referral process. Advertising can be discussed separately if appropriate.</p></details><details><summary>Will Ignite handle estimates or the service work?</summary><p>No. Your team keeps control of pricing, estimates, sales decisions and fulfillment. We work on acquisition and conversion systems around that process.</p></details><details><summary>Will we own what you build?</summary><p>You'll retain ownership of agreed deliverables defined in your project agreement. Optional management is available if you want ongoing support.</p></details></div></section>
 </main>
 <footer><div class="container foot"><strong>© Ignite Company</strong><div class="footer-privacy">Information submitted here is saved securely to help us respond to your inquiry. Individual business results vary. No specific jobs, revenue or return are promised.</div></div></footer>
-<nav class="sticky" id="sticky" aria-label="Apply to work with Ignite"><button type="button" class="cta" data-open-quiz>Apply Now</button></nav>
 <script>
 (function(){
 'use strict';
@@ -425,12 +461,38 @@ function trackEvent(name,properties={}){
  if(typeof window.gtag==='function')window.gtag('event',name,properties);
 }
 const steps=[
- {key:'project_type',title:'What type of construction does your company specialize in?',desc:'Select your primary type of work.',options:[['roofing_siding','Roofing / Siding'],['masonry_hardscaping','Masonry / Hardscaping'],['interior_remodeling','Interior Remodeling'],['hvac','HVAC'],['other_home_service','Other']]},
+ {key:'project_type',title:'What type of construction does your company do?',desc:'Select your primary type of work.',options:[['roofing_siding','Roofing / Siding'],['masonry_hardscaping','Masonry / Hardscaping'],['interior_remodeling','Interior Remodeling'],['hvac','HVAC'],['other_home_service','Other']]},
  {key:'biggest_gap',title:"What's the biggest problem holding your company back?",desc:'Choose your main challenge right now.',options:[['not_enough_leads','Not enough leads'],['lead_quality','Low-quality leads'],['low_conversion','Leads not converting'],['poor_follow_up','Inconsistent follow-up'],['inconsistent_growth','Unpredictable growth']]},
  {key:'readiness',title:'Are you ready to implement systems to grow your business if everything makes sense?',desc:'Choose the answer that best describes you.',options:[['ready_now','Yes, I’m ready'],['need_details','I’d like to learn more'],['not_ready','Not right now']]}
 ];
 const state={};let step=0,submitting=false,isAdvancing=false,advanceTimer=null;
 const $=id=>document.getElementById(id),question=$('question'),desc=$('question-desc'),options=$('options'),err=$('quiz-error');
+/* Reuse the existing first quiz question as visible hero choices. */
+const heroOptions=$('hero-trade-options');
+let heroAdvancing=false;
+function syncHeroTradeSelection(){
+ heroOptions.querySelectorAll('.hero-trade-opt').forEach(button=>{
+  const selected=state[steps[0].key]===button.dataset.trade;
+  button.setAttribute('aria-pressed',String(selected));
+  button.querySelector('.hero-trade-arrow').textContent=selected?'✓':'›';
+ });
+}
+steps[0].options.forEach(([value,label])=>{
+ const button=document.createElement('button');button.type='button';button.className='hero-trade-opt';button.dataset.trade=value;
+ const name=document.createElement('span');name.textContent=label;
+ const arrow=document.createElement('span');arrow.className='hero-trade-arrow';arrow.setAttribute('aria-hidden','true');arrow.textContent='›';
+ button.append(name,arrow);
+ button.addEventListener('click',()=>{
+  if(heroAdvancing)return;
+  heroAdvancing=true;state[steps[0].key]=value;
+  trackEvent('quiz_answer',{question_key:steps[0].key,answer_key:value,step_number:1});
+  syncHeroTradeSelection();
+  setTimeout(()=>{heroAdvancing=false;step=1;openQuiz();},340);
+ });
+ heroOptions.append(button);
+});
+syncHeroTradeSelection();
+
 
 function phoneDigits(value){
  const digits=String(value||'').replace(/\D/g,'');
@@ -535,7 +597,7 @@ function draw(){
  $('prev').disabled=step===0;
  err.textContent='';
 }
-$('prev').addEventListener('click',()=>{if(isAdvancing)return;if(step>0){step--;draw();$('quiz-overlay').querySelector('.quiz-scroll').scrollTop=0;}});
+$('prev').addEventListener('click',()=>{if(isAdvancing)return;if(step===1){closeQuiz();scrollToTrade();return;}if(step>1){step--;draw();$('quiz-overlay').querySelector('.quiz-scroll').scrollTop=0;}});
 $('contact-prev').addEventListener('click',()=>{step=steps.length-1;draw();$('quiz-overlay').querySelector('.quiz-scroll').scrollTop=0;});
 $('contact-form').addEventListener('submit',async e=>{e.preventDefault();if(submitting)return;const form=e.currentTarget;const fe=$('form-error');fe.textContent='';phoneInput.setCustomValidity(normalizeUSPhone(phoneInput.value)?'':'Enter a valid 10-digit US phone number.');if(!form.reportValidity()){fe.textContent='Please complete the required contact details.';return;}if(!$('consent').checked){fe.textContent='Please confirm the contact consent.';return;}
 const data=new FormData(form),query=new URLSearchParams(window.location.search);
@@ -565,7 +627,7 @@ function showBookingStep(){
  $('quiz-overlay').querySelector('.quiz-scroll').scrollTop=0;
 }
 function readSubmission(){try{const r=JSON.parse(window.sessionStorage.getItem('igniteHomeServicesSubmission')||'null');if(r&&r.submission_id&&r.edit_token)return r;}catch{}return null;}
-function returnToAnswers(){$('booking-reveal').classList.add('hidden');step=0;draw();$('quiz-overlay').querySelector('.quiz-scroll').scrollTo({top:0,behavior:'smooth'});question.setAttribute('tabindex','-1');question.focus({preventScroll:true});}
+function returnToAnswers(){$('booking-reveal').classList.add('hidden');step=1;draw();$('quiz-overlay').querySelector('.quiz-scroll').scrollTo({top:0,behavior:'smooth'});question.setAttribute('tabindex','-1');question.focus({preventScroll:true});}
 $('booking-back').addEventListener('click',returnToAnswers);
 const previous=readSubmission();
 if(previous&&previous.answers&&previous.contact){
@@ -577,6 +639,7 @@ if(previous&&previous.answers&&previous.contact){
  $('consent').checked=true;
  showBookingStep();
 }else draw();
+syncHeroTradeSelection();
 
 /* Track meaningful content visibility, rather than only page load. */
 if('IntersectionObserver' in window){
@@ -606,96 +669,14 @@ if('IntersectionObserver' in window){
  });
 }
 
-const video=$('ignite-vsl');
-video.muted=true;
-video.defaultMuted=true;
-const videoUnmute=$('video-unmute'),unmuteStatus=$('video-unmute-status'),unmuteAction=$('video-unmute-action');
-
-/* Native video tracking: require 50% visible, playing and foreground tab.
-   Muted autoplay offscreen does not count as watched. */
-let videoInView=false,watchedSeconds=0,lastPlaybackTime=null;
-let reportedStart=false,reportedVisible=false,reportedSound=false;
-const reportedMilestones=new Set(),videoTitle='Ignite systems walkthrough';
-if('IntersectionObserver' in window){
- const observer=new IntersectionObserver(entries=>{
-  const visible=entries.some(entry=>entry.isIntersecting&&entry.intersectionRatio>=.5);
-  if(videoInView!==visible){
-   videoInView=visible;lastPlaybackTime=null;
-   if(visible&&!reportedVisible&&document.visibilityState==='visible'){
-    reportedVisible=true;trackEvent('video_visible',{video_title:videoTitle});
-   }
-  }
- },{threshold:[0,.5,1]});
- observer.observe(video);
-}
-video.addEventListener('timeupdate',()=>{
- const t=video.currentTime;
- if(!Number.isFinite(t))return;
- if(!videoInView||video.paused||video.seeking||document.visibilityState!=='visible'){
-  lastPlaybackTime=null;return;
- }
- if(lastPlaybackTime!==null){
-  const delta=t-lastPlaybackTime;
-  if(delta>0&&delta<2.5)watchedSeconds+=delta;
- }
- lastPlaybackTime=t;
- if(!reportedStart&&watchedSeconds>=2){
-  reportedStart=true;
-  trackEvent('video_start',{video_title:videoTitle,video_provider:'html5',video_muted:video.muted});
- }
- if(!Number.isFinite(video.duration)||video.duration<=0)return;
- for(const mark of [25,50,75,100]){
-  if(!reportedMilestones.has(mark)&&watchedSeconds>=video.duration*mark/100){
-   reportedMilestones.add(mark);
-   trackEvent('video_progress',{video_title:videoTitle,video_percent:mark});
-  }
- }
-});
-video.addEventListener('pause',()=>{lastPlaybackTime=null;});
-video.addEventListener('seeking',()=>{lastPlaybackTime=null;});
-document.addEventListener('visibilitychange',()=>{lastPlaybackTime=null;});
-video.addEventListener('volumechange',()=>{
- if(!reportedSound&&!video.muted&&video.volume>0){
-  reportedSound=true;trackEvent('video_sound_on',{video_title:videoTitle});
- }
-});
-video.addEventListener('ended',()=>{
- if(Number.isFinite(video.duration)&&watchedSeconds>=video.duration*.9)
-  trackEvent('video_complete',{video_title:videoTitle});
-});
-
-function updateVideoUnmute(){
- const needsSound=video.muted||video.volume===0;
- videoUnmute.classList.toggle('hidden',!needsSound);
- if(needsSound){
-  unmuteStatus.textContent=video.paused?'YOUR WALKTHROUGH IS READY':'YOUR WALKTHROUGH IS PLAYING';
-  unmuteAction.textContent=video.paused?'PRESS TO PLAY WITH SOUND 🔊':'PRESS TO UNMUTE 🔊';
- }
-}
-videoUnmute.addEventListener('click',()=>{
- video.muted=false;
- video.defaultMuted=false;
- video.volume=1;
- if(video.paused) video.play().catch(()=>{updateVideoUnmute();});
- updateVideoUnmute();
-});
-video.addEventListener('volumechange',updateVideoUnmute);
-video.addEventListener('play',updateVideoUnmute);
-video.addEventListener('pause',updateVideoUnmute);
-video.play().catch(()=>{updateVideoUnmute();});
-updateVideoUnmute();
-const sticky=$('sticky');
-function updateSticky(){
-  sticky.style.display=document.body.classList.contains('quiz-open')?'none':'flex';
-}
 let focusBeforeQuiz=null;
-function openQuiz(){trackEvent('quiz_start',{funnel_name:'home_services'});focusBeforeQuiz=document.activeElement;const overlay=$('quiz-overlay');overlay.classList.remove('hidden');document.body.classList.add('quiz-open');overlay.querySelector('.quiz-scroll').scrollTop=0;overlay.querySelector('.quiz-dialog').focus();updateSticky();}
-function closeQuiz(){if(advanceTimer){clearTimeout(advanceTimer);advanceTimer=null;isAdvancing=false;draw();}const overlay=$('quiz-overlay');overlay.classList.add('hidden');document.body.classList.remove('quiz-open');updateSticky();if(focusBeforeQuiz&&typeof focusBeforeQuiz.focus==='function')focusBeforeQuiz.focus();}
-document.querySelectorAll('[data-open-quiz]').forEach(button=>button.addEventListener('click',openQuiz));
+function openQuiz(){trackEvent('quiz_start',{funnel_name:'home_services'});step=1;draw();$('booking-reveal').classList.add('hidden');focusBeforeQuiz=document.activeElement;const overlay=$('quiz-overlay');overlay.classList.remove('hidden');document.body.classList.add('quiz-open');overlay.querySelector('.quiz-scroll').scrollTop=0;overlay.querySelector('.quiz-dialog').focus();}
+function closeQuiz(){if(advanceTimer){clearTimeout(advanceTimer);advanceTimer=null;isAdvancing=false;draw();}const overlay=$('quiz-overlay');overlay.classList.add('hidden');document.body.classList.remove('quiz-open');if(focusBeforeQuiz&&typeof focusBeforeQuiz.focus==='function')focusBeforeQuiz.focus({preventScroll:true});}
+function scrollToTrade(){$('choose-trade').scrollIntoView({behavior:'smooth',block:'start'});}
+document.querySelectorAll('[data-scroll-to-trade]').forEach(button=>button.addEventListener('click',scrollToTrade));
 $('close-quiz').addEventListener('click',closeQuiz);
 $('quiz-overlay').addEventListener('mousedown',e=>{if(e.target===$('quiz-overlay'))closeQuiz();});
 document.addEventListener('keydown',e=>{if($('quiz-overlay').classList.contains('hidden'))return;if(e.key==='Escape'){e.preventDefault();closeQuiz();return;}if(e.key!=='Tab')return;const dialog=$('quiz-overlay').querySelector('.quiz-dialog');const els=Array.from(dialog.querySelectorAll('button:not([disabled]),input:not([disabled]),a[href],iframe')).filter(el=>el.getClientRects().length>0&&getComputedStyle(el).visibility!=='hidden'&&el.closest('.hidden')===null);if(!els.length){e.preventDefault();return;}let first=els[0],last=els[els.length-1];if(e.shiftKey&&(document.activeElement===first||document.activeElement===dialog)){e.preventDefault();last.focus();}else if(!e.shiftKey&&(document.activeElement===last||document.activeElement===dialog)){e.preventDefault();first.focus();}});
-window.addEventListener('resize',updateSticky);updateSticky();
 
 /* Seamless proof-image marquee moves RIGHT; logo marquee moves LEFT. */
 const proofRail=$('ignite-proof-marquee');
