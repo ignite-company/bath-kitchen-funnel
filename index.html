@@ -699,6 +699,9 @@ try{const controller=new AbortController();const timeout=setTimeout(()=>controll
 if(!response.ok){let detail;try{detail=await response.json();}catch{}throw new Error(detail?.error || 'Could not save your application. Please try again.')}
 const receipt=await response.json();
 if(!receipt.ok||!receipt.submission_id||!receipt.edit_token)throw new Error('Unable to confirm saved application.');
+// Both initialized Meta datasets receive the Lead event once for a new saved application.
+// Editing an existing submission must not inflate conversion counts.
+if(!previousReceipt && typeof window.fbq==='function')window.fbq('track','Lead');
 trackEvent('generate_lead',{lead_source:'home_services_quiz'});
 showBookingStep();
 window.sessionStorage.setItem('igniteHomeServicesSubmission',JSON.stringify({submission_id:receipt.submission_id,edit_token:receipt.edit_token,answers:{...state},contact:contactRecord}));
