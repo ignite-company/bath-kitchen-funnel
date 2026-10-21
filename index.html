@@ -288,12 +288,9 @@ body{padding-bottom:0}
 html,body{background:#fff!important;color:#181818!important;overflow-x:hidden}
 body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Arial,sans-serif}
 button,input{font-family:inherit}
-.site-header{height:85px;border-bottom:1px solid #f1eded;background:#fff}
-.site-header-inner{width:min(1160px,calc(100% - 40px));margin:0 auto;height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.site-brand{display:inline-flex;align-items:center;gap:11px;color:#171717;font-size:23px;font-weight:900;letter-spacing:-.06em}
-.site-brand-badge{display:grid;place-items:center;background:#e62b3f;color:#fff;width:35px;height:35px;border-radius:10px;font-size:20px;letter-spacing:0}
-.site-brand .site-red{color:#df2638}
-.site-header-note{font-size:12px;font-weight:700;letter-spacing:.035em;color:#726c68}
+.top-proof-line{width:100%;text-align:right;margin:0 auto 36px;color:#534b47;font-size:12px;font-weight:800;letter-spacing:.018em}
+.top-proof-line::before{content:"★";color:#df2638;font-size:13px;margin-right:7px}
+.hero{padding-top:25px!important}
 .hero{background:radial-gradient(ellipse 75% 440px at 50% 0%,#fff1f2 0%,#fff 90%);padding:63px 0 75px;text-align:center}
 .hero>.container{width:min(1160px,calc(100% - 36px))}
 .hero-eyebrow{font-size:12px;font-weight:850;letter-spacing:.16em;text-transform:uppercase;color:#df2638}
@@ -363,11 +360,8 @@ button,input{font-family:inherit}
 footer{background:#faf8f7!important;color:#625c58!important;border-top:1px solid #eee7e4!important}
 footer .foot strong,footer .footer-privacy{color:#625c58!important}
 @media(max-width:640px){
- .site-header{height:66px}
- .site-header-inner{width:calc(100% - 30px)}
- .site-brand{font-size:20px}
- .site-header-note{font-size:10px;max-width:145px;text-align:right;line-height:1.3}
- .hero{padding:39px 0 51px!important}
+ .top-proof-line{font-size:11px;margin-bottom:32px}
+ .hero{padding:19px 0 51px!important}
  .hero h1{font-size:clamp(39px,10.5vw,58px);line-height:1.04;margin:14px auto 12px}
  .hero .hero-subheadline{font-size:15px!important;line-height:1.48!important;max-width:360px!important;margin-bottom:10px!important}
  .hero-time{font-size:12px;margin-bottom:16px}
@@ -392,9 +386,9 @@ footer .foot strong,footer .footer-privacy{color:#625c58!important}
 </style>
 </head>
 <body>
-<header class="site-header"><div class="site-header-inner"><a class="site-brand" href="#top" aria-label="Ignite Co. home"><span class="site-brand-badge" aria-hidden="true">✳</span><span>IGNITE <span class="site-red">CO.</span></span></a><span class="site-header-note">SYSTEMS FOR CONSTRUCTION COMPANIES</span></div></header>
 <main id="top">
 <section class="hero" aria-labelledby="hero-heading"><div class="container">
+<div class="top-proof-line" aria-label="Client results">$1M Generated for Our Clients</div>
 <div class="hero-eyebrow">For construction company owners</div>
 <h1 id="hero-heading">More booked jobs.<br><span class="accent">A business built to grow.</span></h1>
 <p class="hero-subheadline">Tell us about your company in a few quick questions. We'll show you the next step to a free systems review.</p>
