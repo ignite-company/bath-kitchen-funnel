@@ -40,12 +40,12 @@ module.exports = async function handler(req,res) {
   if(!data || typeof data !== 'object' || Array.isArray(data)) return send(res,400,{error:'Invalid request'});
   // Honeypot. Never create records for bots filling hidden fields.
   if(data.other_field) return send(res,201,{ok:true});
-  // Construction applications use three qualifying questions, with no lead-volume question.
+  // The current kitchen-and-bath quiz uses three qualifying questions. Keep older submissions compatible.
   // Legacy applications remain supported for visitors with an older page open.
   const isConstructionApplication = data.readiness != null;
   if(isConstructionApplication) {
     if(!allowed.readiness.includes(data.readiness)) return send(res,400,{error:'Please confirm when you are ready to get started'});
-    if(!allowed.project_type.includes(data.project_type)) return send(res,400,{error:'Please select your construction specialty'});
+    if(!allowed.project_type.includes(data.project_type)) return send(res,400,{error:'Please select your remodeling specialty'});
   } else if(!allowed.monthly_inquiries.includes(data.monthly_inquiries)) {
     return send(res,400,{error:'Please complete the qualification questions'});
   }
@@ -77,7 +77,7 @@ module.exports = async function handler(req,res) {
   const url = process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_PUBLISHABLE_KEY;
   if(!url || !key) {
-    console.error('Home services application storage environment is not configured');
+    console.error('Funnel application storage environment is not configured');
     return send(res,503,{error:'Application service unavailable'});
   }
   const isEdit = Boolean(data.submission_id || data.edit_token);
@@ -138,13 +138,15 @@ module.exports = async function handler(req,res) {
         monthly_inquiries: payload.monthly_inquiries,
         readiness: payload.readiness,
         readiness_text: {ready_now:'Yes, ready to implement',need_details:'Open to learning more',not_ready:'Not ready right now'}[payload.readiness] || null,
-        construction_type_text: {roofing_siding:'Roofing / Siding',masonry_hardscaping:'Masonry / Hardscaping',interior_remodeling:'Interior Remodeling',hvac:'HVAC',other_home_service:'Other'}[payload.project_type] || null,
+        construction_type_text: {kitchens:'Kitchen Remodeling',bathrooms:'Bathroom Remodeling',both:'Kitchens & Bathrooms',roofing_siding:'Roofing / Siding',masonry_hardscaping:'Masonry / Hardscaping',interior_remodeling:'Interior Remodeling',hvac:'HVAC',other_home_service:'Other'}[payload.project_type] || null,
+        remodeling_type_text: {kitchens:'Kitchen Remodeling',bathrooms:'Bathroom Remodeling',both:'Kitchens & Bathrooms'}[payload.project_type] || null,
         biggest_gap: payload.biggest_gap,
         biggest_gaps: payload.biggest_gaps,
         biggest_gaps_text: payload.biggest_gaps.join(', '),
+        biggest_gap_display: {not_enough_leads:'Not enough homeowner inquiries',lead_quality:'Too many price shoppers',low_conversion:'Consultations not becoming jobs',poor_follow_up:'Estimates and leads go cold',inconsistent_growth:'Unpredictable project pipeline'}[payload.biggest_gap] || payload.biggest_gap,
         capacity: payload.capacity,
         consent: true,
-        source: 'Ignite Home Services Funnel',
+        source: ['kitchens','bathrooms','both'].includes(payload.project_type) ? 'Ignite Kitchen & Bath Funnel' : 'Ignite Home Services Funnel',
         utm_source: payload.utm_source,
         utm_medium: payload.utm_medium,
         utm_campaign: payload.utm_campaign
