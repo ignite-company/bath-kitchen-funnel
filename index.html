@@ -564,7 +564,7 @@ body.quiz-open{overflow:hidden!important}
 #quiz-overlay .booking-intro p strong{color:#fff!important}
 #quiz-overlay .booking-stage .calendar-link{color:#ff7a81!important}
 #quiz-overlay .calendar-shell{background:#fff!important}
-.ignite-mobile-cta{display:none}
+
 @media(max-width:767px){
  .ignite-topbar{padding:8px 0 2px}
  .hero{padding:19px 0 45px!important}
@@ -582,10 +582,10 @@ body.quiz-open{overflow:hidden!important}
  .ignite-video-heading{font-size:23px;margin:25px auto 15px}
  .ignite-after-video{margin-top:25px}
  .ignite-after-video .ignite-white-cta{min-height:58px;font-size:16px}
- .ignite-mobile-cta{display:block;position:fixed;z-index:90;left:0;right:0;bottom:0;background:linear-gradient(0deg,#050505 74%,#050505c9);padding:12px 14px max(12px,env(safe-area-inset-bottom));box-shadow:0 -9px 24px #0009}
- .ignite-mobile-cta button{width:100%;display:block;min-height:49px;border-radius:12px;background:#fff;color:#090909;border:0;font-size:15px;font-weight:900}
- body.quiz-open .ignite-mobile-cta{display:none}
- footer{padding-bottom:92px!important}
+ 
+ 
+ 
+ 
  #quiz-overlay:not(.hidden){padding:6px!important}
  #quiz-overlay .quiz-dialog{height:calc(100dvh - 12px)!important;max-height:calc(100dvh - 12px)!important;border-radius:17px!important}
  #quiz-overlay .ignite-modal-bar{min-height:55px;padding:6px 11px 6px 14px;font-size:12px}
@@ -603,7 +603,7 @@ body.quiz-open{overflow:hidden!important}
  #quiz-overlay .formgrid{grid-template-columns:1fr!important}
  #quiz-overlay .booking-stage .calendar-shell iframe{height:620px!important}
 }
-@media(prefers-reduced-motion:reduce){.ignite-mobile-cta{transition:none}}
+
 
 
 /* Final headline typography fix: no escaped apostrophe, intentional line breaks, no edge clipping. */
@@ -641,6 +641,53 @@ body.quiz-open{overflow:hidden!important}
  .hero h1#hero-heading{font-size:clamp(32px,8.5vw,36px)!important}
 }
 
+
+/* Two-line responsive headline with room for italic gradient letter overhang. */
+.hero h1#hero-heading{
+  width:100%!important;
+  max-width:1120px!important;
+  padding:0 .16em .1em!important;
+  margin:17px auto 0!important;
+  font-size:clamp(22px,6.3vw,77px)!important;
+  line-height:1.16!important;
+  letter-spacing:-.045em!important;
+  text-align:center!important;
+  overflow:visible!important;
+  text-wrap:nowrap!important;
+}
+#hero-heading .ignite-headline-promise,
+#hero-heading .ignite-headline-guarantee{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+}
+#hero-heading .ignite-headline-guarantee{margin-top:.06em!important}
+#hero-heading .ignite-headline-guarantee em.ignite-red-flow{
+  display:inline-block!important;
+  font-style:italic!important;
+  padding:0 .20em .10em .04em!important;
+  margin-right:0!important;
+  white-space:nowrap!important;
+  line-height:1.21!important;
+  overflow:visible!important;
+  -webkit-background-clip:text;
+  background-clip:text;
+}
+@media(max-width:767px){
+  .hero h1#hero-heading{
+    font-size:clamp(20px,7.15vw,51px)!important;
+    line-height:1.15!important;
+    letter-spacing:-.053em!important;
+    padding:0 .07em .12em!important;
+    margin-top:12px!important;
+  }
+}
+@media(max-width:390px){
+  .hero h1#hero-heading{font-size:7.1vw!important}
+}
+
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -674,7 +721,7 @@ src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
 </div></header>
 <section class="hero" aria-labelledby="hero-heading"><div class="container">
  <div class="hero-eyebrow">FOR KITCHEN &amp; BATHROOM REMODELING COMPANIES</div>
- <h1 id="hero-heading"><span class="ignite-headline-promise">2+ New Projects Next Month</span><span class="ignite-headline-guarantee">Or <em class="ignite-red-flow">You Don't Pay</em></span></h1>
+ <h1 id="hero-heading"><span class="ignite-headline-promise">2+ New Projects Next</span><span class="ignite-headline-guarantee">Month <em class="ignite-red-flow">Or You Don't Pay</em></span></h1>
  <p class="hero-subheadline">We help kitchen and bath remodelers turn more homeowners into booked projects, with a results-backed customer acquisition system.</p>
  <div class="ignite-primary-cta ignite-above-fold"><button class="ignite-white-cta ignite-open-quiz" type="button">See If Your Company Qualifies →</button><p>FREE GROWTH REVIEW · QUALIFICATION AND WRITTEN TERMS APPLY</p></div>
  <div class="ignite-offer-box">Better lead flow. Faster follow-up. A more predictable project pipeline. <strong>Built for remodelers, not a generic marketing template.</strong></div>
@@ -835,7 +882,6 @@ src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
 </div></div></section>
 <section class="ignite-finish"><div class="container"><div class="ignite-finish-eyebrow">GROW SMARTER WITH IGNITE</div><h2>Better Systems.<br><span class="ignite-red-flow">More Remodeling Projects.</span></h2><p>You already know how to deliver beautiful projects. Build a smarter way to win and manage more of them.</p><button class="ignite-white-cta ignite-open-quiz" type="button">Get Your Free Growth Review →</button><div class="ignite-quiz-caption">APPLICATION SUBJECT TO QUALIFICATION AND WRITTEN GUARANTEE TERMS</div></div></section>
 </main>
-<div class="ignite-mobile-cta"><button class="ignite-open-quiz" type="button">See If You Qualify →</button></div>
 <footer><div class="container foot"><strong>© Ignite Company</strong><div class="footer-privacy">Information submitted here is saved securely to help us respond to your inquiry. Individual business results vary. No specific jobs, revenue or return are promised.</div></div></footer>
 <script>
 (function(){
