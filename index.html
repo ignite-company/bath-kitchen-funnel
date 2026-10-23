@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#050505">
 <link rel="preconnect" href="https://assets.cdn.filesafe.space" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a9c56db4013f612d9f.png" fetchpriority="high">
 <link rel="preload" as="image" href="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a9c56db4013f612d9e.png" fetchpriority="high">
 <link rel="preload" as="image" href="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b9a982125b9874903bea.png" fetchpriority="high">
@@ -383,6 +384,136 @@ footer .foot strong,footer .footer-privacy{color:#625c58!important}
 }
 @media(prefers-reduced-motion:reduce){.quiz-overlay #options .opt{transition:none!important}}
 
+
+/* Ignite remodeler funnel visual redesign. Quiz, lead endpoint, pixels and booking remain unchanged. */
+:root{color-scheme:dark;--bg:#050505;--surface:#101012;--surface2:#161619;--line:#ffffff20;--text:#fff;--muted:#acacb5;--red:#f32632;--red2:#ff4650}
+html,body{background:#050505!important;color:#fff!important}
+body{font-family:Inter,Arial,sans-serif!important}
+html{scroll-behavior:smooth}
+.ignite-red-flow{background:linear-gradient(110deg,#c00a14,#ff2633 30%,#ff858b 50%,#ff2633 70%,#c00a14);background-size:240% 100%;-webkit-background-clip:text;background-clip:text;color:transparent!important;animation:igniteTextFlow 4.5s linear infinite}
+@keyframes igniteTextFlow{from{background-position:200% 50%}to{background-position:-40% 50%}}
+@keyframes igniteBorderFlow{from{background-position:200% 50%}to{background-position:-60% 50%}}
+.ignite-topbar{padding:29px 0 10px;background:#050505}
+.ignite-topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.ignite-brand{display:flex;align-items:center;gap:13px;text-decoration:none;color:#fff}
+.ignite-brand img{width:53px;height:53px;object-fit:contain}
+.ignite-brand>span{display:flex;flex-direction:column;align-items:flex-start;gap:5px}
+.ignite-brand small{font-size:10px;font-weight:900;letter-spacing:1.2px;background:#f32632;padding:5px 9px;border-radius:5px;color:#fff}
+.ignite-brand strong{font-size:23px;letter-spacing:-1px;font-weight:900}
+.ignite-top-proof{font-size:14px;color:#99999f;font-weight:650}
+.ignite-top-proof span{color:#ffc52f;letter-spacing:1px;font-size:17px;margin-right:8px}
+.hero{background:transparent!important;padding:61px 0 85px!important;text-align:center}
+.hero>.container{width:min(1120px,calc(100% - 40px))!important}
+.hero-eyebrow{font-size:13px!important;color:#ff4650!important;font-weight:900!important;letter-spacing:2px!important;text-transform:uppercase!important}
+.hero h1{font-size:clamp(46px,6.1vw,82px)!important;line-height:1.02!important;letter-spacing:-.055em!important;color:#fff!important;max-width:990px!important;margin:20px auto 0!important;font-weight:900!important;text-wrap:balance}
+.hero h1 em{font-style:italic}
+.hero .hero-subheadline{color:#b6b6bd!important;max-width:760px!important;font-size:clamp(16px,2vw,20px)!important;margin:27px auto 0!important;line-height:1.55!important;font-weight:500!important}
+.ignite-offer-box{max-width:815px;margin:28px auto 0;padding:18px 24px;border:1px solid #f326324d;border-radius:12px;background:#ffffff06;color:#a1a1a8;font-size:16px;line-height:1.55}
+.ignite-offer-box strong{color:#ff4650}
+.ignite-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:960px;margin:44px auto 0;border:1px solid #ffffff20;border-radius:21px;overflow:hidden;background:#101012;box-shadow:0 0 38px #f3263216}
+.ignite-step{display:flex;align-items:center;justify-content:center;gap:14px;min-height:108px;padding:18px 8px;text-align:left;border-right:1px solid #ffffff18}
+.ignite-step:last-child{border:0}
+.ignite-step.active{background:radial-gradient(circle,#f326322a,transparent 80%)}
+.ignite-step>span,.ignite-section-pill b{width:47px;height:47px;flex:none;display:grid;place-items:center;border:3px solid #ffffff2c;border-radius:50%;font-size:20px;font-weight:900;color:#777}
+.ignite-step.active>span,.ignite-section-pill b{border-color:#f32632;color:#ff4650;box-shadow:0 0 20px #f3263233}
+.ignite-step small{display:block;margin-bottom:5px;color:#777;font-size:10px;font-weight:900;letter-spacing:1.4px}
+.ignite-step.active small{color:#ff4650}
+.ignite-step strong{color:#a1a1a9;font-size:17px;font-weight:800;line-height:1.25}
+.ignite-step.active strong{color:#fff}
+.ignite-video-heading{font-size:clamp(27px,3.1vw,41px);color:#fff!important;line-height:1.14;letter-spacing:-.045em;font-weight:900;max-width:820px;margin:44px auto 24px;text-wrap:balance}
+.ignite-video-frame{width:min(940px,100%);padding:4px;margin:auto;border-radius:22px;background:linear-gradient(135deg,#ff3c46,#9d0911,#ff3c46);box-shadow:0 0 18px #f3263280,0 0 55px #f3263228}
+.ignite-video-frame>div{aspect-ratio:16/9;overflow:hidden;border-radius:18px;background:#000}
+.ignite-video-frame video{display:block;width:100%;height:100%;object-fit:contain;background:#000}
+.ignite-primary-cta{margin-top:34px}
+.ignite-white-cta{display:inline-flex;align-items:center;justify-content:center;width:min(680px,100%);min-height:80px;padding:19px 25px;background:#fff;color:#050505!important;border:0;border-radius:15px;font-size:clamp(17px,2.2vw,24px);line-height:1.25;font-weight:900;text-decoration:none;text-align:center;transition:transform .2s,box-shadow .2s}
+.ignite-white-cta:hover{transform:translateY(-3px);box-shadow:0 15px 42px #f326324d}
+.ignite-primary-cta p,.ignite-quiz-caption{margin:18px auto 0;color:#818189;font-size:12px;font-weight:800;letter-spacing:1.7px;text-transform:uppercase}
+.ignite-section-pill{display:flex;align-items:center;gap:24px;max-width:1010px;margin:78px auto 0}
+.ignite-rule{flex:1;height:1px;background:#ffffff20}
+.ignite-section-pill>div{display:flex;align-items:center;text-align:left;gap:17px;min-width:480px;padding:17px 35px;border:1px solid #f326324c;border-radius:99px;background:#0c0c0e}
+.ignite-section-pill small{display:block;margin-bottom:5px;color:#f32632;font-size:11px;letter-spacing:1.8px;font-weight:900}
+.ignite-section-pill strong{color:#fff;font-size:24px;font-weight:900}
+.ignite-request-heading{max-width:980px;margin:46px auto 0;font-size:clamp(41px,5vw,66px);letter-spacing:-.052em;line-height:1.08;font-weight:900;color:#fff!important;text-wrap:balance}
+.ignite-request-heading span{display:block;margin-top:7px}
+.ignite-request-desc{max-width:760px;margin:25px auto 0;color:#aaaab1;font-size:17px;line-height:1.6}
+.ignite-quiz-glow{max-width:920px;margin:45px auto 0;padding:2px;border-radius:23px;background:linear-gradient(110deg,#68060c,#ff2531,#ff737a,#ff2531,#68060c);background-size:260% 100%;box-shadow:0 0 30px #f326323a,0 0 65px #f3263215;animation:igniteBorderFlow 5s linear infinite}
+.ignite-quiz-glow .quiz-overlay,.ignite-quiz-glow .quiz-overlay:not(.hidden){width:100%!important}
+.ignite-quiz-glow .quiz-dialog,.ignite-quiz-glow .quiz-overlay .quiz-dialog,.ignite-quiz-glow .quiz-overlay .quiz{background:#101012!important;border:0!important;border-radius:21px!important;box-shadow:none!important}
+.ignite-quiz-glow .quiz-overlay .quiz-top{background:#101012!important;border-bottom:1px solid #ffffff1b!important}
+.ignite-quiz-glow .quiz-top strong,.ignite-quiz-glow .quiz-top .secure-text{color:#acacb4!important}
+.ignite-quiz-glow .quiz-top #quiz-step-count{color:#eee!important}
+.ignite-quiz-glow .quiz .progress{background:#2b2b31!important}
+.ignite-quiz-glow .quiz .progress-bar{background:linear-gradient(90deg,#cb1520,#ff4650)!important}
+.ignite-quiz-glow .quiz-overlay .quiz-body{background:#101012!important}
+.ignite-quiz-glow .quiz-overlay .q-title{color:#fff!important}
+.ignite-quiz-glow .quiz-overlay .q-desc{color:#b3b3bb!important}
+.ignite-quiz-glow .quiz-overlay #options .opt{background:#1a1a1e!important;border-color:#ffffff25!important;color:#fff!important}
+.ignite-quiz-glow .quiz-overlay #options .opt:hover{background:#2a1920!important;border-color:#ff4650!important}
+.ignite-quiz-glow .quiz-overlay #options .opt.opt-picked,.ignite-quiz-glow .quiz-overlay #options .opt[aria-pressed=true]{background:#34171d!important;border-color:#ff4650!important;box-shadow:0 0 0 1px #f32632 inset!important}
+.ignite-quiz-glow .opt-emoji{background:#2a2326}
+.ignite-quiz-glow .quiz-overlay .circle{background:#18181b!important;border-color:#ffffff55!important}
+.ignite-quiz-glow .quiz-overlay .opt[aria-pressed=true] .circle{background:#f32632!important;border-color:#f32632!important;color:#fff!important}
+.ignite-quiz-glow .quiz-overlay .linkbtn,.ignite-quiz-glow .quiz-overlay .booking-back{color:#c5c5cf!important}
+.ignite-quiz-glow .quiz-auto-note{color:#9999a2!important}
+.ignite-quiz-glow .quiz-overlay .cta{background:#f32632!important;border-color:#f32632!important}
+.ignite-quiz-glow .quiz-overlay .field label{color:#e1e1e6!important}
+.ignite-quiz-glow .quiz-overlay .field input{background:#1b1b20!important;color:#fff!important;border-color:#ffffff30!important}
+.ignite-quiz-glow .quiz-overlay .field input::placeholder{color:#858590!important}
+.ignite-quiz-glow .quiz-overlay .consent{color:#b5b5c0!important}
+.ignite-quiz-glow .quiz-overlay .booking-eyebrow{color:#ff4650!important}
+.ignite-quiz-glow .quiz-overlay .booking-intro p{color:#c1c1c9!important}
+.ignite-quiz-glow .quiz-overlay .booking-intro p strong{color:#fff!important}
+.ignite-quiz-glow .quiz-overlay .booking-stage .calendar-link{color:#ff737a!important}
+.ignite-companies{background:#050505!important;padding:52px 0 42px!important;border:0!important}
+.ignite-companies-header h2{font-size:clamp(34px,4.8vw,60px)!important;color:#fff!important;font-weight:900!important;letter-spacing:-.05em;line-height:1.12;text-align:center}
+.ignite-companies-header{justify-content:center;flex-wrap:wrap}
+.ignite-logos-toggle{color:#bbbbc5!important}
+.ignite-logos-toggle:hover{color:#fff!important;background:#ffffff18!important}
+.ignite-logos-scroll{background:transparent!important;padding:24px 0}
+.ignite-proof-logo-card{background:linear-gradient(145deg,#ffffff10,#ffffff04),#0c0c0e!important;border:1px solid #ffffff25!important;border-radius:19px!important;box-shadow:0 8px 30px #0009!important;width:178px;height:110px;padding:16px}
+.ignite-proof-logo-card:before{background:radial-gradient(ellipse at center,#ff465077,#f326323f 43%,transparent 76%)!important;filter:blur(15px)!important}
+.ignite-proof-logo-card img{filter:drop-shadow(0 0 8px #ffffff20)!important}
+.ignite-proof-section{background:#050505!important;padding:70px 0 93px!important;border:0!important}
+.ignite-proof-section .eyebrow{color:#ff4650!important;font-weight:900;letter-spacing:2px}
+.ignite-proof-header{justify-content:center;text-align:center}
+.ignite-proof-header h2{color:#fff!important;font-weight:900}
+.ignite-proof-header p{color:#acacb5!important;margin:0 auto}
+.ignite-proof-slide{background:#101012!important;border:1px solid #ffffff23!important;box-shadow:0 12px 38px #0009!important;border-radius:20px!important}
+.ignite-proof-help{color:#777783}
+.ignite-proof-arrow{color:#fff!important;background:#101012!important;border-color:#ffffff35!important}
+.ignite-faq{background:#050505;padding:70px 0 100px}
+.ignite-faq-inner{max-width:920px}
+.ignite-faq h2{font-size:clamp(35px,4.6vw,58px);font-weight:900;letter-spacing:-.05em;line-height:1.13;text-align:center;color:#fff;margin:0 0 40px}
+.ignite-faq-list{display:grid;gap:15px}
+.ignite-faq-list details{padding:2px;border-radius:18px;background:linear-gradient(110deg,#73070d,#d61925,#ff5962,#f32632,#85080f);background-size:260% 100%;animation:igniteBorderFlow 7s linear infinite}
+.ignite-faq-list summary{display:flex;align-items:center;justify-content:space-between;gap:18px;background:#0d0d0f;border-radius:16px;padding:23px 24px;min-height:80px;color:#fff;font-size:18px;font-weight:750;text-align:left;cursor:pointer;list-style:none}
+.ignite-faq-list summary::-webkit-details-marker{display:none}
+.ignite-faq-list summary span{display:grid;place-items:center;flex:none;width:38px;height:38px;border:1px solid #f3263280;border-radius:50%;background:#f3263220;color:#ff4650;font-size:25px}
+.ignite-faq-list details[open] summary span{transform:rotate(45deg)}
+.ignite-faq-list details p{background:#0d0d0f;color:#b9b9c2;border-radius:16px;padding:21px 24px 25px;margin:2px 0 0;font-size:16px;line-height:1.65}
+.ignite-finish{background:#050505;text-align:center;padding:82px 0 114px}
+.ignite-finish-eyebrow{font-size:12px;letter-spacing:2px;color:#ff4650;font-weight:900;margin-bottom:25px}
+.ignite-finish h2{font-size:clamp(44px,5.7vw,75px);font-weight:900;letter-spacing:-.05em;line-height:1.07;color:#fff;margin:0 auto}
+.ignite-finish p{max-width:740px;margin:29px auto 39px;color:#adaeb7;font-size:18px}
+footer{background:#050505!important;color:#777781!important;border-top:1px solid #ffffff20!important}
+footer .foot strong,footer .footer-privacy{color:#777781!important}
+@media(max-width:767px){
+.ignite-topbar{padding:12px 0 4px}.ignite-brand img{width:38px;height:38px}.ignite-brand small{font-size:7px;padding:3px 7px}.ignite-brand strong{font-size:17px}.ignite-top-proof{font-size:9px}.ignite-top-proof span{font-size:10px;margin-right:3px}
+.hero{padding:32px 0 58px!important}.hero>.container{width:calc(100% - 28px)!important}.hero-eyebrow{font-size:9px!important;letter-spacing:1.25px!important}
+.hero h1{font-size:clamp(35px,9.5vw,53px)!important;line-height:1.035!important;margin:15px auto 0!important}.hero .hero-subheadline{font-size:15px!important;margin:21px auto 0!important}
+.ignite-offer-box{padding:14px;margin-top:23px;font-size:12px}.ignite-steps{margin-top:30px;border-radius:17px}.ignite-step{flex-direction:column;gap:8px;min-height:118px;padding:13px 5px;text-align:center}.ignite-step>span{width:38px;height:38px;border-width:2px;font-size:15px}.ignite-step small{font-size:7px;letter-spacing:.6px}.ignite-step strong{font-size:11px}
+.ignite-video-heading{font-size:clamp(23px,6vw,32px);margin:31px auto 17px}.ignite-video-frame{padding:3px;border-radius:18px}.ignite-video-frame>div{border-radius:15px}
+.ignite-white-cta{min-height:69px;padding:16px 14px;font-size:18px}.ignite-primary-cta p,.ignite-quiz-caption{font-size:10px;letter-spacing:1px}
+.ignite-section-pill{margin-top:57px}.ignite-rule{display:none}.ignite-section-pill>div{min-width:0;width:100%;padding:14px 17px;gap:13px}.ignite-section-pill b{width:40px;height:40px;border-width:2px;font-size:16px}.ignite-section-pill strong{font-size:17px}.ignite-section-pill small{font-size:9px}
+.ignite-request-heading{font-size:clamp(32px,8.5vw,43px);margin-top:34px}.ignite-request-desc{font-size:15px;margin-top:20px}.ignite-quiz-glow{margin-top:30px;border-radius:18px}
+.ignite-quiz-glow .quiz-dialog,.ignite-quiz-glow .quiz-overlay .quiz{border-radius:16px!important}
+.ignite-companies{padding:43px 0 30px!important}.ignite-companies-header h2{font-size:33px!important}.ignite-proof-logo-card{width:140px;height:92px;padding:13px}
+.ignite-proof-section{padding:54px 0 70px!important}.ignite-faq{padding:45px 0 75px}.ignite-faq h2{font-size:34px}.ignite-faq-list summary{font-size:15px;padding:17px 16px;min-height:70px}.ignite-faq-list details p{font-size:14px;padding:18px 16px}
+.ignite-finish{padding:64px 0 85px}.ignite-finish p{font-size:16px}
+}
+@media(max-width:390px){.ignite-top-proof{font-size:0}.ignite-top-proof span{font-size:11px}.hero h1{font-size:34px!important}.ignite-step strong{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.ignite-red-flow,.ignite-faq-list details,.ignite-quiz-glow{animation:none!important}}
+
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -410,13 +541,23 @@ src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
 /></noscript>
 
 <main id="top">
+<header class="ignite-topbar"><div class="container ignite-topbar-inner">
+ <a href="#top" class="ignite-brand"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b7c8f90b5bc73b099791.png" alt="Ignite Company" width="50" height="50"><span><small>GROWTH SYSTEMS</small><strong>IGNITE</strong></span></a>
+ <div class="ignite-top-proof"><span>★★★★★</span> $1M generated for our clients</div>
+</div></header>
 <section class="hero" aria-labelledby="hero-heading"><div class="container">
-<div class="top-proof-line" aria-label="Client results">$1M Generated for Our Clients</div>
-<div class="hero-eyebrow">For kitchen &amp; bathroom remodelers</div>
-<h1 id="hero-heading">More kitchen &amp; bath projects.<br><span class="accent">A smarter way to grow.</span></h1>
-<p class="hero-subheadline">From the first homeowner inquiry to the signed remodeling project, your systems should do more of the work. See where your kitchen and bath business can grow.</p>
-<div class="hero-time"><span class="hero-time-icon" aria-hidden="true">◷</span><span>Takes about 60 seconds</span></div>
-<div class="quiz-overlay" id="quiz-overlay"><div class="quiz-dialog"><div class="quiz-scroll"><section class="section qualification" id="apply"><div class="container"><div class="quiz" id="quiz"><div class="quiz-top"><strong id="quiz-step-title">About your remodel business</strong><span id="quiz-step-count">Step 1 of 4</span><span class="secure-text">🔒 Secure</span></div><div class="progress"><div class="progress-bar" id="quiz-progress"></div></div>
+ <div class="hero-eyebrow">FOR KITCHEN &amp; BATHROOM REMODELING COMPANIES</div>
+ <h1 id="hero-heading">More <em class="ignite-red-flow">Kitchen &amp; Bath</em> Projects.<br>A Smarter Way to Grow.</h1>
+ <p class="hero-subheadline">Turn more homeowner inquiries into qualified consultations, booked estimates, and signed remodeling projects with systems built around your business.</p>
+ <div class="ignite-offer-box">Better lead flow. Faster follow-up. A more predictable project pipeline. <strong>Built for remodelers, not a generic marketing template.</strong></div>
+ <div class="ignite-steps"><div class="ignite-step active"><span>1</span><div><small>STEP 1 OF 3</small><strong>Watch the Video</strong></div></div><div class="ignite-step"><span>2</span><div><small>STEP 2 OF 3</small><strong>Tell Us About You</strong></div></div><div class="ignite-step"><span>3</span><div><small>STEP 3 OF 3</small><strong>Book Your Review</strong></div></div></div>
+ <h2 class="ignite-video-heading">Hear What <span class="ignite-red-flow">an Ignite Client Has to Say.</span></h2>
+ <div class="ignite-video-frame"><div><video controls autoplay muted playsinline preload="metadata" aria-label="Ignite client testimonial"><source src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a336b225408771d165c7749.mp4" type="video/mp4">Your browser does not support video playback.</video></div></div>
+ <div class="ignite-primary-cta"><a href="#apply" class="ignite-white-cta">See How This Could Work for Your Business →</a><p>FREE REMODELING GROWTH REVIEW · NO OBLIGATION</p></div>
+ <div class="ignite-section-pill"><span class="ignite-rule"></span><div><b>2</b><span><small>STEP 2 OF 3</small><strong>Your Remodeling Business</strong></span></div><span class="ignite-rule"></span></div>
+ <h2 class="ignite-request-heading">Tell Us About Your Company.<span class="ignite-red-flow">Let's Find Your Next Growth Opportunity.</span></h2>
+ <p class="ignite-request-desc">Answer a few quick questions about your remodeling business, then choose a time for your free growth systems review.</p>
+ <div class="ignite-quiz-glow"><div class="quiz-overlay" id="quiz-overlay"><div class="quiz-dialog"><div class="quiz-scroll"><section class="section qualification" id="apply"><div class="container"><div class="quiz" id="quiz"><div class="quiz-top"><strong id="quiz-step-title">About your remodel business</strong><span id="quiz-step-count">Step 1 of 4</span><span class="secure-text">🔒 Secure</span></div><div class="progress"><div class="progress-bar" id="quiz-progress"></div></div>
 <div class="quiz-body">
 <div id="question-view"><h3 id="question" class="q-title"></h3><p id="question-desc" class="q-desc"></p><div id="options" class="options"></div><p class="error" id="quiz-error" role="alert"></p><div class="quiz-actions"><button class="linkbtn" type="button" id="prev" disabled>← Back</button><span class="quiz-auto-note">Select an answer to continue</span></div></div>
 <form id="contact-form" class="hidden" novalidate><h3 class="q-title">Where can we reach you?</h3><p class="q-desc">Tell us how to contact you about your kitchen and bath remodeling business, then choose a call time.</p><div class="formgrid">
@@ -441,12 +582,12 @@ src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
 </div></div>
 </div></section>
 </div></div></div>
-
+</div><div class="ignite-quiz-caption">BUILT FOR REMODELERS · SIMPLE, SECURE APPLICATION</div>
 </div></section>
 <section class="ignite-companies" aria-labelledby="ignite-companies-title">
   <div class="container">
     <div class="ignite-companies-header">
-      <h2 id="ignite-companies-title">Companies we've worked with</h2>
+      <h2 id="ignite-companies-title">Companies That <span class="ignite-red-flow">Trusted Ignite.</span></h2>
       <button type="button" class="ignite-logos-toggle" id="ignite-logos-toggle" aria-label="Pause automatic logo slider" aria-pressed="false"><span id="ignite-logos-toggle-icon" aria-hidden="true">Ⅱ</span><span id="ignite-logos-toggle-text">Pause</span></button>
     </div>
     <div class="ignite-logos-scroll" id="ignite-logos-scroll" tabindex="0" role="group" aria-label="Company logos, scroll horizontally for more">
@@ -507,9 +648,9 @@ src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
   <div class="container">
     <div class="ignite-proof-header">
       <div>
-        <div class="eyebrow">A look at the work</div>
-        <h2 id="ignite-proof-title">Proof you can <span class="accent">actually see.</span></h2>
-        <p>Browse examples of our work and results. Tap any image to take a closer look.</p>
+        <div class="eyebrow">Step 3 · Real client results</div>
+        <h2 id="ignite-proof-title">Real Work. <span class="ignite-red-flow">Real Proof.</span></h2>
+        <p>Browse examples of work and results delivered by Ignite. Tap an image to take a closer look.</p>
       </div>
 
     </div>
@@ -558,6 +699,16 @@ src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
     <button class="ignite-proof-arrow" type="button" id="ignite-proof-lightbox-next" aria-label="Next enlarged image"><svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg></button>
   </div>
 </dialog>
+
+<section class="ignite-faq" id="faq"><div class="container ignite-faq-inner">
+<h2>A Few Things You <span class="ignite-red-flow">Might Be Wondering.</span></h2>
+<div class="ignite-faq-list">
+<details><summary>Is this just another advertising service?<span>+</span></summary><p>No. We look at your entire path from a homeowner inquiry to a booked estimate and signed remodeling project. Depending on your business, the system can include customer acquisition, a website or funnel, automated follow-up, CRM tracking, and appointment booking.</p></details>
+<details><summary>Does it work for both kitchen and bathroom remodelers?<span>+</span></summary><p>Yes. We focus on the types of projects you want, your service area, and how your team currently handles new inquiries and estimates.</p></details>
+<details><summary>Do I need to replace my website or CRM?<span>+</span></summary><p>Not necessarily. We review what you already use and look for practical improvements. The recommended buildout is tailored to your company.</p></details>
+<details><summary>What happens after I answer the questions?<span>+</span></summary><p>Your details are saved securely, and you can choose a time for a free remodeling systems review. Your call is booked only after you confirm a time on the calendar.</p></details>
+</div></div></section>
+<section class="ignite-finish"><div class="container"><div class="ignite-finish-eyebrow">GROW SMARTER WITH IGNITE</div><h2>Better Systems.<br><span class="ignite-red-flow">More Remodeling Projects.</span></h2><p>You already know how to deliver beautiful projects. Build a smarter way to win and manage more of them.</p><a class="ignite-white-cta" href="#apply">Get Your Free Growth Review →</a><div class="ignite-quiz-caption">NO OBLIGATION · BUILT AROUND YOUR REMODELING COMPANY</div></div></section>
 </main>
 <footer><div class="container foot"><strong>© Ignite Company</strong><div class="footer-privacy">Information submitted here is saved securely to help us respond to your inquiry. Individual business results vary. No specific jobs, revenue or return are promised.</div></div></footer>
 <script>
