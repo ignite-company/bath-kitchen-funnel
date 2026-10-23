@@ -514,6 +514,97 @@ footer .foot strong,footer .footer-privacy{color:#777781!important}
 @media(max-width:390px){.ignite-top-proof{font-size:0}.ignite-top-proof span{font-size:11px}.hero h1{font-size:34px!important}.ignite-step strong{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.ignite-red-flow,.ignite-faq-list details,.ignite-quiz-glow{animation:none!important}}
 
+
+/* Mobile-first offer and accessible modal refresh */
+body.quiz-open{overflow:hidden!important}
+.ignite-above-fold{margin-top:22px}
+.ignite-above-fold p{font-size:11px}
+.ignite-offer-box{margin-top:24px}
+.ignite-steps{margin-top:25px;max-width:780px}
+.ignite-step{min-height:67px;padding:9px 10px;gap:10px}
+.ignite-step>span{width:34px;height:34px;font-size:14px;border-width:2px}
+.ignite-step strong{font-size:15px}
+.ignite-video-heading{margin-top:36px}
+.ignite-video-box{position:relative;width:100%;height:100%}
+.ignite-unmute{position:absolute;left:50%;bottom:19px;transform:translateX(-50%);z-index:5;border:1px solid #ffffff95;border-radius:40px;background:#0b0b0bed;color:#fff;font-weight:800;padding:12px 20px;font-size:14px;white-space:nowrap;box-shadow:0 4px 30px #000b}
+.ignite-unmute:hover{background:#fa2632;color:#fff}
+#quiz-overlay.hidden{display:none!important}
+#quiz-overlay:not(.hidden){display:flex!important;position:fixed!important;inset:0!important;z-index:1200!important;align-items:center!important;justify-content:center!important;background:#000d!important;backdrop-filter:blur(11px)!important;-webkit-backdrop-filter:blur(11px)!important;overflow:hidden!important;max-height:none!important;width:100%!important;height:100dvh!important;margin:0!important;padding:16px!important}
+#quiz-overlay .quiz-dialog{position:relative!important;display:flex!important;flex-direction:column!important;flex:0 1 810px!important;max-width:810px!important;width:100%!important;height:min(780px,calc(100dvh - 32px))!important;max-height:calc(100dvh - 32px)!important;min-height:0!important;overflow:hidden!important;border:1px solid #ffffff36!important;border-radius:22px!important;background:#101012!important;box-shadow:0 20px 90px #000!important;outline:none}
+#quiz-overlay .ignite-modal-bar{display:flex;align-items:center;justify-content:space-between;flex:none;gap:14px;padding:10px 16px 10px 24px;min-height:60px;background:#18181d;border-bottom:1px solid #ffffff20;color:#fff;font-size:14px;font-weight:850}
+#quiz-overlay #ignite-quiz-close{display:grid;place-items:center;flex:none;width:42px;height:42px;border:1px solid #ffffff45;border-radius:50%;color:#fff;background:#2b2b33;font-size:17px;line-height:1}
+#quiz-overlay #ignite-quiz-close:hover{background:#d52230}
+#quiz-overlay .quiz-scroll{display:block!important;flex:1 1 auto!important;min-height:0!important;max-height:none!important;height:auto!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain;scrollbar-color:#6b6b74 #141416}
+#quiz-overlay .qualification{padding:18px!important;background:transparent!important;border:0!important}
+#quiz-overlay .qualification .container{width:100%!important}
+#quiz-overlay .quiz{width:100%!important;max-width:none!important;background:#101012!important;border:1px solid #ffffff20!important;border-radius:16px!important;box-shadow:none!important}
+#quiz-overlay .quiz-top{background:#101012!important;border-bottom:1px solid #ffffff1e!important}
+#quiz-overlay .quiz-top strong,#quiz-overlay .quiz-top .secure-text{color:#b7b7c0!important}
+#quiz-overlay .quiz-top #quiz-step-count{color:#fff!important}
+#quiz-overlay .progress{background:#27272d!important}
+#quiz-overlay .progress-bar{background:linear-gradient(90deg,#b90b15,#ff4650)!important}
+#quiz-overlay .quiz-body{background:#101012!important;padding:28px 28px 30px!important;min-height:0!important}
+#quiz-overlay .q-title{color:#fff!important}
+#quiz-overlay .q-desc{color:#b8b8c1!important}
+#quiz-overlay #options .opt{background:#1a1a20!important;border:1px solid #ffffff24!important;color:#fff!important;min-height:57px!important;padding:10px 13px!important}
+#quiz-overlay #options .opt:hover{border-color:#ff4650!important;background:#311920!important}
+#quiz-overlay #options .opt.opt-picked,#quiz-overlay #options .opt[aria-pressed=true]{background:#34171d!important;border-color:#ff4650!important;box-shadow:0 0 0 1px #f32632 inset!important}
+#quiz-overlay .opt-emoji{background:#302125!important;width:37px;height:37px;font-size:19px}
+#quiz-overlay .circle{background:#1a1a20!important;border-color:#ffffff4d!important}
+#quiz-overlay .opt[aria-pressed=true] .circle{background:#f32632!important;border-color:#f32632!important;color:#fff!important}
+#quiz-overlay .quiz-auto-note{color:#9999a3!important}
+#quiz-overlay .linkbtn,#quiz-overlay .booking-back{color:#bcbcc5!important}
+#quiz-overlay .cta{background:#f32632!important;color:#fff!important;border:1px solid #f32632!important;border-radius:12px!important}
+#quiz-overlay .field label{color:#ececf1!important}
+#quiz-overlay .field input{color:#fff!important;background:#1b1b21!important;border-color:#ffffff30!important}
+#quiz-overlay .field input::placeholder{color:#8b8b95!important}
+#quiz-overlay .consent{color:#b9b9c2!important}
+#quiz-overlay .booking-eyebrow{color:#ff4650!important}
+#quiz-overlay .booking-intro p{color:#babac4!important}
+#quiz-overlay .booking-intro p strong{color:#fff!important}
+#quiz-overlay .booking-stage .calendar-link{color:#ff7a81!important}
+#quiz-overlay .calendar-shell{background:#fff!important}
+.ignite-mobile-cta{display:none}
+@media(max-width:767px){
+ .ignite-topbar{padding:8px 0 2px}
+ .hero{padding:19px 0 45px!important}
+ .hero-eyebrow{font-size:9px!important;letter-spacing:.8px!important}
+ .hero h1{font-size:clamp(36px,10vw,49px)!important;line-height:1.04!important;letter-spacing:-.035em!important;margin-top:12px!important}
+ .hero .hero-subheadline{font-size:14px!important;line-height:1.42!important;margin-top:15px!important;max-width:365px!important}
+ .ignite-above-fold{margin-top:17px}
+ .ignite-above-fold .ignite-white-cta{min-height:56px;padding:12px 14px;font-size:16px}
+ .ignite-above-fold p{font-size:9px!important;letter-spacing:.6px;margin-top:8px!important}
+ .ignite-offer-box{font-size:11px;padding:10px 13px;margin-top:17px;line-height:1.4}
+ .ignite-steps{margin-top:16px;border-radius:12px}
+ .ignite-step{min-height:49px;gap:6px;flex-direction:row;padding:7px 4px}
+ .ignite-step>span{height:26px;width:26px;flex:none;font-size:12px;border-width:2px}
+ .ignite-step strong{font-size:11px;line-height:1.1}
+ .ignite-video-heading{font-size:23px;margin:25px auto 15px}
+ .ignite-after-video{margin-top:25px}
+ .ignite-after-video .ignite-white-cta{min-height:58px;font-size:16px}
+ .ignite-mobile-cta{display:block;position:fixed;z-index:90;left:0;right:0;bottom:0;background:linear-gradient(0deg,#050505 74%,#050505c9);padding:12px 14px max(12px,env(safe-area-inset-bottom));box-shadow:0 -9px 24px #0009}
+ .ignite-mobile-cta button{width:100%;display:block;min-height:49px;border-radius:12px;background:#fff;color:#090909;border:0;font-size:15px;font-weight:900}
+ body.quiz-open .ignite-mobile-cta{display:none}
+ footer{padding-bottom:92px!important}
+ #quiz-overlay:not(.hidden){padding:6px!important}
+ #quiz-overlay .quiz-dialog{height:calc(100dvh - 12px)!important;max-height:calc(100dvh - 12px)!important;border-radius:17px!important}
+ #quiz-overlay .ignite-modal-bar{min-height:55px;padding:6px 11px 6px 14px;font-size:12px}
+ #quiz-overlay #ignite-quiz-close{width:40px;height:40px}
+ #quiz-overlay .qualification{padding:10px 7px!important}
+ #quiz-overlay .quiz{border-radius:12px!important}
+ #quiz-overlay .quiz-top{padding:12px 10px!important}
+ #quiz-overlay .quiz-body{padding:16px 12px 20px!important}
+ #quiz-overlay .q-title{font-size:24px!important}
+ #quiz-overlay .q-desc{margin-bottom:15px!important;font-size:12px!important}
+ #quiz-overlay #options{grid-template-columns:1fr!important;gap:8px!important}
+ #quiz-overlay #options .opt{min-height:48px!important;padding:7px 10px!important;font-size:13px!important}
+ #quiz-overlay .opt-emoji{width:34px;height:34px;font-size:17px}
+ #quiz-overlay .quiz-actions{margin-top:12px!important}
+ #quiz-overlay .formgrid{grid-template-columns:1fr!important}
+ #quiz-overlay .booking-stage .calendar-shell iframe{height:620px!important}
+}
+@media(prefers-reduced-motion:reduce){.ignite-mobile-cta{transition:none}}
+
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -547,17 +638,16 @@ src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
 </div></header>
 <section class="hero" aria-labelledby="hero-heading"><div class="container">
  <div class="hero-eyebrow">FOR KITCHEN &amp; BATHROOM REMODELING COMPANIES</div>
- <h1 id="hero-heading">More <em class="ignite-red-flow">Kitchen &amp; Bath</em> Projects.<br>A Smarter Way to Grow.</h1>
- <p class="hero-subheadline">Turn more homeowner inquiries into qualified consultations, booked estimates, and signed remodeling projects with systems built around your business.</p>
+ <h1 id="hero-heading">2+ New projects next month <em class="ignite-red-flow">or you don\'t pay</em></h1>
+ <p class="hero-subheadline">We help kitchen and bath remodelers turn more homeowners into booked projects, with a results-backed customer acquisition system.</p>
+ <div class="ignite-primary-cta ignite-above-fold"><button class="ignite-white-cta ignite-open-quiz" type="button">See If Your Company Qualifies →</button><p>FREE GROWTH REVIEW · QUALIFICATION AND WRITTEN TERMS APPLY</p></div>
  <div class="ignite-offer-box">Better lead flow. Faster follow-up. A more predictable project pipeline. <strong>Built for remodelers, not a generic marketing template.</strong></div>
- <div class="ignite-steps"><div class="ignite-step active"><span>1</span><div><small>STEP 1 OF 3</small><strong>Watch the Video</strong></div></div><div class="ignite-step"><span>2</span><div><small>STEP 2 OF 3</small><strong>Tell Us About You</strong></div></div><div class="ignite-step"><span>3</span><div><small>STEP 3 OF 3</small><strong>Book Your Review</strong></div></div></div>
+ <div class="ignite-steps" aria-label="How it works"><div class="ignite-step active"><span>1</span><div><strong>Watch</strong></div></div><div class="ignite-step"><span>2</span><div><strong>Qualify</strong></div></div><div class="ignite-step"><span>3</span><div><strong>Book</strong></div></div></div>
  <h2 class="ignite-video-heading">Hear What <span class="ignite-red-flow">an Ignite Client Has to Say.</span></h2>
- <div class="ignite-video-frame"><div><video controls autoplay muted playsinline preload="metadata" aria-label="Ignite client testimonial"><source src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a336b225408771d165c7749.mp4" type="video/mp4">Your browser does not support video playback.</video></div></div>
- <div class="ignite-primary-cta"><a href="#apply" class="ignite-white-cta">See How This Could Work for Your Business →</a><p>FREE REMODELING GROWTH REVIEW · NO OBLIGATION</p></div>
- <div class="ignite-section-pill"><span class="ignite-rule"></span><div><b>2</b><span><small>STEP 2 OF 3</small><strong>Your Remodeling Business</strong></span></div><span class="ignite-rule"></span></div>
- <h2 class="ignite-request-heading">Tell Us About Your Company.<span class="ignite-red-flow">Let's Find Your Next Growth Opportunity.</span></h2>
- <p class="ignite-request-desc">Answer a few quick questions about your remodeling business, then choose a time for your free growth systems review.</p>
- <div class="ignite-quiz-glow"><div class="quiz-overlay" id="quiz-overlay"><div class="quiz-dialog"><div class="quiz-scroll"><section class="section qualification" id="apply"><div class="container"><div class="quiz" id="quiz"><div class="quiz-top"><strong id="quiz-step-title">About your remodel business</strong><span id="quiz-step-count">Step 1 of 4</span><span class="secure-text">🔒 Secure</span></div><div class="progress"><div class="progress-bar" id="quiz-progress"></div></div>
+ <div class="ignite-video-frame"><div class="ignite-video-box"><video id="ignite-client-video" controls autoplay playsinline preload="metadata" aria-label="Ignite client testimonial"><source src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a336b225408771d165c7749.mp4" type="video/mp4">Your browser does not support video playback.</video><button type="button" id="ignite-unmute" class="ignite-unmute hidden" aria-label="Play video with sound">🔊 Tap for sound</button></div></div>
+ <div class="ignite-primary-cta ignite-after-video"><button class="ignite-white-cta ignite-open-quiz" type="button">Apply for the 2+ Projects Offer →</button><p>60-SECOND APPLICATION · QUALIFICATION AND WRITTEN TERMS APPLY</p></div>
+</div></section>
+<div class="quiz-overlay hidden" id="quiz-overlay"><div class="quiz-dialog" role="dialog" aria-modal="true" aria-labelledby="quiz-modal-title" tabindex="-1"><div class="ignite-modal-bar"><span id="quiz-modal-title">Your Remodeling Growth Review</span><button type="button" id="ignite-quiz-close" aria-label="Close application">✕</button></div><div class="quiz-scroll"><section class="section qualification"><div class="container"><div class="quiz" id="quiz"><div class="quiz-top"><strong id="quiz-step-title">About your remodel business</strong><span id="quiz-step-count">Step 1 of 4</span><span class="secure-text">🔒 Secure</span></div><div class="progress"><div class="progress-bar" id="quiz-progress"></div></div>
 <div class="quiz-body">
 <div id="question-view"><h3 id="question" class="q-title"></h3><p id="question-desc" class="q-desc"></p><div id="options" class="options"></div><p class="error" id="quiz-error" role="alert"></p><div class="quiz-actions"><button class="linkbtn" type="button" id="prev" disabled>← Back</button><span class="quiz-auto-note">Select an answer to continue</span></div></div>
 <form id="contact-form" class="hidden" novalidate><h3 class="q-title">Where can we reach you?</h3><p class="q-desc">Tell us how to contact you about your kitchen and bath remodeling business, then choose a call time.</p><div class="formgrid">
@@ -582,8 +672,7 @@ src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
 </div></div>
 </div></section>
 </div></div></div>
-</div><div class="ignite-quiz-caption">BUILT FOR REMODELERS · SIMPLE, SECURE APPLICATION</div>
-</div></section>
+
 <section class="ignite-companies" aria-labelledby="ignite-companies-title">
   <div class="container">
     <div class="ignite-companies-header">
@@ -708,8 +797,9 @@ src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
 <details><summary>Do I need to replace my website or CRM?<span>+</span></summary><p>Not necessarily. We review what you already use and look for practical improvements. The recommended buildout is tailored to your company.</p></details>
 <details><summary>What happens after I answer the questions?<span>+</span></summary><p>Your details are saved securely, and you can choose a time for a free remodeling systems review. Your call is booked only after you confirm a time on the calendar.</p></details>
 </div></div></section>
-<section class="ignite-finish"><div class="container"><div class="ignite-finish-eyebrow">GROW SMARTER WITH IGNITE</div><h2>Better Systems.<br><span class="ignite-red-flow">More Remodeling Projects.</span></h2><p>You already know how to deliver beautiful projects. Build a smarter way to win and manage more of them.</p><a class="ignite-white-cta" href="#apply">Get Your Free Growth Review →</a><div class="ignite-quiz-caption">NO OBLIGATION · BUILT AROUND YOUR REMODELING COMPANY</div></div></section>
+<section class="ignite-finish"><div class="container"><div class="ignite-finish-eyebrow">GROW SMARTER WITH IGNITE</div><h2>Better Systems.<br><span class="ignite-red-flow">More Remodeling Projects.</span></h2><p>You already know how to deliver beautiful projects. Build a smarter way to win and manage more of them.</p><button class="ignite-white-cta ignite-open-quiz" type="button">Get Your Free Growth Review →</button><div class="ignite-quiz-caption">APPLICATION SUBJECT TO QUALIFICATION AND WRITTEN GUARANTEE TERMS</div></div></section>
 </main>
+<div class="ignite-mobile-cta"><button class="ignite-open-quiz" type="button">See If You Qualify →</button></div>
 <footer><div class="container foot"><strong>© Ignite Company</strong><div class="footer-privacy">Information submitted here is saved securely to help us respond to your inquiry. Individual business results vary. No specific jobs, revenue or return are promised.</div></div></footer>
 <script>
 (function(){
@@ -719,14 +809,16 @@ function trackEvent(name,properties={}){
 }
 const steps=[
  {key:'project_type',title:'What does your remodeling company specialize in?',desc:'Select the type of projects you want to grow.',options:[['kitchens','Kitchen Remodeling'],['bathrooms','Bathroom Remodeling'],['both','Kitchens & Bathrooms']]},
+ {key:'monthly_revenue',title:'How much revenue is your remodeling company generating per month?',desc:'Choose your current average monthly revenue.',options:[['under_20k','Under $20,000'],['20k_50k','$20,000–$49,999'],['50k_100k','$50,000–$99,999'],['100k_plus','$100,000+']]},
  {key:'biggest_gap',title:"What's holding back more kitchen and bath projects?",desc:'Choose the biggest challenge in your lead-to-project process.',options:[['not_enough_leads','Not enough homeowner inquiries'],['lead_quality','Too many price shoppers'],['low_conversion','Consultations not becoming jobs'],['poor_follow_up','Estimates and leads go cold'],['inconsistent_growth','Unpredictable project pipeline']]},
  {key:'readiness',title:'How soon would you want a better system in place?',desc:'One that helps turn remodeling inquiries into booked projects.',options:[['ready_now','As soon as possible'],['need_details','Show me how it works'],['not_ready','Just exploring for now']]}
 ];
 const state={};let step=0,submitting=false,isAdvancing=false,advanceTimer=null;
 const $=id=>document.getElementById(id),question=$('question'),desc=$('question-desc'),options=$('options'),err=$('quiz-error');
-/* The original questions now live in the inline, always-visible quiz. */
+/* Qualification questions are presented inside an accessible popup. */
 const optionEmoji={
  kitchens:'🍳',bathrooms:'🛁',both:'🏡',
+ under_20k:'🌱','20k_50k':'📈','50k_100k':'💰','100k_plus':'🚀',
  not_enough_leads:'📉',lead_quality:'🎯',low_conversion:'📞',poor_follow_up:'⏰',inconsistent_growth:'📊',
  ready_now:'🚀',need_details:'💬',not_ready:'🗓️'
 };
@@ -869,7 +961,7 @@ function showBookingStep(){
  $('quiz-progress').style.width='90%';
  if(!$('calendar').getAttribute('src'))$('calendar').src=$('calendar').dataset.src;
  $('quiz-overlay').querySelector('.quiz-scroll').scrollTop=0;
- $('quiz').scrollIntoView({behavior:'smooth',block:'start'});
+ if(!$('quiz-overlay').classList.contains('hidden'))$('quiz-overlay').querySelector('.quiz-scroll').scrollTop=0;
 }
 function readSubmission(){try{const r=JSON.parse(window.sessionStorage.getItem('igniteHomeServicesSubmission')||'null');if(r&&r.submission_id&&r.edit_token&&['kitchens','bathrooms','both'].includes(r.answers?.project_type))return r;}catch{}return null;}
 function returnToAnswers(){$('booking-reveal').classList.add('hidden');step=steps.length-1;draw();$('quiz-overlay').querySelector('.quiz-scroll').scrollTo({top:0,behavior:'smooth'});question.setAttribute('tabindex','-1');question.focus({preventScroll:true});}
@@ -913,7 +1005,61 @@ if('IntersectionObserver' in window){
  });
 }
 
-/* Inline quiz replaces the original modal and its scroll-lock behavior. */
+/* Popup controls preserve quiz answers, lead tracking, form save and calendar. */
+const quizOverlay=$('quiz-overlay');
+const quizDialog=quizOverlay.querySelector('.quiz-dialog');
+const closeQuizBtn=$('ignite-quiz-close');
+let returnFocusTo=null;
+function openQuiz(){
+ returnFocusTo=document.activeElement;
+ quizOverlay.classList.remove('hidden');
+ document.body.classList.add('quiz-open');
+ trackEvent('quiz_popup_open',{source:'remodeler_offer'});
+ quizDialog.focus({preventScroll:true});
+}
+function closeQuiz(){
+ if(submitting)return;
+ quizOverlay.classList.add('hidden');
+ document.body.classList.remove('quiz-open');
+ if(returnFocusTo&&returnFocusTo.isConnected)returnFocusTo.focus({preventScroll:true});
+}
+document.querySelectorAll('.ignite-open-quiz').forEach(button=>button.addEventListener('click',openQuiz));
+closeQuizBtn.addEventListener('click',closeQuiz);
+quizOverlay.addEventListener('click',event=>{if(event.target===quizOverlay)closeQuiz();});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!quizOverlay.classList.contains('hidden')){event.preventDefault();closeQuiz();}});
+quizOverlay.addEventListener('keydown',event=>{
+ if(event.key!=='Tab')return;
+ const focusable=Array.from(quizDialog.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])')).filter(el=>el.getClientRects().length&&!el.closest('.hidden'));
+ if(!focusable.length)return;
+ const first=focusable[0],last=focusable[focusable.length-1];
+ if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
+ else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+});
+/* Audio autoplay is commonly blocked. Try unmuted playback, fall back to muted video with an explicit unmute button. */
+const igniteVideo=$('ignite-client-video'),igniteSoundButton=$('ignite-unmute');
+function updateVideoSoundButton(){igniteSoundButton.classList.toggle('hidden',!igniteVideo.muted&&!igniteVideo.paused);}
+function tryAudibleAutoplay(){
+ igniteVideo.muted=false;
+ const attempt=igniteVideo.play();
+ if(attempt&&typeof attempt.catch==='function')attempt.catch(()=>{
+  igniteVideo.muted=true;
+  igniteVideo.play().catch(()=>{});
+  igniteSoundButton.classList.remove('hidden');
+ });
+ else updateVideoSoundButton();
+}
+igniteVideo.addEventListener('loadedmetadata',tryAudibleAutoplay,{once:true});
+igniteVideo.addEventListener('volumechange',updateVideoSoundButton);
+igniteVideo.addEventListener('play',updateVideoSoundButton);
+igniteVideo.addEventListener('pause',()=>{if(igniteVideo.muted)igniteSoundButton.classList.remove('hidden');});
+igniteSoundButton.addEventListener('click',()=>{
+ igniteVideo.muted=false;
+ igniteVideo.volume=1;
+ igniteVideo.play().catch(()=>{igniteSoundButton.classList.remove('hidden');});
+ updateVideoSoundButton();
+});
+if(igniteVideo.readyState>=1)tryAudibleAutoplay();
+
 
 /* Seamless proof-image marquee moves RIGHT; logo marquee moves LEFT. */
 const proofRail=$('ignite-proof-marquee');
