@@ -526,7 +526,7 @@ body.quiz-open{overflow:hidden!important}
 .ignite-step strong{font-size:15px}
 .ignite-video-heading{margin-top:36px}
 .ignite-video-box{position:relative;width:100%;height:100%}
-.ignite-unmute{position:absolute;left:50%;bottom:19px;transform:translateX(-50%);z-index:5;border:1px solid #ffffff95;border-radius:40px;background:#0b0b0bed;color:#fff;font-weight:800;padding:12px 20px;font-size:14px;white-space:nowrap;box-shadow:0 4px 30px #000b}
+.ignite-unmute{position:absolute;left:50%;top:50%;bottom:auto;transform:translate(-50%,-50%);z-index:5;display:inline-flex;align-items:center;justify-content:center;min-height:60px;max-width:calc(100% - 24px);border:2px solid #fff;border-radius:999px;background:#d91e2cef;color:#fff;font-weight:900;padding:16px 28px;font-size:clamp(15px,2vw,19px);line-height:1.2;white-space:nowrap;box-shadow:0 0 0 7px #0008,0 12px 38px #000b;cursor:pointer}
 .ignite-unmute:hover{background:#fa2632;color:#fff}
 #quiz-overlay.hidden{display:none!important}
 #quiz-overlay:not(.hidden){display:flex!important;position:fixed!important;inset:0!important;z-index:1200!important;align-items:center!important;justify-content:center!important;background:#000d!important;backdrop-filter:blur(11px)!important;-webkit-backdrop-filter:blur(11px)!important;overflow:hidden!important;max-height:none!important;width:100%!important;height:100dvh!important;margin:0!important;padding:16px!important}
@@ -686,6 +686,14 @@ body.quiz-open{overflow:hidden!important}
 }
 @media(max-width:390px){
   .hero h1#hero-heading{font-size:7.1vw!important}
+}
+
+
+/* Keep the sound activation centered, readable and above the native video controls. */
+.ignite-video-box .ignite-unmute:not(.hidden){display:inline-flex!important}
+.ignite-unmute:focus-visible{outline:3px solid #fff;outline-offset:6px}
+@media(max-width:767px){
+ .ignite-unmute{top:50%;bottom:auto;min-height:48px;padding:12px 18px;font-size:15px;max-width:calc(100% - 26px);box-shadow:0 0 0 5px #0009,0 8px 24px #000c}
 }
 
 </style>
