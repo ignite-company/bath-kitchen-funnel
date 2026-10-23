@@ -605,6 +605,42 @@ body.quiz-open{overflow:hidden!important}
 }
 @media(prefers-reduced-motion:reduce){.ignite-mobile-cta{transition:none}}
 
+
+/* Final headline typography fix: no escaped apostrophe, intentional line breaks, no edge clipping. */
+.hero h1#hero-heading{
+  width:min(1100px,100%)!important;
+  max-width:100%!important;
+  margin-inline:auto!important;
+  font-size:clamp(38px,5.1vw,70px)!important;
+  line-height:1.12!important;
+  letter-spacing:-.045em!important;
+  overflow:visible!important;
+  text-wrap:balance;
+}
+#hero-heading .ignite-headline-promise,
+#hero-heading .ignite-headline-guarantee{
+  display:block;
+  width:100%;
+  max-width:100%;
+  white-space:normal;
+  overflow-wrap:normal;
+}
+#hero-heading .ignite-headline-guarantee{margin-top:7px}
+#hero-heading .ignite-headline-guarantee em{font-style:italic;display:inline;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+@media(max-width:767px){
+ .hero h1#hero-heading{
+   width:100%!important;
+   font-size:clamp(34px,8.8vw,48px)!important;
+   line-height:1.1!important;
+   letter-spacing:-.038em!important;
+ }
+ #hero-heading .ignite-headline-promise{max-width:430px;margin-inline:auto}
+ #hero-heading .ignite-headline-guarantee{margin-top:8px}
+}
+@media(max-width:390px){
+ .hero h1#hero-heading{font-size:clamp(32px,8.5vw,36px)!important}
+}
+
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -638,7 +674,7 @@ src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
 </div></header>
 <section class="hero" aria-labelledby="hero-heading"><div class="container">
  <div class="hero-eyebrow">FOR KITCHEN &amp; BATHROOM REMODELING COMPANIES</div>
- <h1 id="hero-heading">2+ New projects next month <em class="ignite-red-flow">or you don\'t pay</em></h1>
+ <h1 id="hero-heading"><span class="ignite-headline-promise">2+ New Projects Next Month</span><span class="ignite-headline-guarantee">Or <em class="ignite-red-flow">You Don't Pay</em></span></h1>
  <p class="hero-subheadline">We help kitchen and bath remodelers turn more homeowners into booked projects, with a results-backed customer acquisition system.</p>
  <div class="ignite-primary-cta ignite-above-fold"><button class="ignite-white-cta ignite-open-quiz" type="button">See If Your Company Qualifies →</button><p>FREE GROWTH REVIEW · QUALIFICATION AND WRITTEN TERMS APPLY</p></div>
  <div class="ignite-offer-box">Better lead flow. Faster follow-up. A more predictable project pipeline. <strong>Built for remodelers, not a generic marketing template.</strong></div>
