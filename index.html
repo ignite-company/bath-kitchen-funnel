@@ -642,52 +642,60 @@ body.quiz-open{overflow:hidden!important}
 }
 
 
-/* Two-line responsive headline with room for italic gradient letter overhang. */
-.hero h1#hero-heading{
-  width:100%!important;
-  max-width:1120px!important;
-  padding:0 .16em .1em!important;
-  margin:17px auto 0!important;
-  font-size:clamp(22px,6.3vw,77px)!important;
-  line-height:1.16!important;
-  letter-spacing:-.045em!important;
-  text-align:center!important;
-  overflow:visible!important;
-  text-wrap:nowrap!important;
+/* Service-business hero: restore the original red animation, but allow readable wrapping. */
+.hero h1#hero-heading {
+  width: min(1100px, 100%) !important;
+  max-width: 100% !important;
+  padding: 0 .06em .12em !important;
+  margin: 17px auto 0 !important;
+  font-size: clamp(38px, 5.2vw, 70px) !important;
+  line-height: 1.1 !important;
+  letter-spacing: -.047em !important;
+  text-align: center !important;
+  text-wrap: balance !important;
+  white-space: normal !important;
+  overflow: visible !important;
 }
 #hero-heading .ignite-headline-promise,
-#hero-heading .ignite-headline-guarantee{
-  display:block!important;
-  width:100%!important;
-  max-width:100%!important;
-  white-space:nowrap!important;
-  overflow:visible!important;
+#hero-heading .ignite-headline-guarantee {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  white-space: normal !important;
+  overflow-wrap: normal !important;
+  text-wrap: balance !important;
+  overflow: visible !important;
 }
-#hero-heading .ignite-headline-guarantee{margin-top:.06em!important}
-#hero-heading .ignite-headline-guarantee em.ignite-red-flow{
-  display:inline-block!important;
-  font-style:italic!important;
-  padding:0 .20em .10em .04em!important;
-  margin-right:0!important;
-  white-space:nowrap!important;
-  line-height:1.21!important;
-  overflow:visible!important;
-  -webkit-background-clip:text;
-  background-clip:text;
+#hero-heading .ignite-headline-promise {
+  color: #fff;
 }
-@media(max-width:767px){
-  .hero h1#hero-heading{
-    font-size:clamp(20px,7.15vw,51px)!important;
-    line-height:1.15!important;
-    letter-spacing:-.053em!important;
-    padding:0 .07em .12em!important;
-    margin-top:12px!important;
+#hero-heading .ignite-headline-guarantee {
+  margin-top: .09em !important;
+  color: #fff;
+}
+#hero-heading .ignite-headline-guarantee em.ignite-red-flow {
+  display: inline !important;
+  font-style: italic !important;
+  padding: 0 .09em .07em .03em !important;
+  margin-right: 0 !important;
+  white-space: normal !important;
+  line-height: inherit !important;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+@media (max-width: 767px) {
+  .hero h1#hero-heading {
+    font-size: clamp(34px, 8.7vw, 49px) !important;
+    line-height: 1.09 !important;
+    letter-spacing: -.044em !important;
+    padding: 0 .03em .12em !important;
+    margin-top: 12px !important;
   }
+  #hero-heading .ignite-headline-guarantee { margin-top: .13em !important; }
 }
-@media(max-width:390px){
-  .hero h1#hero-heading{font-size:7.1vw!important}
+@media (max-width: 390px) {
+  .hero h1#hero-heading { font-size: clamp(32px, 8.4vw, 36px) !important; }
 }
-
 
 /* Keep the sound activation centered, readable and above the native video controls. */
 .ignite-video-box .ignite-unmute:not(.hidden){display:inline-flex!important}
@@ -696,8 +704,6 @@ body.quiz-open{overflow:hidden!important}
  .ignite-unmute{top:50%;bottom:auto;min-height:48px;padding:12px 18px;font-size:15px;max-width:calc(100% - 26px);box-shadow:0 0 0 5px #0009,0 8px 24px #000c}
 }
 
-/* Let the new service-business headline wrap cleanly on every screen. */
-#hero-heading{ text-wrap:balance!important; white-space:normal!important; }
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -731,7 +737,7 @@ src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
 </div></header>
 <section class="hero" aria-labelledby="hero-heading"><div class="container">
  <div class="hero-eyebrow">FOR SERVICE BUSINESS OWNERS</div>
- <h1 id="hero-heading">Get more projects for your business on autopilot.</h1>
+ <h1 id="hero-heading"><span class="ignite-headline-promise">Get more projects</span><span class="ignite-headline-guarantee">for your business <em class="ignite-red-flow">on autopilot.</em></span></h1>
  <p class="hero-subheadline">We help service businesses turn more inquiries into booked jobs and paying customers with better lead generation, follow-up and sales systems.</p>
  <div class="ignite-primary-cta ignite-above-fold"><button class="ignite-white-cta ignite-open-quiz" type="button">See If Your Company Qualifies →</button><p>FREE GROWTH REVIEW · QUALIFICATION AND WRITTEN TERMS APPLY</p></div>
  <div class="ignite-offer-box">Better lead flow. Faster follow-up. A more predictable customer pipeline. <strong>Built around your service business, not a generic marketing template.</strong></div>
