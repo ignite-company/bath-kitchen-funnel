@@ -5,12 +5,12 @@ const { randomUUID } = require('node:crypto');
 // Save consented applications to Supabase, then notify GoHighLevel.
 
 const allowed = {
-  project_type: ['kitchens','bathrooms','both','remodeling','hvac','plumbing','electrical','roofing','landscaping','junk_removal','restoration','cleaning','pest_control','garage_doors','other_home_service','roofing_siding','masonry_hardscaping','interior_remodeling','tree_service','painting','auto_detailing','pressure_washing','other_service'],
+  project_type: ['kitchens','bathrooms','both','remodeling','hvac','plumbing','electrical','roofing','landscaping','junk_removal','restoration','cleaning','pest_control','garage_doors','other_home_service','roofing_siding','masonry_hardscaping','interior_remodeling'],
   monthly_revenue: ['under_20k','20k_50k','50k_100k','100k_plus'],
   monthly_inquiries: ['under_10','10_25','26_50','50_plus','unsure'],
-  biggest_gap: ['missed_calls','slow_followup','reactivation','reviews','lead_quality','other','not_enough_leads','low_conversion','poor_follow_up','repeat_business','inconsistent_growth','online_presence','operations'],
+  biggest_gap: ['missed_calls','slow_followup','reactivation','reviews','lead_quality','other','not_enough_leads','low_conversion','poor_follow_up','repeat_business','inconsistent_growth'],
   capacity: ['yes','limited','booked_out','unsure'],
-  readiness: ['ready_now','need_details','not_ready','within_30_days','one_to_three_months','just_exploring']
+  readiness: ['ready_now','need_details','not_ready']
 };
 
 function limited(value, max) {
@@ -40,12 +40,12 @@ module.exports = async function handler(req,res) {
   if(!data || typeof data !== 'object' || Array.isArray(data)) return send(res,400,{error:'Invalid request'});
   // Honeypot. Never create records for bots filling hidden fields.
   if(data.other_field) return send(res,201,{ok:true});
-  // The service-business quiz uses three qualifying questions. Keep older submissions compatible.
+  // The current kitchen-and-bath quiz uses three qualifying questions. Keep older submissions compatible.
   // Legacy applications remain supported for visitors with an older page open.
-  const isTimedApplication = data.readiness != null;
-  if(isTimedApplication) {
+  const isConstructionApplication = data.readiness != null;
+  if(isConstructionApplication) {
     if(!allowed.readiness.includes(data.readiness)) return send(res,400,{error:'Please confirm when you are ready to get started'});
-    if(!allowed.project_type.includes(data.project_type)) return send(res,400,{error:'Please select your service business type'});
+    if(!allowed.project_type.includes(data.project_type)) return send(res,400,{error:'Please select your remodeling specialty'});
   } else if(!allowed.monthly_inquiries.includes(data.monthly_inquiries)) {
     return send(res,400,{error:'Please complete the qualification questions'});
   }
@@ -137,17 +137,16 @@ module.exports = async function handler(req,res) {
         monthly_revenue: payload.monthly_revenue,
         monthly_inquiries: payload.monthly_inquiries,
         readiness: payload.readiness,
-        readiness_text: {ready_now:'As soon as possible',within_30_days:'Within 30 days',one_to_three_months:'In 1–3 months',just_exploring:'Just exploring',need_details:'Open to learning more',not_ready:'Not ready right now'}[payload.readiness] || null,
+        readiness_text: {ready_now:'Yes, ready to implement',need_details:'Open to learning more',not_ready:'Not ready right now'}[payload.readiness] || null,
         construction_type_text: {kitchens:'Kitchen Remodeling',bathrooms:'Bathroom Remodeling',both:'Kitchens & Bathrooms',roofing_siding:'Roofing / Siding',masonry_hardscaping:'Masonry / Hardscaping',interior_remodeling:'Interior Remodeling',hvac:'HVAC',other_home_service:'Other'}[payload.project_type] || null,
-        service_business_type_text: {junk_removal:'Junk Removal',tree_service:'Tree Service',landscaping:'Landscaping / Lawn Care',hvac:'HVAC',plumbing:'Plumbing',electrical:'Electrical',roofing:'Roofing',remodeling:'Remodeling / Construction',cleaning:'Cleaning',painting:'Painting',auto_detailing:'Auto Detailing',pressure_washing:'Pressure Washing',restoration:'Restoration',pest_control:'Pest Control',garage_doors:'Garage Doors',other_service:'Other Service Business',kitchens:'Kitchen Remodeling',bathrooms:'Bathroom Remodeling',both:'Kitchens & Bathrooms',roofing_siding:'Roofing / Siding',masonry_hardscaping:'Masonry / Hardscaping',interior_remodeling:'Interior Remodeling',other_home_service:'Other Home Service'}[payload.project_type] || payload.project_type,
         remodeling_type_text: {kitchens:'Kitchen Remodeling',bathrooms:'Bathroom Remodeling',both:'Kitchens & Bathrooms'}[payload.project_type] || null,
         biggest_gap: payload.biggest_gap,
         biggest_gaps: payload.biggest_gaps,
         biggest_gaps_text: payload.biggest_gaps.join(', '),
-        biggest_gap_display: {not_enough_leads:'Not enough leads or inquiries',missed_calls:'Missing incoming calls',slow_followup:'Slow lead follow-up',lead_quality:'Low-quality leads',low_conversion:'Not converting leads into customers',poor_follow_up:'Leads going cold',inconsistent_growth:'Inconsistent business growth',online_presence:'Weak online presence',operations:'Managing leads and operations',reviews:'Getting more reviews'}[payload.biggest_gap] || payload.biggest_gap,
+        biggest_gap_display: {not_enough_leads:'Not enough homeowner inquiries',lead_quality:'Too many price shoppers',low_conversion:'Consultations not becoming jobs',poor_follow_up:'Estimates and leads go cold',inconsistent_growth:'Unpredictable project pipeline'}[payload.biggest_gap] || payload.biggest_gap,
         capacity: payload.capacity,
         consent: true,
-        source: ['kitchens','bathrooms','both'].includes(payload.project_type) ? 'Ignite Kitchen & Bath Funnel' : 'Ignite Service Business Funnel',
+        source: ['kitchens','bathrooms','both'].includes(payload.project_type) ? 'Ignite Kitchen & Bath Funnel' : 'Ignite Home Services Funnel',
         utm_source: payload.utm_source,
         utm_medium: payload.utm_medium,
         utm_campaign: payload.utm_campaign
