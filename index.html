@@ -642,16 +642,19 @@ body.quiz-open{overflow:hidden!important}
 }
 
 
-/* Responsive headline: allow longer homeowner offer to wrap cleanly on all devices. */
+/* Long-form headline: wrap whole words without cropping the end on narrow screens. */
 .hero h1#hero-heading{
-  width:100%!important;
-  max-width:1050px!important;
-  padding:0 .13em .1em!important;
-  margin:17px auto 0!important;
-  font-size:clamp(34px,5.2vw,67px)!important;
-  line-height:1.13!important;
+  display:block!important;
+  box-sizing:border-box!important;
+  width:min(100%,1050px)!important;
+  max-width:100%!important;
+  padding:0 12px 8px!important;
+  margin:18px auto 0!important;
+  font-size:clamp(36px,5.7vw,72px)!important;
+  line-height:1.12!important;
   letter-spacing:-.045em!important;
   text-align:center!important;
+  white-space:normal!important;
   text-wrap:balance!important;
   overflow:visible!important;
 }
@@ -661,34 +664,42 @@ body.quiz-open{overflow:hidden!important}
   width:100%!important;
   max-width:100%!important;
   white-space:normal!important;
+  overflow:visible!important;
   overflow-wrap:normal!important;
   text-wrap:balance!important;
-  overflow:visible!important;
 }
-#hero-heading .ignite-headline-promise{font-size:.72em;letter-spacing:-.03em;}
-#hero-heading .ignite-headline-guarantee{margin-top:.15em!important;}
-#hero-heading .ignite-headline-guarantee em.ignite-red-flow{
+#hero-heading .ignite-headline-promise{
+  font-size:.73em;
+  letter-spacing:-.035em;
+}
+#hero-heading .ignite-headline-guarantee{
+  margin-top:.13em!important;
+}
+#hero-heading .ignite-headline-red{
+  color:#ff4650!important;
+  background:none!important;
+  -webkit-text-fill-color:#ff4650!important;
+  -webkit-background-clip:initial!important;
+  background-clip:initial!important;
+  animation:none!important;
   display:inline!important;
-  font-style:italic!important;
-  padding:0 .10em .10em .03em!important;
-  margin-right:0!important;
   white-space:normal!important;
-  line-height:1.21!important;
-  overflow:visible!important;
-  -webkit-background-clip:text;
-  background-clip:text;
+  padding:0!important;
 }
 @media(max-width:767px){
   .hero h1#hero-heading{
-    font-size:clamp(33px,8vw,49px)!important;
+    width:100%!important;
+    font-size:clamp(32px,8vw,49px)!important;
     line-height:1.13!important;
     letter-spacing:-.045em!important;
-    padding:0 .07em .12em!important;
+    padding:0 7px 9px!important;
     margin-top:12px!important;
   }
 }
 @media(max-width:390px){
-  .hero h1#hero-heading{font-size:clamp(30px,8.15vw,33px)!important;}
+  .hero h1#hero-heading{
+    font-size:clamp(30px,8.4vw,34px)!important;
+  }
 }
 
 /* Keep the sound activation centered, readable and above the native video controls. */
@@ -730,8 +741,7 @@ src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
  <div class="ignite-top-proof"><span>★★★★★</span> $1M generated for our clients</div>
 </div></header>
 <section class="hero" aria-labelledby="hero-heading"><div class="container">
- <div class="hero-eyebrow">SERVICE BUSINESSES LOOKING TO GROW</div>
- <h1 id="hero-heading"><span class="ignite-headline-promise">If you service homeowners:</span><span class="ignite-headline-guarantee">I have 5 more clients for you next month <em class="ignite-red-flow">using AI</em></span></h1>
+ <h1 id="hero-heading"><span class="ignite-headline-promise"><span class="ignite-headline-red">Service Businesses:</span></span><span class="ignite-headline-guarantee">Get 10 more clients next month <span class="ignite-headline-red">using AI</span></span></h1>
  <p class="hero-subheadline">We use AI and smart systems to help you book more jobs and make more money.</p>
  <div class="ignite-primary-cta ignite-above-fold"><button class="ignite-white-cta ignite-open-quiz" type="button">See If Your Company Qualifies →</button><p>FREE GROWTH REVIEW · QUALIFICATION AND WRITTEN TERMS APPLY</p></div>
  <div class="ignite-offer-box">Better lead flow. Faster follow-up. More booked jobs. <strong>Built around the service you provide, not a generic marketing template.</strong></div>
