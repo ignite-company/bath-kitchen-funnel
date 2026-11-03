@@ -5,8 +5,8 @@ const { randomUUID } = require('node:crypto');
 // Save consented applications to Supabase, then notify GoHighLevel.
 
 const allowed = {
-  project_type: ['kitchens','bathrooms','both','remodeling','hvac','plumbing','electrical','roofing','landscaping','junk_removal','restoration','cleaning','pest_control','garage_doors','other_home_service','roofing_siding','masonry_hardscaping','interior_remodeling'],
-  monthly_revenue: ['under_20k','20k_50k','50k_100k','100k_plus'],
+  project_type: ['kitchens','bathrooms','both','remodeling','hvac','plumbing','electrical','roofing','landscaping','junk_removal','restoration','cleaning','pest_control','garage_doors','other_home_service','roofing_siding','masonry_hardscaping','interior_remodeling','tree_service','painting','auto_detailing','pressure_washing','other_service','epoxy_coatings','flooring'],
+  monthly_revenue: ['under_20k','20k_50k','50k_100k','100k_plus','5k_10k','10k_30k','30k_60k','60k_100k'],
   monthly_inquiries: ['under_10','10_25','26_50','50_plus','unsure'],
   biggest_gap: ['missed_calls','slow_followup','reactivation','reviews','lead_quality','other','not_enough_leads','low_conversion','poor_follow_up','repeat_business','inconsistent_growth'],
   capacity: ['yes','limited','booked_out','unsure'],
@@ -45,11 +45,13 @@ module.exports = async function handler(req,res) {
   const isConstructionApplication = data.readiness != null;
   if(isConstructionApplication) {
     if(!allowed.readiness.includes(data.readiness)) return send(res,400,{error:'Please confirm when you are ready to get started'});
-    if(!allowed.project_type.includes(data.project_type)) return send(res,400,{error:'Please select your remodeling specialty'});
+    if(!allowed.project_type.includes(data.project_type)) return send(res,400,{error:'Please select your business service'});
   } else if(!allowed.monthly_inquiries.includes(data.monthly_inquiries)) {
     return send(res,400,{error:'Please complete the qualification questions'});
   }
   if(data.project_type != null && !allowed.project_type.includes(data.project_type)) return send(res,400,{error:'Invalid business type'});
+  // Require the new quiz's four revenue bands while preserving older open applications.
+  if(data.funnel_version === 'service_business_v2' && !['5k_10k','10k_30k','30k_60k','60k_100k'].includes(data.monthly_revenue)) return send(res,400,{error:'Please select your monthly business revenue'});
   if(data.monthly_inquiries != null && !allowed.monthly_inquiries.includes(data.monthly_inquiries)) return send(res,400,{error:'Invalid lead volume'});
   // Allow legacy open forms to send these fields, but never require them.
   for(const key of ['monthly_revenue','capacity']) if(data[key] != null && !allowed[key].includes(data[key])) return send(res,400,{error:'Invalid qualification answer'});
@@ -135,18 +137,21 @@ module.exports = async function handler(req,res) {
         website: payload.website,
         project_type: payload.project_type,
         monthly_revenue: payload.monthly_revenue,
+        monthly_revenue_text: {under_20k:'Under $20,000', '20k_50k':'$20,000–$49,999','50k_100k':'$50,000–$99,999', '100k_plus':'$100,000+', '5k_10k':'$5,000–$10,000', '10k_30k':'$10,000–$30,000', '30k_60k':'$30,000–$60,000', '60k_100k':'$60,000–$100,000'}[payload.monthly_revenue] || payload.monthly_revenue,
         monthly_inquiries: payload.monthly_inquiries,
         readiness: payload.readiness,
         readiness_text: {ready_now:'Yes, ready to implement',need_details:'Open to learning more',not_ready:'Not ready right now'}[payload.readiness] || null,
-        construction_type_text: {kitchens:'Kitchen Remodeling',bathrooms:'Bathroom Remodeling',both:'Kitchens & Bathrooms',roofing_siding:'Roofing / Siding',masonry_hardscaping:'Masonry / Hardscaping',interior_remodeling:'Interior Remodeling',hvac:'HVAC',other_home_service:'Other'}[payload.project_type] || null,
+        construction_type_text: {kitchens:'Kitchen Remodeling',bathrooms:'Bathroom Remodeling',both:'Kitchens & Bathrooms',remodeling:'Construction / Remodeling',roofing:'Roofing',roofing_siding:'Roofing / Siding',masonry_hardscaping:'Masonry / Hardscaping',interior_remodeling:'Interior Remodeling',hvac:'HVAC',landscaping:'Landscaping',epoxy_coatings:'Epoxy / Concrete Coatings',flooring:'Flooring',plumbing:'Plumbing',electrical:'Electrical',tree_service:'Tree Services',junk_removal:'Junk Removal',cleaning:'Cleaning',restoration:'Restoration',painting:'Painting',pressure_washing:'Pressure Washing',pest_control:'Pest Control',garage_doors:'Garage Doors',auto_detailing:'Auto Detailing',other_home_service:'Other Home Service',other_service:'Other Service Business'}[payload.project_type] || null,
         remodeling_type_text: {kitchens:'Kitchen Remodeling',bathrooms:'Bathroom Remodeling',both:'Kitchens & Bathrooms'}[payload.project_type] || null,
+        service_type_text: {kitchens:'Kitchen Remodeling',bathrooms:'Bathroom Remodeling',both:'Kitchens & Bathrooms',remodeling:'Construction / Remodeling',roofing:'Roofing',roofing_siding:'Roofing / Siding',masonry_hardscaping:'Masonry / Hardscaping',interior_remodeling:'Interior Remodeling',hvac:'HVAC',landscaping:'Landscaping',epoxy_coatings:'Epoxy / Concrete Coatings',flooring:'Flooring',plumbing:'Plumbing',electrical:'Electrical',tree_service:'Tree Services',junk_removal:'Junk Removal',cleaning:'Cleaning',restoration:'Restoration',painting:'Painting',pressure_washing:'Pressure Washing',pest_control:'Pest Control',garage_doors:'Garage Doors',auto_detailing:'Auto Detailing',other_home_service:'Other Home Service',other_service:'Other Service Business'}[payload.project_type] || payload.project_type,
         biggest_gap: payload.biggest_gap,
         biggest_gaps: payload.biggest_gaps,
         biggest_gaps_text: payload.biggest_gaps.join(', '),
         biggest_gap_display: {not_enough_leads:'Not enough homeowner inquiries',lead_quality:'Too many price shoppers',low_conversion:'Consultations not becoming jobs',poor_follow_up:'Estimates and leads go cold',inconsistent_growth:'Unpredictable project pipeline'}[payload.biggest_gap] || payload.biggest_gap,
         capacity: payload.capacity,
         consent: true,
-        source: ['kitchens','bathrooms','both'].includes(payload.project_type) ? 'Ignite Kitchen & Bath Funnel' : 'Ignite Home Services Funnel',
+        source: data.funnel_version === 'service_business_v2' ? 'Ignite Service Business Funnel' : (['kitchens','bathrooms','both'].includes(payload.project_type) ? 'Ignite Kitchen & Bath Funnel' : 'Ignite Home Services Funnel'),
+        funnel_version: data.funnel_version === 'service_business_v2' ? data.funnel_version : null,
         utm_source: payload.utm_source,
         utm_medium: payload.utm_medium,
         utm_campaign: payload.utm_campaign
