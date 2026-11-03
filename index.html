@@ -511,7 +511,7 @@ footer .foot strong,footer .footer-privacy{color:#777781!important}
 .ignite-proof-section{padding:54px 0 70px!important}.ignite-faq{padding:45px 0 75px}.ignite-faq h2{font-size:34px}.ignite-faq-list summary{font-size:15px;padding:17px 16px;min-height:70px}.ignite-faq-list details p{font-size:14px;padding:18px 16px}
 .ignite-finish{padding:64px 0 85px}.ignite-finish p{font-size:16px}
 }
-@media(max-width:390px){.ignite-top-proof{font-size:0}.ignite-top-proof span{font-size:11px}.hero h1{font-size:34px!important}.ignite-step strong{font-size:10px}}
+@media(max-width:390px){.ignite-top-proof{font-size:9px;white-space:nowrap}.ignite-top-proof span{font-size:11px}.hero h1{font-size:34px!important}.ignite-step strong{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.ignite-red-flow,.ignite-faq-list details,.ignite-quiz-glow{animation:none!important}}
 
 
@@ -738,7 +738,7 @@ src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
 <main id="top">
 <header class="ignite-topbar"><div class="container ignite-topbar-inner">
  <a href="#top" class="ignite-brand"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b7c8f90b5bc73b099791.png" alt="Ignite Company" width="50" height="50"><span><small>GROWTH SYSTEMS</small><strong>IGNITE</strong></span></a>
- <div class="ignite-top-proof"><span>★★★★★</span> $1M generated for our clients</div>
+ <div class="ignite-top-proof"><span>★★★★★</span> $1M in Project Revenue</div>
 </div></header>
 <section class="hero" aria-labelledby="hero-heading"><div class="container">
  <h1 id="hero-heading"><span class="ignite-headline-promise"><span class="ignite-headline-red">Service Businesses:</span></span><span class="ignite-headline-guarantee">Get 10 more clients next month <span class="ignite-headline-red">using AI</span></span></h1>
@@ -910,18 +910,18 @@ function trackEvent(name,properties={}){
  if(typeof window.gtag==='function')window.gtag('event',name,properties);
 }
 const steps=[
- {key:'project_type',title:'What service does your business provide?',desc:'Select your main service.',options:[['remodeling','Construction / Remodeling'],['roofing','Roofing'],['hvac','HVAC'],['landscaping','Landscaping'],['masonry_hardscaping','Masonry / Hardscaping'],['epoxy_coatings','Epoxy / Concrete Coatings'],['flooring','Flooring'],['tree_service','Tree Services'],['junk_removal','Junk Removal'],['plumbing','Plumbing'],['electrical','Electrical'],['cleaning','Cleaning'],['restoration','Restoration'],['painting','Painting'],['pressure_washing','Pressure Washing'],['other_service','Other Service Business']]},
+ {key:'project_type',title:'What service does your business provide?',desc:'Choose the category that fits your business best.',options:[['construction_roofing','Construction, Remodeling & Roofing'],['mechanical_trades','HVAC, Plumbing & Electrical'],['outdoor_services','Landscaping & Outdoor Services'],['flooring_coatings','Flooring, Epoxy & Concrete'],['junk_cleaning','Junk Removal & Cleaning'],['other_service','Other Service Business']]},
  {key:'monthly_revenue',title:'How much revenue is your business generating per month?',desc:'Choose your current average monthly revenue.',options:[['5k_10k','$5,000–$10,000'],['10k_30k','$10,000–$30,000'],['30k_60k','$30,000–$60,000'],['60k_100k','$60,000–$100,000']]},
- {key:'biggest_gap',title:"What's holding your business back from growing?",desc:'Choose the biggest challenge in your lead-to-job process.',options:[['not_enough_leads','Not enough calls or inquiries'],['lead_quality','Too many unqualified leads'],['low_conversion','Quotes not turning into jobs'],['poor_follow_up','Leads and estimates go cold'],['inconsistent_growth','Inconsistent monthly jobs']]},
+ {key:'capacity',title:'How many more projects can your current team take on next month?',desc:'Choose what your team could realistically handle.',options:[['0','0, fully booked'],['1_2','1–2 more projects'],['3_5','3–5 more projects'],['6_10','6–10 more projects'],['10_plus','10+ more projects']]},
  {key:'readiness',title:'How soon would you want a better system in place?',desc:'One that helps turn more inquiries into booked jobs.',options:[['ready_now','As soon as possible'],['need_details','Show me how it works'],['not_ready','Just exploring for now']]}
 ];
 const state={};let step=0,submitting=false,isAdvancing=false,advanceTimer=null;
 const $=id=>document.getElementById(id),question=$('question'),desc=$('question-desc'),options=$('options'),err=$('quiz-error');
 /* Qualification questions are presented inside an accessible popup. */
 const optionEmoji={
- remodeling:'🏗️',roofing:'🏠',hvac:'❄️',landscaping:'🌿',masonry_hardscaping:'🧱',epoxy_coatings:'🪣',flooring:'🪵',tree_service:'🌳',junk_removal:'🚛',plumbing:'🔧',electrical:'⚡',cleaning:'🧼',restoration:'🛠️',painting:'🎨',pressure_washing:'💧',other_service:'🏢',
+ construction_roofing:'🏗️',mechanical_trades:'🔧',outdoor_services:'🌳',flooring_coatings:'🪣',junk_cleaning:'🚛',other_service:'🏢',
  '5k_10k':'🌱','10k_30k':'📈','30k_60k':'💰','60k_100k':'🚀',
- not_enough_leads:'📉',lead_quality:'🎯',low_conversion:'📞',poor_follow_up:'⏰',inconsistent_growth:'📊',
+ '0':'📅','1_2':'🧰','3_5':'🏗️','6_10':'📈','10_plus':'🚀',
  ready_now:'🚀',need_details:'💬',not_ready:'🗓️'
 };
 let quizStarted=false;
@@ -1038,7 +1038,7 @@ $('contact-form').addEventListener('submit',async e=>{e.preventDefault();if(subm
 const data=new FormData(form),query=new URLSearchParams(window.location.search);
 const previousReceipt=readSubmission();
 const contactRecord={name:String(data.get('name')||'').trim(),phone:normalizeUSPhone(data.get('phone'))||String(data.get('phone')||'').trim(),email:String(data.get('email')||'').trim(),business_name:String(data.get('business_name')||'').trim()};
-const payload={...state,funnel_version:'service_business_v2',...(previousReceipt?{submission_id:previousReceipt.submission_id,edit_token:previousReceipt.edit_token}:{}),name:contactRecord.name,phone:contactRecord.phone,email:contactRecord.email,business_name:contactRecord.business_name,consent:true,other_field:String(data.get('other_field')||''),utm_source:(query.get('utm_source')||'').slice(0,100),utm_medium:(query.get('utm_medium')||'').slice(0,100),utm_campaign:(query.get('utm_campaign')||'').slice(0,100)};
+const payload={...state,funnel_version:'service_business_v3',...(previousReceipt?{submission_id:previousReceipt.submission_id,edit_token:previousReceipt.edit_token}:{}),name:contactRecord.name,phone:contactRecord.phone,email:contactRecord.email,business_name:contactRecord.business_name,consent:true,other_field:String(data.get('other_field')||''),utm_source:(query.get('utm_source')||'').slice(0,100),utm_medium:(query.get('utm_medium')||'').slice(0,100),utm_campaign:(query.get('utm_campaign')||'').slice(0,100)};
 submitting=true;$('submit').disabled=true;$('submit').textContent='Saving your application…';
 try{const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),16000);let response;try{response=await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:controller.signal});}finally{clearTimeout(timeout);}
 if(!response.ok){let detail;try{detail=await response.json();}catch{}throw new Error(detail?.error || 'Could not save your application. Please try again.')}
@@ -1049,7 +1049,7 @@ if(!receipt.ok||!receipt.submission_id||!receipt.edit_token)throw new Error('Una
 if(!previousReceipt && typeof window.fbq==='function')window.fbq('track','Lead');
 trackEvent('generate_lead',{lead_source:'service_business_growth_quiz'});
 showBookingStep();
-window.sessionStorage.setItem('igniteHomeServicesSubmission',JSON.stringify({submission_id:receipt.submission_id,edit_token:receipt.edit_token,answers:{...state},contact:contactRecord}));
+window.sessionStorage.setItem('igniteHomeServicesSubmission',JSON.stringify({submission_id:receipt.submission_id,edit_token:receipt.edit_token,funnel_version:'service_business_v3',answers:{...state},contact:contactRecord}));
 $('quiz-overlay').querySelector('.quiz-scroll').scrollTo({top:0,behavior:'smooth'});}
 catch(ex){fe.textContent=ex.name==='AbortError'?'The request timed out. Please try again.':ex.message||'Unable to save. Please try again.'}finally{submitting=false;$('submit').disabled=false;$('submit').textContent='Save & See Calendar →'}});
 
@@ -1065,7 +1065,7 @@ function showBookingStep(){
  $('quiz-overlay').querySelector('.quiz-scroll').scrollTop=0;
  if(!$('quiz-overlay').classList.contains('hidden'))$('quiz-overlay').querySelector('.quiz-scroll').scrollTop=0;
 }
-function readSubmission(){try{const r=JSON.parse(window.sessionStorage.getItem('igniteHomeServicesSubmission')||'null');if(r&&r.submission_id&&r.edit_token&&typeof r.answers?.project_type==='string')return r;}catch{}return null;}
+function readSubmission(){try{const r=JSON.parse(window.sessionStorage.getItem('igniteHomeServicesSubmission')||'null');if(r&&r.submission_id&&r.edit_token&&r.funnel_version==='service_business_v3'&&typeof r.answers?.project_type==='string'&&typeof r.answers?.capacity==='string')return r;}catch{}return null;}
 function returnToAnswers(){$('booking-reveal').classList.add('hidden');step=steps.length-1;draw();$('quiz-overlay').querySelector('.quiz-scroll').scrollTo({top:0,behavior:'smooth'});question.setAttribute('tabindex','-1');question.focus({preventScroll:true});}
 $('booking-back').addEventListener('click',returnToAnswers);
 const previous=readSubmission();
