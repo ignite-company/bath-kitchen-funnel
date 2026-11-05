@@ -709,6 +709,29 @@ body.quiz-open{overflow:hidden!important}
  .ignite-unmute{top:50%;bottom:auto;min-height:48px;padding:12px 18px;font-size:15px;max-width:calc(100% - 26px);box-shadow:0 0 0 5px #0009,0 8px 24px #000c}
 }
 
+
+/* Animated red gradient for the contractor headline only. */
+#hero-heading .ignite-headline-gradient {
+  display:inline-block;
+  color:#ff4650;
+  background:linear-gradient(90deg,#ff3157 0%,#ff7a94 24%,#df153f 50%,#ff6483 76%,#ff3157 100%);
+  background-size:240% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:ignite-contractor-gradient 4s ease-in-out infinite;
+}
+@keyframes ignite-contractor-gradient {
+  0%,100% {background-position:0% 50%}
+  50% {background-position:100% 50%}
+}
+@media(prefers-reduced-motion:reduce) {
+  #hero-heading .ignite-headline-gradient {animation:none;background-position:0% 50%}
+}
+@media(forced-colors:active) {
+  #hero-heading .ignite-headline-gradient {background:none;-webkit-text-fill-color:currentColor}
+}
+
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -741,7 +764,7 @@ src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
  <div class="ignite-top-proof"><span>★★★★★</span> $1M in Project Revenue</div>
 </div></header>
 <section class="hero" aria-labelledby="hero-heading"><div class="container">
- <h1 id="hero-heading"><span class="ignite-headline-promise"><span class="ignite-headline-red">Contractors</span></span><span class="ignite-headline-guarantee">get 5 more high-ticket projects next month with AI</span></h1>
+ <h1 id="hero-heading"><span class="ignite-headline-promise"><span class="ignite-headline-gradient">CONTRACTORS:</span></span><span class="ignite-headline-guarantee">Get 5 more high-ticket projects next month with AI</span></h1>
  <p class="hero-subheadline">We use AI and custom systems to help you book more jobs and make more money.</p>
  <div class="ignite-primary-cta ignite-above-fold"><button class="ignite-white-cta ignite-open-quiz" type="button">See If Your Company Qualifies →</button><p>FREE GROWTH REVIEW · QUALIFICATION AND WRITTEN TERMS APPLY</p></div>
  <div class="ignite-offer-box">Better lead flow. Faster follow-up. More booked jobs. <strong>Built around the service you provide, not a generic marketing template.</strong></div>
