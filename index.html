@@ -732,6 +732,24 @@ body.quiz-open{overflow:hidden!important}
   #hero-heading .ignite-headline-gradient {background:none;-webkit-text-fill-color:currentColor}
 }
 
+
+/* Give the hero message more impact while keeping smaller devices readable. */
+.hero h1#hero-heading {
+  font-size:clamp(44px,6.6vw,90px)!important;
+  line-height:1.09!important;
+}
+@media(max-width:767px) {
+  .hero h1#hero-heading {
+    font-size:clamp(36px,9.3vw,58px)!important;
+    line-height:1.12!important;
+  }
+}
+@media(max-width:390px) {
+  .hero h1#hero-heading {
+    font-size:clamp(34px,9vw,38px)!important;
+  }
+}
+
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -768,7 +786,6 @@ src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
  <p class="hero-subheadline">We use AI and custom systems to help you book more jobs and make more money.</p>
  <div class="ignite-primary-cta ignite-above-fold"><button class="ignite-white-cta ignite-open-quiz" type="button">See If Your Company Qualifies →</button><p>FREE GROWTH REVIEW · QUALIFICATION AND WRITTEN TERMS APPLY</p></div>
  <div class="ignite-offer-box">Better lead flow. Faster follow-up. More booked jobs. <strong>Built around the service you provide, not a generic marketing template.</strong></div>
- <div class="ignite-steps" aria-label="How it works"><div class="ignite-step active"><span>1</span><div><strong>Watch</strong></div></div><div class="ignite-step"><span>2</span><div><strong>Qualify</strong></div></div><div class="ignite-step"><span>3</span><div><strong>Book</strong></div></div></div>
  <h2 class="ignite-video-heading">Hear What <span class="ignite-red-flow">an Ignite Client Has to Say.</span></h2>
  <div class="ignite-video-frame"><div class="ignite-video-box"><video id="ignite-client-video" controls autoplay playsinline preload="metadata" aria-label="Ignite client testimonial"><source src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a336b225408771d165c7749.mp4" type="video/mp4">Your browser does not support video playback.</video><button type="button" id="ignite-unmute" class="ignite-unmute hidden" aria-label="Play video with sound">🔊 Tap for sound</button></div></div>
  <div class="ignite-primary-cta ignite-after-video"><button class="ignite-white-cta ignite-open-quiz" type="button">Apply for the Growth Offer →</button><p>60-SECOND APPLICATION · QUALIFICATION AND WRITTEN TERMS APPLY</p></div>
