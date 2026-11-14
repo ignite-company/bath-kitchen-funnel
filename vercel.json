@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/headline-a",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/headline-b",
+      "destination": "/headline-b.html"
+    }
+  ]
+}
