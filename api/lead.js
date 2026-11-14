@@ -1,182 +1,45 @@
 'use strict';
-const { randomUUID } = require('node:crypto');
 
-// Server-side qualification intake. No Meta Pixel or analytics SDK.
-// Save consented applications to Supabase, then notify GoHighLevel.
+// Version B routes applications through the same production intake as Version A.
+// This keeps Supabase, GoHighLevel, validation, receipts and lead notifications
+// consistent even when Vercel preview environment variables are not configured.
+const PRODUCTION_INTAKE_URL = 'https://ignite-co-funnel.vercel.app/api/lead';
 
-const allowed = {
-  project_type: ['kitchens','bathrooms','both','remodeling','hvac','plumbing','electrical','roofing','landscaping','junk_removal','restoration','cleaning','pest_control','garage_doors','other_home_service','roofing_siding','masonry_hardscaping','interior_remodeling','tree_service','painting','auto_detailing','pressure_washing','other_service','epoxy_coatings','flooring','construction_roofing','mechanical_trades','outdoor_services','flooring_coatings','junk_cleaning'],
-  monthly_revenue: ['under_20k','20k_50k','50k_100k','100k_plus','5k_10k','10k_30k','30k_60k','60k_100k'],
-  monthly_inquiries: ['under_10','10_25','26_50','50_plus','unsure'],
-  biggest_gap: ['missed_calls','slow_followup','reactivation','reviews','lead_quality','other','not_enough_leads','low_conversion','poor_follow_up','repeat_business','inconsistent_growth'],
-  capacity: ['yes','limited','booked_out','unsure','0','1_2','3_5','6_10','10_plus'],
-  readiness: ['ready_now','need_details','not_ready']
-};
-
-function limited(value, max) {
-  return typeof value === 'string' ? value.trim().slice(0,max) : '';
-}
-function validText(value, max, min=1) {
-  return typeof value === 'string' && value.trim().length >= min && value.trim().length <= max;
-}
-function send(res,status,result) {
-  res.status(status).setHeader('Cache-Control','no-store');
-  return res.json(result);
-}
-
-module.exports = async function handler(req,res) {
-  res.setHeader('X-Content-Type-Options','nosniff');
-  if(req.method !== 'POST') {
-    res.setHeader('Allow','POST');
-    return send(res,405,{error:'Method not allowed'});
+module.exports = async function handler(req, res) {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('Cache-Control', 'no-store');
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+    return res.status(405).json({ error: 'Method not allowed' });
   }
-  if(!String(req.headers['content-type']||'').includes('application/json')) return send(res,415,{error:'Use JSON'});
-  const length = Number(req.headers['content-length'] || 0);
-  if(length > 12000) return send(res,413,{error:'Request is too large'});
-  let data = req.body;
-  if(typeof data === 'string') {
-    try {data = JSON.parse(data);}catch {return send(res,400,{error:'Invalid request'});}
+  if (!String(req.headers['content-type'] || '').includes('application/json')) {
+    return res.status(415).json({ error: 'Use JSON' });
   }
-  if(!data || typeof data !== 'object' || Array.isArray(data)) return send(res,400,{error:'Invalid request'});
-  // Honeypot. Never create records for bots filling hidden fields.
-  if(data.other_field) return send(res,201,{ok:true});
-  // Keep earlier quiz versions working while supporting capacity-based qualification.
-  const isCapacityFlow = data.funnel_version === 'service_business_v3';
-  const isConstructionApplication = data.readiness != null;
-  if(isConstructionApplication) {
-    if(!allowed.readiness.includes(data.readiness)) return send(res,400,{error:'Please confirm when you are ready to get started'});
-    if(!allowed.project_type.includes(data.project_type)) return send(res,400,{error:'Please select your business service'});
-  } else if(!allowed.monthly_inquiries.includes(data.monthly_inquiries)) {
-    return send(res,400,{error:'Please complete the qualification questions'});
-  }
-  if(data.project_type != null && !allowed.project_type.includes(data.project_type)) return send(res,400,{error:'Invalid business type'});
-  // Require the current four revenue bands for service-business funnels.
-  if(['service_business_v2','service_business_v3'].includes(data.funnel_version) && !['5k_10k','10k_30k','30k_60k','60k_100k'].includes(data.monthly_revenue)) return send(res,400,{error:'Please select your monthly business revenue'});
-  if(isCapacityFlow && !['construction_roofing','mechanical_trades','outdoor_services','flooring_coatings','junk_cleaning','other_service'].includes(data.project_type)) return send(res,400,{error:'Please choose your service category'});
-  if(isCapacityFlow && !['0','1_2','3_5','6_10','10_plus'].includes(data.capacity)) return send(res,400,{error:'Please choose how many additional projects you can take on'});
-  if(data.monthly_inquiries != null && !allowed.monthly_inquiries.includes(data.monthly_inquiries)) return send(res,400,{error:'Invalid lead volume'});
-  // Allow legacy open forms to send these fields, but never require them.
-  for(const key of ['monthly_revenue','capacity']) if(data[key] != null && !allowed[key].includes(data[key])) return send(res,400,{error:'Invalid qualification answer'});
-  const gaps = Array.isArray(data.biggest_gaps) ? [...new Set(data.biggest_gaps)] : (typeof data.biggest_gap === 'string' ? [data.biggest_gap] : []);
-  if((!isCapacityFlow && !gaps.length) || gaps.length > allowed.biggest_gap.length || !gaps.every(value=>typeof value==='string' && allowed.biggest_gap.includes(value))){
-    return send(res,400,{error:'Select at least one business challenge'});
-  }
-  // Support a single Name field while remaining compatible with older saved forms.
-  const enteredName = typeof data.name === 'string' ? data.name.trim().replace(/\s+/g,' ') : '';
-  if(typeof data.name === 'string' && !validText(enteredName,160)) return send(res,400,{error:'Please enter your name'});
-  const namePieces = enteredName ? enteredName.split(' ') : [];
-  const firstName = enteredName ? namePieces.shift() : limited(data.first_name,80);
-  const lastName = enteredName ? namePieces.join(' ') : limited(data.last_name,80);
-  const serviceArea = limited(data.service_area,150);
-  if(!validText(firstName,80) || (lastName && !validText(lastName,80)) || !validText(data.business_name,150,2)) return send(res,400,{error:'Please provide valid contact details'});
-  if(data.service_area != null && serviceArea && !validText(serviceArea,150,2)) return send(res,400,{error:'Invalid service area'});
-  if(!validText(data.email,200,5)|| !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) return send(res,400,{error:'Please use a valid business email'});
-  // Accept either a 10-digit US number or a +1-prefixed autofill value.
-  const digits = limited(data.phone,30).replace(/\D/g,'');
-  const nationalPhone = digits.length===11 && digits.startsWith('1') ? digits.slice(1) : digits;
-  if(!/^\d{10}$/.test(nationalPhone)) return send(res,400,{error:'Please use a valid 10-digit US phone number'});
-  const normalizedPhone = '+1' + nationalPhone;
-  if(data.consent !== true) return send(res,400,{error:'Contact permission is required'});
-  if(data.website != null && !validText(data.website,250,0)) return send(res,400,{error:'Invalid website'});
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_PUBLISHABLE_KEY;
-  if(!url || !key) {
-    console.error('Funnel application storage environment is not configured');
-    return send(res,503,{error:'Application service unavailable'});
-  }
-  const isEdit = Boolean(data.submission_id || data.edit_token);
-  const uuidRx = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-  if(isEdit && (!uuidRx.test(data.submission_id||'') || !uuidRx.test(data.edit_token||''))) return send(res,400,{error:'Invalid edit session'});
-  const submissionId = isEdit ? data.submission_id : randomUUID();
-  const editToken = isEdit ? data.edit_token : randomUUID();
-  const payload = {
-    first_name:firstName,
-    last_name:lastName||null,
-    business_name:limited(data.business_name,150),
-    email:limited(data.email,200).toLowerCase(),
-    phone:normalizedPhone,
-    service_area:serviceArea||null,
-    website:data.website?limited(data.website,250):null,
-    project_type:data.project_type??'junk_removal',monthly_revenue:data.monthly_revenue??null,monthly_inquiries:data.monthly_inquiries??null,readiness:data.readiness??null,
-    biggest_gap:isCapacityFlow?null:(gaps[0]??null),biggest_gaps:isCapacityFlow?[]:gaps,capacity:data.capacity??null,consent:true,source:'home_services_funnel',
-    utm_source:limited(data.utm_source,100)||null,
-    utm_medium:limited(data.utm_medium,100)||null,
-    utm_campaign:limited(data.utm_campaign,100)||null
-  };
+  let serialized;
   try {
-    const headers = {'Content-Type':'application/json','apikey':key,'Prefer':'return=minimal'};
-    if(!key.startsWith('sb_publishable_'))headers.Authorization='Bearer '+key;
-    const endpoint = url.replace(/\/$/,'') + (isEdit ? '/rest/v1/rpc/update_remodel_funnel_application' : '/rest/v1/remodel_funnel_leads');
-    const body = isEdit
-      ? {p_id:submissionId,p_token:editToken,p_data:payload}
-      : {...payload,id:submissionId,edit_token:editToken};
-    const upstream = await fetch(endpoint,{
-      method:'POST',headers,body:JSON.stringify(body),signal:AbortSignal.timeout(9000)
+    serialized = typeof req.body === 'string' ? req.body : JSON.stringify(req.body);
+  } catch {
+    return res.status(400).json({ error: 'Invalid request' });
+  }
+  if (typeof serialized !== 'string') {
+    return res.status(400).json({ error: 'Invalid request' });
+  }
+  if (Buffer.byteLength(serialized, 'utf8') > 12000) {
+    return res.status(413).json({ error: 'Request is too large' });
+  }
+  try {
+    const response = await fetch(PRODUCTION_INTAKE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: serialized,
+      signal: AbortSignal.timeout(14500)
     });
-    if(!upstream.ok) {
-      console.error('Database write failed, status:',upstream.status);
-      return send(res,502,{error:'Unable to save application right now'});
-    }
-    if(isEdit && (await upstream.text()).trim() !== 'true') {
-      return send(res,409,{error:'This editing session expired. Please refresh and submit again.'});
-    }
-
-    // A GoHighLevel incoming webhook is a server-to-server integration.
-    // Keep its URL out of the public webpage and never send the edit token.
-    const webhookUrl = process.env.GHL_LEAD_WEBHOOK_URL;
-    if(webhookUrl) {
-      const webhookPayload = {
-        event_type: isEdit ? 'application_updated' : 'application_submitted',
-        submission_id: submissionId,
-        first_name: payload.first_name,
-        last_name: payload.last_name,
-        name: [payload.first_name,payload.last_name].filter(Boolean).join(' '),
-        email: payload.email,
-        phone: payload.phone,
-        company_name: payload.business_name,
-        business_name: payload.business_name,
-        service_area: payload.service_area,
-        website: payload.website,
-        project_type: payload.project_type,
-        monthly_revenue: payload.monthly_revenue,
-        monthly_revenue_text: {under_20k:'Under $20,000', '20k_50k':'$20,000–$49,999','50k_100k':'$50,000–$99,999', '100k_plus':'$100,000+', '5k_10k':'$5,000–$10,000', '10k_30k':'$10,000–$30,000', '30k_60k':'$30,000–$60,000', '60k_100k':'$60,000–$100,000'}[payload.monthly_revenue] || payload.monthly_revenue,
-        monthly_inquiries: payload.monthly_inquiries,
-        readiness: payload.readiness,
-        readiness_text: {ready_now:'Yes, ready to implement',need_details:'Open to learning more',not_ready:'Not ready right now'}[payload.readiness] || null,
-        construction_type_text: {kitchens:'Kitchen Remodeling',bathrooms:'Bathroom Remodeling',both:'Kitchens & Bathrooms',remodeling:'Construction / Remodeling',roofing:'Roofing',roofing_siding:'Roofing / Siding',masonry_hardscaping:'Masonry / Hardscaping',interior_remodeling:'Interior Remodeling',hvac:'HVAC',landscaping:'Landscaping',epoxy_coatings:'Epoxy / Concrete Coatings',flooring:'Flooring',plumbing:'Plumbing',electrical:'Electrical',tree_service:'Tree Services',junk_removal:'Junk Removal',cleaning:'Cleaning',restoration:'Restoration',painting:'Painting',pressure_washing:'Pressure Washing',pest_control:'Pest Control',garage_doors:'Garage Doors',auto_detailing:'Auto Detailing',other_home_service:'Other Home Service',other_service:'Other Service Business',construction_roofing:'Construction / Remodeling / Roofing',mechanical_trades:'HVAC / Plumbing / Electrical',outdoor_services:'Landscaping / Tree / Outdoor Services',flooring_coatings:'Flooring / Epoxy / Concrete',junk_cleaning:'Junk Removal / Cleaning'}[payload.project_type] || null,
-        remodeling_type_text: {kitchens:'Kitchen Remodeling',bathrooms:'Bathroom Remodeling',both:'Kitchens & Bathrooms'}[payload.project_type] || null,
-        service_type_text: {kitchens:'Kitchen Remodeling',bathrooms:'Bathroom Remodeling',both:'Kitchens & Bathrooms',remodeling:'Construction / Remodeling',roofing:'Roofing',roofing_siding:'Roofing / Siding',masonry_hardscaping:'Masonry / Hardscaping',interior_remodeling:'Interior Remodeling',hvac:'HVAC',landscaping:'Landscaping',epoxy_coatings:'Epoxy / Concrete Coatings',flooring:'Flooring',plumbing:'Plumbing',electrical:'Electrical',tree_service:'Tree Services',junk_removal:'Junk Removal',cleaning:'Cleaning',restoration:'Restoration',painting:'Painting',pressure_washing:'Pressure Washing',pest_control:'Pest Control',garage_doors:'Garage Doors',auto_detailing:'Auto Detailing',other_home_service:'Other Home Service',other_service:'Other Service Business',construction_roofing:'Construction / Remodeling / Roofing',mechanical_trades:'HVAC / Plumbing / Electrical',outdoor_services:'Landscaping / Tree / Outdoor Services',flooring_coatings:'Flooring / Epoxy / Concrete',junk_cleaning:'Junk Removal / Cleaning'}[payload.project_type] || payload.project_type,
-        biggest_gap: payload.biggest_gap,
-        biggest_gaps: payload.biggest_gaps,
-        biggest_gaps_text: payload.biggest_gaps.join(', '),
-        biggest_gap_display: {not_enough_leads:'Not enough homeowner inquiries',lead_quality:'Too many price shoppers',low_conversion:'Consultations not becoming jobs',poor_follow_up:'Estimates and leads go cold',inconsistent_growth:'Unpredictable project pipeline'}[payload.biggest_gap] || payload.biggest_gap,
-        capacity: payload.capacity,
-        capacity_text: {yes:'Has room for more jobs',limited:'Limited availability',booked_out:'Fully booked',unsure:'Not sure','0':'0 additional projects','1_2':'1–2 additional projects','3_5':'3–5 additional projects','6_10':'6–10 additional projects', '10_plus':'10+ additional projects'}[payload.capacity] || payload.capacity,
-        consent: true,
-        source: ['service_business_v2','service_business_v3'].includes(data.funnel_version) ? 'Ignite Service Business Funnel' : (['kitchens','bathrooms','both'].includes(payload.project_type) ? 'Ignite Kitchen & Bath Funnel' : 'Ignite Home Services Funnel'),
-        funnel_version: ['service_business_v2','service_business_v3'].includes(data.funnel_version) ? data.funnel_version : null,
-        utm_source: payload.utm_source,
-        utm_medium: payload.utm_medium,
-        utm_campaign: payload.utm_campaign
-      };
-      try {
-        const hookResponse = await fetch(webhookUrl,{
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
-          body:JSON.stringify(webhookPayload),
-          signal:AbortSignal.timeout(6000)
-        });
-        if(!hookResponse.ok) console.error('GoHighLevel webhook delivery returned:',hookResponse.status);
-      } catch (hookError) {
-        console.error('GoHighLevel webhook delivery failed:',hookError?.name || 'UnknownError');
-      }
-    } else {
-      console.error('GoHighLevel webhook environment variable not configured');
-    }
-
-    return send(res,isEdit?200:201,{ok:true,submission_id:submissionId,edit_token:editToken});
-  } catch(err) {
-    console.error('Application submission failed:',err?.name || 'UnknownError');
-    return send(res,503,{error:'Unable to save application right now'});
+    const body = await response.text();
+    const contentType = response.headers.get('content-type') || 'application/json';
+    res.status(response.status).setHeader('Content-Type', contentType);
+    return res.send(body);
+  } catch (error) {
+    console.error('Version B lead intake forwarding failed:', error?.name || 'UnknownError');
+    return res.status(503).json({ error: 'Unable to save application right now' });
   }
 };
