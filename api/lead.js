@@ -157,7 +157,10 @@ module.exports = async function handler(req,res) {
         funnel_version: ['service_business_v2','service_business_v3'].includes(data.funnel_version) ? data.funnel_version : null,
         utm_source: payload.utm_source,
         utm_medium: payload.utm_medium,
-        utm_campaign: payload.utm_campaign
+        utm_campaign: payload.utm_campaign,
+        // Facebook ad click ID used for downstream CRM conversion attribution.
+        // Only attach to the consented GHL webhook, without modifying Supabase schema.
+        fbclid: limited(data.fbclid,500)||null
       };
       try {
         const hookResponse = await fetch(webhookUrl,{
