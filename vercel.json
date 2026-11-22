@@ -9,5 +9,6 @@
       "destination": "/headline-b.html"
     }
   ],
-  "buildCommand": "node scripts/build-ignite-vsl.cjs"
+  "buildCommand": "node scripts/build-ignite-vsl.cjs",
+  "outputDirectory": "."
 }
