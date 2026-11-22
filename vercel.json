@@ -8,5 +8,6 @@
       "source": "/headline-b",
       "destination": "/headline-b.html"
     }
-  ]
+  ],
+  "buildCommand": "node scripts/build-ignite-vsl.cjs"
 }

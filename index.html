@@ -829,6 +829,24 @@ body.quiz-open{overflow:hidden!important}
   .ignite-companies .ignite-companies-header h2{font-size:20px!important}
 }
 
+
+/* Compact 3:2 sales video: original frame is preserved on mobile and desktop. */
+.hero{padding:6px 0 13px!important}
+.hero .ignite-video-heading{margin:8px auto 5px;text-transform:uppercase;letter-spacing:.085em}
+.hero .ignite-video-frame{width:min(600px,100%);padding:2px}
+.hero .ignite-video-frame>.ignite-video-box{aspect-ratio:3/2}
+.hero .ignite-video-frame video{object-fit:contain}
+.hero .ignite-unmute{flex-direction:column;gap:2px;min-height:50px;width:max-content;max-width:calc(100% - 20px);white-space:normal;text-align:center;padding:8px 17px}
+.hero .ignite-unmute span{font-size:12px;font-weight:700}
+.hero .ignite-unmute strong{font-size:clamp(14px,3.7vw,17px)}
+.hero .ignite-after-video{margin-top:8px}
+.ignite-companies{padding-top:clamp(17px,3vw,32px)!important}
+.ignite-companies .ignite-companies-header{margin-bottom:14px}
+@media(max-width:767px){
+  .hero .ignite-video-frame{width:min(540px,100%,max(280px,calc((100svh - 320px) * 1.5)))}
+  .ignite-companies{padding-top:16px!important}
+}
+
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -863,8 +881,8 @@ src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
 <section class="hero" aria-labelledby="hero-heading"><div class="container">
  <h1 id="hero-heading"><span class="ignite-headline-promise"><span class="ignite-headline-gradient">Contractors:</span></span> <span class="ignite-headline-guarantee"><span class="ignite-headline-primary">Get 10+ Booked Estimates in the Next 30 Days,</span> <span class="ignite-headline-secondary">Without Chasing Referrals.</span></span></h1>
  <p class="hero-subheadline">We build and run the whole system that fills your calendar, so you can focus on the work.</p>
- <h2 class="ignite-video-heading">Hear What <span class="ignite-red-flow">an Ignite Client Has to Say.</span></h2>
- <div class="ignite-video-frame"><div class="ignite-video-box"><video id="ignite-client-video" controls autoplay playsinline preload="metadata" aria-label="Ignite client testimonial"><source src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a336b225408771d165c7749.mp4" type="video/mp4">Your browser does not support video playback.</video><button type="button" id="ignite-unmute" class="ignite-unmute hidden" aria-label="Play video with sound">🔊 Tap for sound</button></div></div>
+ <h2 class="ignite-video-heading">Watch This First</h2>
+ <div class="ignite-video-frame"><div class="ignite-video-box"><video id="ignite-client-video" controls autoplay muted playsinline webkit-playsinline preload="metadata" aria-label="Ignite sales video"><source src="/media/ignite-vsl-2-web.mp4" type="video/mp4"><source src="https://files.leadconnectorhq.com/file/6b0366b3306ac237518dc0a0/vsl-2.mp4" type="video/mp4">Your browser does not support video playback.</video><button type="button" id="ignite-unmute" class="ignite-unmute"><span>Your video is playing.</span><strong>Press to unmute</strong></button></div></div>
  <div class="ignite-primary-cta ignite-after-video"><button class="ignite-white-cta ignite-open-quiz" type="button">See If My Company Qualifies</button><p>60-SECOND APPLICATION · QUALIFICATION AND WRITTEN TERMS APPLY</p></div>
 </div></section>
 <div class="quiz-overlay hidden" id="quiz-overlay"><div class="quiz-dialog" role="dialog" aria-modal="true" aria-labelledby="quiz-modal-title" tabindex="-1"><div class="ignite-modal-bar"><span id="quiz-modal-title">Your Service Business Growth Review</span><button type="button" id="ignite-quiz-close" aria-label="Close application">✕</button></div><div class="quiz-scroll"><section class="section qualification"><div class="container"><div class="quiz" id="quiz"><div class="quiz-top"><strong id="quiz-step-title">About your service business</strong><span id="quiz-step-count">Step 1 of 4</span><span class="secure-text">🔒 Secure</span></div><div class="progress"><div class="progress-bar" id="quiz-progress"></div></div>
@@ -1259,30 +1277,40 @@ quizOverlay.addEventListener('keydown',event=>{
  if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
  else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
 });
-/* Audio autoplay is commonly blocked. Try unmuted playback, fall back to muted video with an explicit unmute button. */
+/* Autoplay muted. The overlay is the explicit gesture to restart with sound. */
 const igniteVideo=$('ignite-client-video'),igniteSoundButton=$('ignite-unmute');
-function updateVideoSoundButton(){igniteSoundButton.classList.toggle('hidden',!igniteVideo.muted&&!igniteVideo.paused);}
-function tryAudibleAutoplay(){
- igniteVideo.muted=false;
- const attempt=igniteVideo.play();
- if(attempt&&typeof attempt.catch==='function')attempt.catch(()=>{
-  igniteVideo.muted=true;
-  igniteVideo.play().catch(()=>{});
-  igniteSoundButton.classList.remove('hidden');
- });
- else updateVideoSoundButton();
-}
-igniteVideo.addEventListener('loadedmetadata',tryAudibleAutoplay,{once:true});
-igniteVideo.addEventListener('volumechange',updateVideoSoundButton);
-igniteVideo.addEventListener('play',updateVideoSoundButton);
-igniteVideo.addEventListener('pause',()=>{if(igniteVideo.muted)igniteSoundButton.classList.remove('hidden');});
+let igniteSoundStarted=false,igniteSoundPending=false;
+igniteVideo.defaultMuted=true;
+igniteVideo.muted=true;
 igniteSoundButton.addEventListener('click',()=>{
+ if(igniteSoundPending)return;
+ igniteSoundPending=true;
+ igniteVideo.pause();
+ igniteVideo.currentTime=0;
  igniteVideo.muted=false;
  igniteVideo.volume=1;
- igniteVideo.play().catch(()=>{igniteSoundButton.classList.remove('hidden');});
- updateVideoSoundButton();
+ const succeeded=()=>{
+  igniteSoundStarted=true;
+  igniteSoundPending=false;
+  igniteSoundButton.classList.add('hidden');
+ };
+ const failed=()=>{
+  igniteSoundPending=false;
+  igniteVideo.muted=true;
+  igniteSoundButton.classList.remove('hidden');
+  const retry=igniteVideo.play();
+  if(retry&&typeof retry.catch==='function')retry.catch(()=>{});
+ };
+ try{
+  const attempt=igniteVideo.play();
+  if(attempt&&typeof attempt.then==='function')attempt.then(succeeded,failed);
+  else succeeded();
+ }catch(_error){failed();}
 });
-if(igniteVideo.readyState>=1)tryAudibleAutoplay();
+igniteVideo.addEventListener('volumechange',()=>{
+ if(igniteSoundStarted&&igniteVideo.muted)igniteSoundButton.classList.remove('hidden');
+ else if(igniteSoundStarted&&!igniteSoundPending&&!igniteVideo.muted)igniteSoundButton.classList.add('hidden');
+});
 
 
 /* Seamless proof-image marquee moves RIGHT; logo marquee moves LEFT. */
