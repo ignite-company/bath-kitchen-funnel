@@ -1313,6 +1313,96 @@ igniteVideo.addEventListener('volumechange',()=>{
 });
 
 
+/* VSL retention: count actual foreground playback, not autoplay requests or seeks. */
+{
+ const video=igniteVideo;
+ const emitted=new Set(),heard=[];
+ let last=null,visible=false;
+ const milestones=[[10,'vsl_10s'],[30,'vsl_30s'],[60,'vsl_60s']];
+ const onScreen=()=>document.visibilityState==='visible'&&(
+  visible||document.fullscreenElement===video||video.webkitDisplayingFullscreen||
+  document.pictureInPictureElement===video
+ );
+ const reset=()=>{last=null;};
+ const emit=(name)=>{
+  if(emitted.has(name))return;
+  emitted.add(name);
+  trackEvent(name,{
+   video_id:'ignite_vsl_2',video_duration:Math.round(video.duration),
+   page_location:window.location.origin+window.location.pathname
+  });
+ };
+ const addHeard=(start,end)=>{
+  let i=0;
+  while(i<heard.length&&heard[i][1]<start-.35)i++;
+  while(i<heard.length&&heard[i][0]<=end+.35){
+   const [a,b]=heard.splice(i,1)[0];
+   start=Math.min(start,a);end=Math.max(end,b);
+  }
+  heard.splice(i,0,[start,end]);
+ };
+ let mutedTime=0,audibleTime=0;
+ function sample(ending=false,allowPaused=false){
+  const duration=video.duration,at=video.currentTime,now=performance.now();
+  if(!onScreen()||igniteSoundPending||(!ending&&!allowPaused&&video.paused)||video.seeking||
+     !Number.isFinite(duration)||duration<=0||!Number.isFinite(at)){reset();return;}
+  const audible=!video.muted&&video.volume>0;
+  const point={at,now,audible};
+  const prev=last;
+  last=point;
+  if(!prev||prev.audible!==audible)return;
+  const elapsed=(now-prev.now)/1000,delta=at-prev.at;
+  if(delta<0||elapsed>3||delta>Math.max(0,elapsed)*Math.max(1,video.playbackRate)+.4)return;
+  if(!audible){
+   mutedTime+=delta;
+   if(mutedTime>=1)emit('vsl_muted_start');
+   return;
+  }
+  audibleTime+=delta;
+  if(audibleTime>=1)emit('vsl_sound_start');
+  if(delta>0)addHeard(prev.at,at);
+  // Only count a checkpoint if the audio leading up to it was played.
+  const front=heard[0];
+  const reached=front&&front[0]<=1.5?front[1]:0;
+  for(const [seconds,name] of milestones)if(reached>=seconds)emit(name);
+  for(const percent of [25,50,75])if(reached>=duration*percent/100)emit('vsl_'+percent+'_percent');
+  if(ending&&reached>=duration-1)emit('vsl_complete');
+ }
+ if('IntersectionObserver' in window){
+  const observer=new IntersectionObserver(entries=>{
+   for(const entry of entries){
+    const next=entry.isIntersecting&&entry.intersectionRatio>=.5;
+    if(next!==visible){visible=next;reset();}
+   }
+  },{threshold:.5});
+  observer.observe(video);
+ }else{
+  const update=()=>{
+   const p=video.getBoundingClientRect();
+   const next=p.width>0&&p.height>0&&
+    Math.max(0,Math.min(p.bottom,window.innerHeight)-Math.max(p.top,0))*
+    Math.max(0,Math.min(p.right,window.innerWidth)-Math.max(p.left,0))>=p.width*p.height*.5;
+   if(next!==visible){visible=next;reset();}
+  };
+  window.addEventListener('scroll',update,{passive:true});
+  window.addEventListener('resize',update);
+  update();
+ }
+ video.addEventListener('playing',()=>sample());
+ video.addEventListener('timeupdate',()=>sample());
+ video.addEventListener('ended',()=>sample(true));
+ for(const type of ['pause','waiting']){
+  video.addEventListener(type,()=>{sample(false,true);reset();});
+ }
+ for(const type of ['play','seeking','seeked','volumechange','ratechange',
+     'enterpictureinpicture','leavepictureinpicture','webkitbeginfullscreen','webkitendfullscreen']){
+  video.addEventListener(type,reset);
+ }
+ document.addEventListener('visibilitychange',reset);
+ document.addEventListener('fullscreenchange',reset);
+ window.addEventListener('pagehide',reset);
+}
+
 /* Seamless proof-image marquee moves RIGHT; logo marquee moves LEFT. */
 const proofRail=$('ignite-proof-marquee');
 const proofOriginalSet=$('ignite-proof-original-set');
