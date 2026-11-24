@@ -861,6 +861,16 @@ body.quiz-open{overflow:hidden!important}
 #quiz-overlay .quiz-step-in{animation:inline-quiz-in .14s ease-out}
 @media(prefers-reduced-motion:reduce){#quiz-overlay .quiz-step-in{animation:none}}
 .ignite-testimonial{padding:12px 0 42px;background:#050505;text-align:center}.ignite-testimonial .ignite-video-heading{margin:0 auto 15px}
+.hero #quiz-overlay .quiz{border:0!important;background:transparent!important;box-shadow:none!important;border-radius:0!important;overflow:visible!important}
+.hero #quiz-overlay .quiz-body{background:transparent!important;padding-inline:0!important}
+.hero #quiz-overlay[data-step="1"] .quiz-body{padding-top:0!important;padding-bottom:4px!important}
+.hero #quiz-overlay[data-step="1"] #question{text-align:center}
+.hero #quiz-overlay[data-step="1"] #options{width:min(316px,100%);margin-inline:auto;gap:10px!important}
+.hero #quiz-overlay[data-step="1"] #options .opt{aspect-ratio:1/1;justify-content:center!important;border-radius:16px!important;padding:10px 6px!important;text-align:center!important}
+.hero #quiz-overlay[data-step="1"] #options .opt-main{flex-direction:column;justify-content:center;gap:8px;text-align:center}
+.hero #quiz-overlay[data-step="1"] #options .circle{display:none!important}
+.hero #quiz-overlay[data-step="1"] #options .opt-emoji{width:38px;height:38px;border-radius:10px;color:#ff9aa2}
+.hero #quiz-overlay[data-step="1"] #options .opt-emoji svg{width:22px;height:22px}
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -894,7 +904,7 @@ src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
 </div></header>
 <section class="hero" aria-labelledby="hero-heading"><div class="container">
  <h1 id="hero-heading"><span class="ignite-headline-promise"><span class="ignite-headline-gradient">Contractors:</span></span> <span class="ignite-headline-guarantee"><span class="ignite-headline-primary">Get 10+ Booked Estimates in the Next 30 Days,</span> <span class="ignite-headline-secondary">Without Chasing Referrals.</span></span></h1>
-<div class="quiz-overlay" id="quiz-overlay" data-step="1" aria-labelledby="quiz-inline-label"><h2 class="quiz-inline-label" id="quiz-inline-label">Answer to book <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15m-5-5 5 5 5-5"/></svg></h2><section class="section qualification"><div class="container"><div class="quiz" id="quiz"><div class="quiz-top"><strong id="quiz-step-title">About your contracting business</strong><span id="quiz-step-count">Step 1 of 5</span><span class="secure-text">🔒 Secure</span></div><div class="progress"><div class="progress-bar" id="quiz-progress"></div></div>
+<div class="quiz-overlay" id="quiz-overlay" data-step="1" aria-labelledby="quiz-inline-label"><h2 class="quiz-inline-label" id="quiz-inline-label">Answer to book <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15m-5-5 5 5 5-5"/></svg></h2><section class="section qualification"><div class="container"><div class="quiz" id="quiz">
 <div class="quiz-body">
 <div id="question-view"><h3 id="question" class="q-title" tabindex="-1">What service does your business provide</h3><p id="question-desc" class="q-desc" hidden></p><div id="options" class="options"></div><p class="error" id="quiz-error" role="alert"></p><div class="quiz-actions"><button class="linkbtn" type="button" id="prev" disabled>← Back</button><span class="quiz-auto-note">Select an answer to continue</span></div></div>
 <form id="contact-form" class="hidden" novalidate><h3 class="q-title" id="contact-heading" tabindex="-1">Where can we reach you?</h3><p class="q-desc">Share your contact details, then choose a time for your growth call.</p><div class="formgrid">
@@ -1150,9 +1160,6 @@ function draw(){
  $('quiz-overlay').dataset.step=String(step+1);
  $('question-view').classList.toggle('hidden',contact);
  $('contact-form').classList.toggle('hidden',!contact);
- $('quiz-step-title').textContent=contact?'Almost finished':'About your contracting business';
- $('quiz-step-count').textContent='Step '+(step+1)+' of '+(steps.length+1);
- $('quiz-progress').style.width=((step+1)/(steps.length+1)*100)+'%';
  if(contact)return;
  const q=steps[step];
  question.textContent=q.title;
@@ -1221,9 +1228,6 @@ function showBookingStep(){
  $('question-view').classList.add('hidden');
  $('contact-form').classList.add('hidden');
  $('booking-reveal').classList.remove('hidden');
- $('quiz-step-title').textContent='One last step: book your call';
- $('quiz-step-count').textContent='Booking required';
- $('quiz-progress').style.width='90%';
  if(!$('calendar').getAttribute('src'))$('calendar').src=$('calendar').dataset.src;
  $('booking-heading').setAttribute('tabindex','-1');
  $('booking-heading').focus({preventScroll:true});
