@@ -52,7 +52,7 @@ module.exports = async function handler(req,res) {
   if(data.project_type != null && !allowed.project_type.includes(data.project_type)) return send(res,400,{error:'Invalid business type'});
   // Require the current four revenue bands for service-business funnels.
   if(['service_business_v2','service_business_v3'].includes(data.funnel_version) && !['5k_10k','10k_30k','30k_60k','60k_100k'].includes(data.monthly_revenue)) return send(res,400,{error:'Please select your monthly business revenue'});
-  if(isCapacityFlow && !['construction_roofing','mechanical_trades','outdoor_services','flooring_coatings','junk_cleaning','other_service'].includes(data.project_type)) return send(res,400,{error:'Please choose your service category'});
+  if(isCapacityFlow && !['interior_remodeling','roofing','masonry_hardscaping','construction_roofing','mechanical_trades','outdoor_services','flooring_coatings','junk_cleaning','other_service'].includes(data.project_type)) return send(res,400,{error:'Please choose your service category'});
   if(isCapacityFlow && !['0','1_2','3_5','6_10','10_plus'].includes(data.capacity)) return send(res,400,{error:'Please choose how many additional projects you can take on'});
   if(data.monthly_inquiries != null && !allowed.monthly_inquiries.includes(data.monthly_inquiries)) return send(res,400,{error:'Invalid lead volume'});
   // Allow legacy open forms to send these fields, but never require them.
