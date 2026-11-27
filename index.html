@@ -889,7 +889,16 @@ body.quiz-open{overflow:hidden!important}
 .ignite-proof-section{padding-top:55px!important}
 @media(max-width:640px){.ignite-proof-section{padding-top:42px!important}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
-.ignite-written-guarantee{width:min(600px,100%);margin:11px auto 16px;color:#ffe8eb;font-size:clamp(14px,2.2vw,18px);line-height:1.4;text-align:center;text-wrap:balance}
+/* Keep the guarantee readable and leave more of the quiz above the fold. */
+.ignite-written-guarantee{width:100%;margin:5px auto 6px;color:#ffe8eb;font-size:clamp(11px,3.45vw,17px);line-height:1.22;text-align:center}
+.ignite-written-guarantee .guarantee-line{display:block}
+.ignite-topbar{padding-block:6px 0!important}
+.hero{padding-top:3px!important}
+.hero h1#hero-heading{margin-top:2px!important}
+.hero #quiz-overlay:not(.hidden){margin-top:6px!important}
+.hero #quiz-overlay[data-step="1"] .quiz-inline-label{margin-bottom:5px}
+.hero #quiz-overlay[data-step="1"] #options{width:min(250px,100%);gap:8px!important}
+@media(max-width:640px){.hero #quiz-overlay[data-step="1"] #options{width:min(228px,100%);gap:7px!important}}
 .hero #quiz-overlay[data-step="1"] #question{margin-bottom:5px!important}
 </style>
 <!-- Meta Pixel Code -->
@@ -930,7 +939,7 @@ src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
 </div></header>
 <section class="hero" aria-labelledby="hero-heading"><div class="container">
  <h1 id="hero-heading"><span class="ignite-headline-promise"><span class="ignite-headline-gradient">Contractors:</span></span> <span class="ignite-headline-guarantee"><span class="ignite-headline-primary">Get 10+ Booked Estimates in the Next 30 Days,</span> <span class="ignite-headline-secondary">Without Chasing Referrals.</span></span></h1>
- <p class="ignite-written-guarantee"><em>If you don’t get 10 booked estimates in 30 days, we’ll refund what you paid Ignite Co. in full. Written terms apply.</em></p>
+ <p class="ignite-written-guarantee"><em><span class="guarantee-line">If you don’t get 10 booked estimates in 30 days, we’ll</span> <span class="guarantee-line">refund what you paid Ignite Co. in full. Written terms apply.</span></em></p>
 <div class="quiz-overlay" id="quiz-overlay" data-step="1" role="group" aria-label="Growth call questions"><section class="section qualification"><div class="container"><div class="quiz" id="quiz">
 <div class="quiz-body">
 <div id="question-view"><h3 id="question" class="q-title" tabindex="-1">What service does your business provide?</h3><p id="question-desc" class="q-desc" hidden></p><p class="quiz-inline-label" id="quiz-inline-label">Choose One <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15m-5-5 5 5 5-5"/></svg></p><div id="options" class="options"></div><p class="error" id="quiz-error" role="alert"></p><div class="quiz-actions"><button class="linkbtn" type="button" id="prev" disabled>← Back</button><span class="quiz-auto-note">Select an answer to continue</span></div></div>
