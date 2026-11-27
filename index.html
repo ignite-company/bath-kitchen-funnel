@@ -926,12 +926,6 @@ src="https://www.facebook.com/tr?id=1090014440552347&ev=PageView&noscript=1"
 src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
 /></noscript>
 
-<style>
-#investment-thanks{min-height:75vh;min-height:75svh;display:grid;place-items:center;text-align:center;padding:48px 20px}
-#investment-thanks[hidden],main#top[hidden]{display:none!important}
-#investment-thanks h2{margin-bottom:12px}
-#investment-thanks p{max-width:35rem;margin:auto;color:var(--muted)}
-</style>
 <main id="top">
 <header class="ignite-topbar"><div class="container ignite-topbar-inner">
  <a href="#top" class="ignite-brand"><img src="https://assets.cdn.filesafe.space/bF1dT8IAVuvat84LkAVe/media/6a03b7c8f90b5bc73b099791.png" alt="Ignite Company" width="50" height="50"><span><small>GROWTH SYSTEMS</small><strong>IGNITE</strong></span></a>
@@ -1089,13 +1083,10 @@ src="https://www.facebook.com/tr?id=1822916335803108&ev=PageView&noscript=1"
 <details><summary>Is this just another advertising service?<span>+</span></summary><p>No. We look at how a potential customer finds your company, requests service, receives a quote, and becomes a booked job. Depending on your business, the system can include customer acquisition, a website or funnel, automated follow-up, CRM tracking, and appointment booking.</p></details>
 <details><summary>Does it work for my type of contracting business?<span>+</span></summary><p>Yes. We tailor the approach to the services you offer, the area you serve, your growth goals, and the way your team handles calls, inquiries, and quotes.</p></details>
 <details><summary>Do I need to replace my website or CRM?<span>+</span></summary><p>Not necessarily. We review what you already use and look for practical improvements. The recommended buildout is tailored to your company.</p></details>
-<details><summary>What happens after I answer the questions?<span>+</span></summary><p>If the offer fits your budget, you can share your details and choose a time for a free contractor growth call. Your call is booked only after you confirm a time on the calendar.</p></details>
+<details><summary>What happens after I answer the questions?<span>+</span></summary><p>You can share your details and choose a time for a free contractor growth call. Your call is booked only after you confirm a time on the calendar.</p></details>
 </div></div></section>
 <section class="ignite-finish"><div class="container"><div class="ignite-finish-eyebrow">GROW SMARTER WITH IGNITE</div><h2>Better Systems.<br><span class="ignite-red-flow">More Booked Jobs.</span></h2><p>You know how to deliver great work. Build a smarter way to win more customers and manage more jobs.</p><a class="ignite-white-cta" href="#top">Book My Free Review</a><div class="ignite-quiz-caption">APPLICATION SUBJECT TO QUALIFICATION AND WRITTEN GUARANTEE TERMS</div></div></section>
 </main>
-<section id="investment-thanks" hidden aria-labelledby="investment-thanks-heading">
-<div><h2 id="investment-thanks-heading" tabindex="-1">Thanks for your interest.</h2><p>Based on your answer, this might not be the right fit for your business at this time.</p></div>
-</section>
 <footer><div class="container foot"><strong>© Ignite Company</strong><div class="footer-privacy">Information submitted here is saved securely to help us respond to your inquiry. The guarantee applies to booked estimates. We don’t promise closed jobs or revenue.</div></div></footer>
 <script>
 (function(){
@@ -1107,8 +1098,7 @@ const steps=[
  {key:'project_type',title:'What service does your business provide?',desc:'',options:[['interior_remodeling','Interior Remodeling'],['roofing','Roofing'],['masonry_hardscaping','Masonry'],['landscaping','Landscaping'],['junk_removal','Junk Removal'],['other_service','Other']]},
  {key:'monthly_revenue',title:'How much revenue is your business generating per month?',desc:'Choose your current average monthly revenue.',options:[['5k_10k','$5,000–$10,000'],['10k_30k','$10,000–$30,000'],['30k_60k','$30,000–$60,000'],['60k_100k','$60,000–$100,000']]},
  {key:'capacity',title:'How many more projects can your current team take on next month?',desc:'Choose what your team could realistically handle.',options:[['0','0, fully booked'],['1_2','1–2 more projects'],['3_5','3–5 more projects'],['6_10','6–10 more projects'],['10_plus','10+ more projects']]},
- {key:'readiness',title:'How soon would you want a better system in place?',desc:'One that helps turn more inquiries into booked jobs.',options:[['ready_now','As soon as possible'],['need_details','Show me how it works'],['not_ready','Just exploring for now']]},
- {key:'investment_ready',title:'Are you ready to invest at least $2,000 to get more work with a full guarantee?',desc:"If you don’t get 10 booked estimates in 30 days, we’ll refund what you paid Ignite Co. in full. Written terms apply.",options:[['yes','Yes'],['no','No']]}
+ {key:'readiness',title:'How soon would you want a better system in place?',desc:'One that helps turn more inquiries into booked jobs.',options:[['ready_now','As soon as possible'],['need_details','Show me how it works'],['not_ready','Just exploring for now']]}
 ];
 const state={};let step=0,submitting=false,isAdvancing=false,advanceTimer=null;
 const $=id=>document.getElementById(id),question=$('question'),desc=$('question-desc'),options=$('options'),err=$('quiz-error');
@@ -1118,7 +1108,7 @@ const optionEmoji={
  construction_roofing:'🏗️',mechanical_trades:'🔧',outdoor_services:'🌳',flooring_coatings:'🪣',junk_cleaning:'🚛',other_service:'🏢',
  '5k_10k':'🌱','10k_30k':'📈','30k_60k':'💰','60k_100k':'🚀',
  '0':'📅','1_2':'🧰','3_5':'🏗️','6_10':'📈','10_plus':'🚀',
- ready_now:'🚀',need_details:'💬',not_ready:'🗓️',yes:'✓',no:'✕'
+ ready_now:'🚀',need_details:'💬',not_ready:'🗓️'
 };
 let quizStarted=false;
 
@@ -1227,15 +1217,6 @@ function draw(){
    advanceTimer=setTimeout(()=>{
     advanceTimer=null;
     isAdvancing=false;
-    if(q.key==='investment_ready'&&pair[0]==='no'){
-     $('contact-form').classList.add('hidden');
-     $('booking-reveal').classList.add('hidden');
-     $('top').hidden=true;
-     $('investment-thanks').hidden=false;
-     window.scrollTo({top:0,behavior:'instant'});
-     $('investment-thanks-heading').focus({preventScroll:true});
-     return;
-    }
     step++;
     draw();
     animateInlineStep();
@@ -1250,7 +1231,7 @@ function draw(){
 }
 $('prev').addEventListener('click',()=>{if(isAdvancing)return;if(step>0){step--;draw();animateInlineStep();question.focus({preventScroll:true});}});
 $('contact-prev').addEventListener('click',()=>{step=steps.length-1;draw();animateInlineStep();question.focus({preventScroll:true});});
-$('contact-form').addEventListener('submit',async e=>{e.preventDefault();if(submitting)return;const form=e.currentTarget;const fe=$('form-error');fe.textContent='';if(step!==steps.length||state.investment_ready!=='yes')return;phoneInput.setCustomValidity(normalizeUSPhone(phoneInput.value)?'':'Enter a valid 10-digit US phone number.');if(!form.reportValidity()){fe.textContent='Please complete the required contact details.';return;}if(!$('consent').checked){fe.textContent='Please confirm the contact consent.';return;}
+$('contact-form').addEventListener('submit',async e=>{e.preventDefault();if(submitting)return;const form=e.currentTarget;const fe=$('form-error');fe.textContent='';if(step!==steps.length)return;phoneInput.setCustomValidity(normalizeUSPhone(phoneInput.value)?'':'Enter a valid 10-digit US phone number.');if(!form.reportValidity()){fe.textContent='Please complete the required contact details.';return;}if(!$('consent').checked){fe.textContent='Please confirm the contact consent.';return;}
 const data=new FormData(form),query=new URLSearchParams(window.location.search);
 const previousReceipt=readSubmission();
 const contactRecord={name:String(data.get('name')||'').trim(),phone:normalizeUSPhone(data.get('phone'))||String(data.get('phone')||'').trim(),email:String(data.get('email')||'').trim(),business_name:String(data.get('business_name')||'').trim()};
@@ -1283,7 +1264,7 @@ function returnToAnswers(){$('booking-reveal').classList.add('hidden');step=step
 $('booking-back').addEventListener('click',returnToAnswers);
 const previous=readSubmission();
 if(previous&&previous.answers&&previous.contact){
- Object.assign(state,previous.answers);
+ for(const {key} of steps)if(typeof previous.answers[key]==='string')state[key]=previous.answers[key];
  const restoredName=previous.contact.name||[previous.contact.first_name,previous.contact.last_name].filter(Boolean).join(' ');
  if(restoredName) $('name').value=restoredName;
  for(const key of ['phone','email','business_name']){const value=previous.contact[key];if(typeof value==='string') $('contact-form').elements.namedItem(key).value=value;}
